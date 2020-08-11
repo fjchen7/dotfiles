@@ -1,0 +1,66 @@
+# This is Git's per-user configuration file.
+[core]
+	ignorecase = true
+    # use diff-so-fancy for all diff output
+    pager = diff-so-fancy --colors | less -FRX
+	excludesfile = ~/.gitignore
+	editor = vim
+	autocrlf = input
+	fileMode = false
+    symlinks=true
+	# git speed up. http://t.ly/0Nhe
+	preloadindex = true
+	fscache = true
+	quotepath = off
+
+[push]
+    default = simple
+[alias]
+    co = checkout
+    p = push
+    s = status
+	st = status -sb
+    b = branch
+    ba = branch -a
+
+    cm = commit
+	ac = !git add -A && git commit
+    m = merge
+
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    # Show verbose output about tags, branches or remotes
+    last = log -1
+    tags = tags -l
+    remotes = remote -v
+    ts = tag -l
+    bs = branch -a
+    rs = remote -v
+
+    loga = log --graph --decorate --name-status --all
+	alias = config --get-regexp ^alias\\.
+
+# Improved colors for the highlighted bits
+[color]
+	ui = true
+[gui]
+	encoding = utf-8
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "grep"]
+    linenumber = yellow bold
+    match = red
+    filename = magenta
+
+# Inlucde local config
+[include]
+    path = ~/.gitconfig_local

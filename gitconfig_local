@@ -1,0 +1,8 @@
+# https://gist.github.com/bgauduch/06a8c4ec2fec8fef6354afe94358c89e
+
+# git apply "last one wins" rule, thus this local config should be include at .gitconfig end
+# https://stackoverflow.com/questions/4310974/more-than-one-value-for-the-key-user-name-git
+
+[user]
+	name = your_name
+	email = your_email@google.com
