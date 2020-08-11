@@ -13,11 +13,14 @@ export UPDATE_ZSH_DAYS=13
 ZSH_DISABLE_COMPFIX=true
 
 plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump)
-# Load sub configuration
-for file in ~/.{alias,func,zshrc_extra,zshrc_appearance}; do
-    [ -r ${file} ] && [ -f ${file} ] && source ${file};
-done;
+
+[ -e ${HOME}/.zshrc_appearance ] && source ${HOME}/.zshrc_appearance
 source $ZSH/oh-my-zsh.sh
+
+# source customized configuration in the end to avoid oh-my-zsh overwrite
+for file in ~/.{alias,func,zshrc_extra}; do
+    [ -e ${file} ] && source ${file};
+done;
 
 
 
@@ -67,7 +70,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # zsh-completions
 fpath=(/usr/local/share/zsh-completions $fpath)
-
+fpath=(${ZSH_CUSTOM}/themes/spaceship-prompt $fpath)
 # fzf
 # https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
 export FZF_DEFAULT_COMMAND='fd --type f'
