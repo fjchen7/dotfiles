@@ -5,8 +5,8 @@
 
 case "$OSTYPE" in
     "linux-gnu"* )    # ubuntu only now
-        # apt-get update
-        # apt-get upgrade
+        # sudo apt-get update
+        # sudo apt-get upgrade
         ;;
     "darwin"* )    # macOS
         # brew update
@@ -22,7 +22,7 @@ esac
 cmds=( ["python3"]="python3.8" ["pip3"]="python3-pip" ["tmux"]="tmux" )
 for k in "${!cmds[@]}"; do
     # -z: empty string
-    [ -z "$(which $k)" ] && apt-get -y install ${cmds[$k]}
+    [ -z "$(which $k)" ] && sudo apt-get -y install ${cmds[$k]}
 done
 
 
@@ -77,7 +77,7 @@ fi
 #     fi
 # }
 # if ! existcommand python3; do
-#         apt-get -y install python3.8
+#         sudo apt-get -y install python3.8
 # fi
 
 main "$@"; exit

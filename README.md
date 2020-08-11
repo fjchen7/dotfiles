@@ -3,8 +3,10 @@
 **via curl**
 
 ```
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/fjchen7/dotfiles/master/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/fjchen7/dotfiles/master/install.sh)"
 ```
+
+Require root password
 
 ## Reference
 
