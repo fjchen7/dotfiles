@@ -11,7 +11,7 @@ export UPDATE_ZSH_DAYS=13
 
 plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump)
 # Load sub configuration
-for file in ~/.{alias,zshrc_extra,zshrc_appearance}; do
+for file in ~/.{alias,func,zshrc_extra,zshrc_appearance}; do
     [ -r ${file} ] && [ -f ${file} ] && source ${file};
 done;
 source $ZSH/oh-my-zsh.sh
@@ -20,10 +20,16 @@ source $ZSH/oh-my-zsh.sh
 
 # --------------------------------------------------------------------------------------------- #
 # ---------------------------------------  General Settings ----------------------------------- #
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+export PYTHONIOENCODING='UTF-8';
 export EDITOR='vim'
-export LANG=en_US.UTF-8
+
+export HISTSIZE=32768
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth';
+
 export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
-export HISTSIZE=100 # only show recent 100 history
 export LESS='-iMs'  # -i: ignore case at search; -M: more information; -s: combine multiple blank lines into one line, -C:...
 
 export HOMEBREW_NO_AUTO_UPDATE=1    # https://github.com/Homebrew/brew/issues/1670
