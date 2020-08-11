@@ -2,49 +2,63 @@
 alias cl='clear'
 alias cls='clear'
 
+# ls
 alias ll='ls -l'
 alias la='ls -A'
-alias lal='ls -Al'
-alias l.='ls -d .*'  # only show hidden files
-alias l.l='ls -ld .??*'
+alias lla='ls -Al'
+# only show hidden files
+alias l.='_f(){ if [ $# -eq 0 ]; then ls -d .*; else ( cd $1; ls -d .*; ) fi; }; _f'
+alias ll.='_f(){ if [ $# -eq 0 ]; then ls -ld .??*; else ( cd $1; ls -ld .??*; ) fi; }; _f'
+# easy ls and grep
+alias lg='ls -al | grep -i'
 
+# cd
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
-function _cds() { cd $1; ls; }
-alias cds='cdd'
+alias cds='_f(){ cd $1; ls; }'
 
+# git
 alias gti='git'
+alias pullhead='git pull origin $(git rev-parse --abbrev-ref HEAD)'
 
 # utility
-GEO_API="ipinfo.io"
-alias path="tr ':' '\n' <<< \"$PATH\""
-alias ip="curl ${GEO_API}"
-alias hosts='sudo vim /etc/hosts'
-
+alias e='exit'
 alias h="fc -l"
-alias tree='tree -N -C'  # -N设置中文能正常显式，-C打印色彩
+alias tree='tree -N -C'  # -N show Chinese file name; -C print with color
 alias eee='echo $1'
-alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U' # update all python package
 alias als='alias | vim -R -'
+alias paths="tr ':' '\n' <<< \"$PATH\""
+
+GEO_API="ipinfo.io"
+alias ip="curl ${GEO_API}"
 
 # quick configuration
-alias mvrc='vim ~/.vim_runtime/vimrcs/*.vim'
+alias mvrc='vim ~/.vimrc.d/*.vim'
 alias mzrc='vim ~/.zshrc'
+alias mzrce='vim ~/.zshrc_extra'
 alias mtrc='vim ~/.tmux.conf'
 alias mals='vim ~/.alias'
+alias mfun='vim ~/.func'
+alias mhosts='sudo vim /etc/hosts'
 alias szrc='source ~/.zshrc'
+
+# open file between terminal and folder
+alias t2f='ofd'  # open directory：iTerminal -> finder (need plugin osx)
+alias f2t='cdf'  # open directory：finder -> iterminal (need plugin osx)
+
+# python
+alias p3=python3
+alias python=python3
+alias python2=python2.7
+alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U' # update all python package
 
 if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     alias cat='bat'
-    alias i2f='ofd'  # open directory：iTerminal -> finder (need plugin osx)
-    alias f2i='cdf'  # open directory：finder -> iterminal (need plugin osx)
     alias -s md='open -a Typora' # open *.md with Typora by default
     alias cht='cht.sh'
     #alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
     alias ipy=ipython
-    alias python2=python2.7
-    alias python=python3
     alias virtualenv2='virtualenv -p /usr/local/bin/python2'
 
     # upgrade
@@ -54,7 +68,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
 
     # proxy
     alias proxy="export http_proxy=http://127.0.0.1:1080;export https_proxy=http://127.0.0.1:1080;curl ${GEO_API}"
-    alias unproxy="unset http_proxy;unset https_proxy;curl http://ip.cn"
+    alias unproxy="unset http_proxy;unset https_proxy;curl ${GEO_API}"
 
     # config
     alias kar='open $HOME/.config/karabiner/assets/complex_modifications/modifier.json'
