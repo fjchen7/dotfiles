@@ -24,6 +24,7 @@ source $ZSH/oh-my-zsh.sh
 # --------------------------------------------------------------------------------------------- #
 # ---------------------------------------  General Settings ----------------------------------- #
 export PATH=~/.local/bin:$PATH
+export PATH=~/.local/diff-so-fancy:$PATH
 
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
