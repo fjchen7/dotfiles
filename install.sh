@@ -6,4 +6,4 @@
 
 for file in ~/.dotfiles/install_{link,cli}.sh; do
     bash ${file}
-fi
+done

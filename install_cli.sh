@@ -5,8 +5,8 @@
 
 case "$OSTYPE" in
     "linux-gnu"* )    # ubuntu only now
-        apt-get update
-        apt-get upgrade
+        # apt-get update
+        # apt-get upgrade
         ;;
     "darwin"* )    # macOS
         # brew update
@@ -40,7 +40,7 @@ fi
 
 
 # zsh
-if [[ -z "$(which zsh)" ]];; then
+if [[ -z "$(which zsh)" ]]; then
     apt install zsh
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi

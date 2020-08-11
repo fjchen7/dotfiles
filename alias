@@ -35,8 +35,6 @@ alias mals='vim ~/.alias'
 alias szrc='source ~/.zshrc'
 
 if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
-    alias o='open'
-
     alias cat='bat'
     alias i2f='ofd'  # open directory：iTerminal -> finder (need plugin osx)
     alias f2i='cdf'  # open directory：finder -> iterminal (need plugin osx)
