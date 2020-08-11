@@ -1,10 +1,12 @@
-  Host github.com
-  	HostName github.com
-  	User git
-  	IdentityFile ~/.ssh/github_private_key
-  	IdentitiesOnly=yes
-  Host gitlab.com
-  	Hostname gitlab.com
-  	User git
-  	IdentityFile ~/.ssh/gitlab_private_key
-  	IdentitiesOnly=yes
+# Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+
+Host github
+    HostName github.com
+    User your_name
+    IdentityFile ~/.ssh/github_private_key
+    IdentitiesOnly=yes
+Host gitlab
+    Hostname gitlab.com
+    User your_name
+    IdentityFile ~/.ssh/gitlab_private_key
+    IdentitiesOnly=yes
