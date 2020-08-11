@@ -42,6 +42,15 @@ fi
 [ -z "$(which zsh)" ] && sudo apt install zsh
 [ ! -e ${HOME}/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+# zsh plugins
+if [[ -z "$(which j)" ]]; then
+    git clone git://github.com/wting/autojump.git
+    cd ${HOME}/autojump
+    python3 ./install.py
+    cd ${HOME}
+    rm -rf ${HOME}/autojump
+fi
+
 ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 for plugin in {zsh-completions,zsh-syntax-highlighting,zsh-autosuggestions}; do
     [ ! -e ${ZSH_CUSTOM}/plugins/${plugin} ] && git clone https://github.com/zsh-users/${plugin} ${ZSH_CUSTOM}/plugins/${plugin}
@@ -59,7 +68,6 @@ if [[ ! -e $ZSH_CUSTOM/themes/spaceship-prompt ]]; then
         rm -rf ${HOME}/.fonts
         echo "zsh powerline fonts installed!"
     fi;
-
 fi
 
 # vim plugin manager
