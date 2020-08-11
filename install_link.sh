@@ -35,7 +35,7 @@ softDotFiles=(
 [ ! -e ${HOME}/.vim ] && mkdir ${HOME}/.vim
 for file in "${softDotFiles[@]}"; do
     if [[ ${KEEP_OLD_CONF} == "YES" ]]; then
-        mv ${HOME}/.${file} ${BACKUP_DIR}
+        mv ${HOME}/.${file} ${BACKUP_DIR} 2>/dev/null
     else
         rm -rf ${HOME}/.${file} ${BACKUP_DIR}
     fi
