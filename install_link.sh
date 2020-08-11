@@ -26,7 +26,7 @@ fi
 # soft-linked configurations
 softDotFiles=(
 	'zshrc' 'zshrc_appearance'
-    'alias'
+    'alias' 'func'
 	'vimrc' 'vimrc.d' 'vim/colors'
 	'tmux.conf'
 	'gitconfig' 'gitignore'
