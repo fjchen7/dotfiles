@@ -27,7 +27,7 @@ fi
 softDotFiles=(
 	'zshrc' 'zshrc_appearance'
     'alias'
-	'vimrc' 'vim/colors'
+	'vimrc' 'vimrc.d' 'vim/colors'
 	'tmux.conf'
 	'gitconfig' 'gitignore'
     'vim/colors'
@@ -41,8 +41,11 @@ for file in "${softDotFiles[@]}"; do
     fi
     if [[ ${USE_SOFT_LINK} == "YES" ]]; then
         ln -s ${HOME}/.dotfiles/${file} ${HOME}/.${file}
+        echo "[${HOME}/.dotfiles/${file}] soft linked => [${HOME}/.${file}]"
     else
         cp -r ${HOME}/.dotfiles/${file} ${HOME}/.${file}
+
+        echo "[${HOME}/.dotfiles/${file}] copied => [${HOME}/.${file}]"
     fi
 done
 
