@@ -57,18 +57,9 @@ for plugin in {zsh-completions,zsh-syntax-highlighting,zsh-autosuggestions}; do
     [ ! -e ${ZSH_CUSTOM}/plugins/${plugin} ] && git clone https://github.com/zsh-users/${plugin} ${ZSH_CUSTOM}/plugins/${plugin}
 done;
 
-if [[ ! -e $ZSH_CUSTOM/themes/spaceship-prompt ]]; then
-    git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-    ln -sf "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
-
-    read -p "Do you want to install zsh powerline fonts? (y/n) " -n 1;
-    echo "";
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        git clone --depth=1 https://github.com/powerline/fonts.git ${HOME}/.fonts
-        bash ${HOME}/.fonts/install.sh
-        rm -rf ${HOME}/.fonts
-        echo "zsh powerline fonts installed!"
-    fi;
+# zsh theme
+if [[ ! -e ${ZSH_CUSTOM}/themes/powerlevel10k ]]; then
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 fi
 
 # git
@@ -81,14 +72,3 @@ fi
 [ ! -e ${HOME}/.vim ] && mkdir ${HOME}/.vim
 [ ! -e ${HOME}/.vim/bundle ] && mkdir -p ${HOME}/.vim/bundle
 [ ! -e ${HOME}/.vim/bundle/Vundle.vim ] && git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
-
-# function existcommand() {
-#     if type ${1} >/dev/null 2>&1; then
-#         return 0    # true
-#     else
-#         return 1    # false
-#     fi
-# }
-# if ! existcommand python3; do
-#         sudo apt-get -y install python3.8
-# fi
