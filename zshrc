@@ -9,6 +9,9 @@ DISABLE_AUTO_UPDATE="false"
 # how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=13
 
+# skip the verification of insecure directories
+ZSH_DISABLE_COMPFIX=true
+
 plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump)
 # Load sub configuration
 for file in ~/.{alias,func,zshrc_extra,zshrc_appearance}; do
@@ -20,6 +23,8 @@ source $ZSH/oh-my-zsh.sh
 
 # --------------------------------------------------------------------------------------------- #
 # ---------------------------------------  General Settings ----------------------------------- #
+export PATH=~/.local/bin:$PATH
+
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 export PYTHONIOENCODING='UTF-8';
