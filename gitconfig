@@ -2,7 +2,7 @@
 [core]
 	ignorecase = true
     # use diff-so-fancy for all diff output
-    pager = diff-so-fancy --colors | less -FRX
+    pager = diff-so-fancy --colors | less --tab=4 -FRX
 	excludesfile = ~/.gitignore
 	editor = vim
 	autocrlf = input
@@ -64,3 +64,7 @@
 # Inlucde local config
 [include]
     path = ~/.gitconfig_local
+[credential]
+	# Permanently authenticating with Git repositories
+	# https://stackoverflow.com/a/28562712/10134408
+	helper = store
