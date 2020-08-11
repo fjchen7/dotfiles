@@ -6,6 +6,7 @@ alias ll='ls -l'
 alias la='ls -A'
 alias lal='ls -Al'
 alias l.='ls -d .*'  # only show hidden files
+alias l.l='ls -ld .??*'
 
 alias ..='cd ../'
 alias ...='cd ../../'
