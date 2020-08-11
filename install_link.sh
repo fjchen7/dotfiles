@@ -1,32 +1,48 @@
 #!/bin/bash
 
+# ask if using soft links
 USE_SOFT_LINK="YES"
 read -p "Do you want to configure with soft links? (y/n) " -n 1;
 echo "";
 if [[ $REPLY =~ ^[Nn]$ ]]; then
     USE_SOFT_LINK="NO"
-fi;
+fi
+# ask if keeping old configurations
+KEEP_OLD_CONF="YES"
+read -p "Do you want to keep old configurations? (y/n) " -n 1;
+echo "";
+if [[ $REPLY =~ ^[Nn]$ ]]; then
+    KEEP_OLD_CONF="NO"
+fi
+echo ""
 
-BACKUP_DIR=~/old_softDotFiles
+if [[ ${KEEP_OLD_CONF} == "YES" ]]; then
+    BACKUP_DIR=${HOME}/old_softDotFiles
+    [ ! -e ${BACKUP_DIR} ] && mkdir ${BACKUP_DIR}
+    echo "old configurations are kept in ${BACKUP_DIR}."
+fi
+
+
 # soft-linked configurations
 softDotFiles=(
 	'zshrc' 'zshrc_appearance'
     'alias'
-	'vimrc' 'vim'
+	'vimrc' 'vim/colors'
 	'tmux.conf'
 	'gitconfig' 'gitignore'
     'vim/colors'
 	)
-
-[ ! -e ${BACKUP_DIR} ] && mkdir ${BACKUP_DIR}
+[ ! -e ${HOME}/.vim ] && mkdir ${HOME}/.vim
 for file in "${softDotFiles[@]}"; do
-	if [[ -e ~/.${file} ]]; then
-        mv ~/.${file} ${BACKUP_DIR}
-    fi
-    if [[ USE_SOFT_LINK == "YES" ]]; then
-        ln -s ~/.dotfiles/${file} ~/.${file}
+    if [[ ${KEEP_OLD_CONF} == "YES" ]]; then
+        mv ${HOME}/.${file} ${BACKUP_DIR}
     else
-        cp -r ~/.dotfiles/${file} ~/.${file}
+        rm -rf ${HOME}/.${file} ${BACKUP_DIR}
+    fi
+    if [[ ${USE_SOFT_LINK} == "YES" ]]; then
+        ln -s ${HOME}/.dotfiles/${file} ${HOME}/.${file}
+    else
+        cp -r ${HOME}/.dotfiles/${file} ${HOME}/.${file}
     fi
 done
 
@@ -36,15 +52,6 @@ hardDotFiles=(
     "gitconfig_local"
 )
 for file in "${hardDotFiles[@]}"; do
-    [ ! -e ~/.${file} ] && cp ~/.dotfiles/${file} ~/.${file}
-    echo "modify ~/.${file} for LOCAL configuration"
+    [ ! -e ${HOME}/.${file} ] && cp ${HOME}/.dotfiles/${file} ${HOME}/.${file}
+    echo "modify ${HOME}/.${file} for LOCAL configuration"
 done
-
-# ask if keeping old configurations
-read -p "Do you want to keep old configurations? (y/n) " -n 1;
-echo "";
-if [[ $REPLY =~ ^[Nn]$ ]]; then
-    rm -rf ${BACKUP_DIR} >/dev/null 2>&1
-else
-    echo "old configurations are kept in ${BACKUP_DIR}."
-fi;
