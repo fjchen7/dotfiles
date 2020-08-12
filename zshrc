@@ -17,7 +17,7 @@ plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions aut
 source $ZSH/oh-my-zsh.sh
 
 # source customized configuration in the end to avoid oh-my-zsh overwrite
-for file in ~/.{alias,func,zshrc_extra}; do
+for file in ~/.{alias,func,zshrc_local}; do
     [ -e ${file} ] && source ${file};
 done;
 
