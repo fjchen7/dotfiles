@@ -51,7 +51,7 @@ done
 
 # hard-linked configurations
 hardDotFiles=(
-    "zshrc_extra"
+    "zshrc_local"
     "gitconfig_local"
 )
 for file in "${hardDotFiles[@]}"; do

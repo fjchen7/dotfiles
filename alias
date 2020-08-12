@@ -36,7 +36,7 @@ alias ip="curl ${GEO_API}"
 # quick configuration
 alias mvrc='vim ~/.vimrc.d/*.vim'
 alias mzrc='vim ~/.zshrc'
-alias mzrce='vim ~/.zshrc_extra'
+alias mzrcl='vim ~/.zshrc_local'
 alias mtrc='vim ~/.tmux.conf'
 alias mals='vim ~/.alias'
 alias mfun='vim ~/.func'
