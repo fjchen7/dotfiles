@@ -1,8 +1,10 @@
+# dotfiles
+
 ## Installation
 
-**via curl**
+via curl
 
-```
+```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/fjchen7/dotfiles/master/install.sh)"
 ```
 
