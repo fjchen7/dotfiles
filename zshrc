@@ -17,8 +17,8 @@ plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions aut
 source $ZSH/oh-my-zsh.sh
 
 # source customized configuration in the end to avoid oh-my-zsh overwrite
-for file in ~/.{alias,func,zshrc_local}; do
-    [ -e ${file} ] && source ${file};
+for file in ~/.{alias,func,zshrc_zle,zshrc_local}; do
+    [ -e ${file} ] && source ${file}
 done;
 
 
@@ -46,19 +46,6 @@ export VIMRC=$HOME/.vim_runtime/vimrcs
 # prevent > overwriting existent file
 # using >| for write forcedly
 # set -o noclobber
-
-# Ctrl-Z switch Vim and ZSH
-fancy-ctrl-z () {
-    if [[ $#BUFFER -eq 0 ]]; then
-        BUFFER="fg"
-        zle accept-line
-    else
-        zle push-input
-        zle clear-screen
-    fi
-}
-zle -N fancy-ctrl-z
-bindkey '^Z' fancy-ctrl-z
 
 
 
@@ -101,12 +88,7 @@ export CHEATCOLORS=true
 
 # --------------------------------------------------------------------------------------------- #
 # ------------------------------  macOS Specified Configuration ------------------------------- #
-if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
-        # zsh-autosuggestions key bind for iTerm2
-		# further step for iTerm2: set key mapping in Preferences->Profiles->Keys
-		bindkey '^[[ZE' autosuggest-execute # Accepts and executes the current suggestion.
-		bindkey '^[[ZC' autosuggest-clear # Clears the current suggestion.
-
+if [[ "$OSTYPE" == "darwin"* ]]; then
 		# nnn
 		export NNN_BMS='t:~/Documents/Notes;d:~/Desktop;D:~/Downloads'
 fi
