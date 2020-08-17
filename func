@@ -170,8 +170,8 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-function fls() # Show a list of functions
-{
+# list user-defined functions
+function fls() {
     local funcs=$(grep "^function" ~/.func | cut -d' ' -f2 | sed 's/()//g')
     echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //'
 }

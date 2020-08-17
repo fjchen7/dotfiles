@@ -29,6 +29,8 @@ alias tree='tree -N -C'  # -N show Chinese file name; -C print with color
 alias eee='echo $1'
 alias als='alias | vim -R -'
 alias paths="tr ':' '\n' <<< \"$PATH\""
+# https://github.com/chubin/cheat.sh#usage
+alias cht='_f() { url="cheat.sh"; for i in "$@"; do url="${url}/$i"; done; curl "${url}"; }; _f'
 
 GEO_API="ipinfo.io"
 alias ip="curl ${GEO_API}"
