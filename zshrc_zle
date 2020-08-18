@@ -28,9 +28,12 @@ fancy-ctrl-z () {
     fi
 }
 zle -N fancy-ctrl-z
-bindkey '^Z' fancy-ctrl-z  # Here ^z can be replace by \32 that found by `showkey -a`
+bindkey '^Z' fancy-ctrl-z  # Here ^z can be replace by \32 found by `showkey -a`
 
 # zsh-autosuggestions key bind
 # ^[J is <Alt+Shift+j>
 bindkey '^[J' autosuggest-execute # Accepts and executes the current suggestion.
 bindkey '^[C' autosuggest-clear # Clears the current suggestion.
+
+# make ^u has the same behaviour with that in Bash: delete command to beginning-of-line
+bindkey '^u' backward-kill-line
