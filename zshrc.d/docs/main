@@ -1,0 +1,24 @@
+### usage: docs <documentation>
+### available documentations: key(k), zsh(z), history(h)
+
+# Customized shell cheatsheet
+DOCS_DIR=$(dirname $0)
+function docs() {
+	local file
+	case "$1" in
+		"his"* | "h" )
+			file="history"
+			;;
+		"key" | "k" )
+			file="key"
+			;;
+		"zsh" | "z" )
+			file="zsh"
+			;;
+		* )
+			file="main"
+			;;
+	esac
+
+	sed -rn 's/^### ?//;T;p' "${DOCS_DIR}/${file}"
+}
