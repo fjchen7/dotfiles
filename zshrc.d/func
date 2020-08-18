@@ -170,14 +170,23 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-# list user-defined functions
-function fls() {
-    local funcs=$(grep "^function" ~/.zshrc.d/func | cut -d' ' -f2 | sed 's/()//g')
-    echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //'
-}
-
+# List functions
 function func() {
-    declare -f $1
+	case "$1" in
+		"-h" | "--help" )
+			echo "usage:"
+			echo "  func       List user-defined functions"
+			echo "  func -a    List all functions"
+			;;
+		"-a" )
+            local funcs=$(declare -f $1 | grep "^[a-zA-Z].*() {" | cut -d' ' -f1)
+   			echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //' | less
+			;;
+		* )
+			local funcs=$(grep "^function" ~/.zshrc.d/* 2>/dev/null | cut -d' ' -f2 | sed 's/()//g')
+   			echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //'
+			;;
+	esac
 }
 
 # Random tip from the-art-of-command-line
