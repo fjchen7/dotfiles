@@ -25,8 +25,7 @@
 ###   ^p or ^k  Up line in history
 ###
 ### Autosuggest
-###        ^[J  Autosuggest execute
-###        ^[C  Autosuggest clear
+### ^[J or ^[j  Autosuggest execute
 ###
 ### History
 ###         !!  Last command
