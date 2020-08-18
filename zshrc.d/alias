@@ -35,15 +35,8 @@ alias cht='_f() { url="cheat.sh"; for i in "$@"; do url="${url}/$i"; done; curl 
 GEO_API="ipinfo.io"
 alias ip="curl ${GEO_API}"
 
-# quick configuration
-alias mvrc='vim ~/.vimrc.d/*.vim'
-alias mzrc='vim ~/.zshrc'
-alias mzrcl='vim ~/.zshrc_local'
-alias mtrc='vim ~/.tmux.conf'
-alias mals='vim ~/.alias'
-alias mfun='vim ~/.func'
-alias mhosts='sudo vim /etc/hosts'
-alias szrc='source ~/.zshrc'
+# quick source zshrc
+alias src='source ~/.zshrc'
 
 # open file between terminal and folder
 alias t2f='ofd'  # open directory：iTerminal -> finder (need plugin osx)

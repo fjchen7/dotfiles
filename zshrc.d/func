@@ -170,6 +170,51 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+
+# Quick modify configuration
+function conf() {
+	# multiple compare
+	if [[ $1 =~ ("hosts"|"host"|"h") ]]; then
+		sudo vim "/etc/hosts"
+		exit 0
+	fi
+
+	local f="${HOME}"
+	case "$1" in
+		"vim" | "v" )
+			f+="/.vimrc.d/*.vim"
+			;;
+		"zshrc" | "zrc" | "z" )
+			f+="/.zshrc"
+			;;
+		"zshrc_local" | "zrcl" | "local" | "l" )
+			f+="/.zshrc_local"
+			;;
+		"tmux" | "tmux_conf" | "t" )
+			f+="/.tmux.conf"
+			;;
+		"alias" | "als" | "a" )
+			f+="/.zshrc.d/alias"
+			;;
+		"function" | "func" | "f" )
+			f+="/.zshrc.d/func"
+			;;
+		"docs" | "doc" | "d" )
+			f+="/.zshrc.d/docs/*"
+			echo $f
+			;;
+		* )
+			echo "available files to modify: zshrc(z), zshrc_local(l), alias(a), func(f), docs(d), vim(v), tmux(t), hosts(h)"
+			f=""
+			;;
+	esac
+
+	if [[ -n $f ]]; then
+		# expand wildcard: https://stackoverflow.com/a/4692028/10134408
+		eval vim $f
+	fi
+}
+
 # List functions
 function func() {
 	case "$1" in
