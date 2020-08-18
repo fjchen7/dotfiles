@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# install command line tolls if not found
-
-
+# install command line tools if not found
 case "$OSTYPE" in
     "linux-gnu"* )    # ubuntu only now
         # sudo apt-get update
@@ -45,9 +43,7 @@ fi
 # zsh plugin: autojump
 if [[ ! -e ${HOME}/.autojump ]]; then
     git clone git://github.com/wting/autojump.git ${HOME}/autojump
-    cd ${HOME}/autojump
-    python3 ./install.py
-    cd -
+    (cd ${HOME}/autojump; python3 ./install.py)
     rm -rf ${HOME}/autojump
 fi
 
