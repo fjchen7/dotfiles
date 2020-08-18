@@ -199,20 +199,21 @@ function conf() {
 		"function" | "func" | "f" )
 			f+="/.zshrc.d/func"
 			;;
+		"zle" )
+			f+="/.zshrc.d/zle"
+			;;
 		"docs" | "doc" | "d" )
 			f+="/.zshrc.d/docs/*"
 			echo $f
 			;;
 		* )
-			echo "available files to modify: zshrc(z), zshrc_local(l), alias(a), func(f), docs(d), vim(v), tmux(t), hosts(h)"
+			echo "available files to modify: zshrc(z), zshrc_local(l), alias(a), func(f), zle, docs(d), vim(v), tmux(t), hosts(h)"
 			f=""
 			;;
 	esac
 
-	if [[ -n $f ]]; then
-		# expand wildcard: https://stackoverflow.com/a/4692028/10134408
-		eval vim $f
-	fi
+	# expand wildcard: https://stackoverflow.com/a/4692028/10134408
+	[ -n $f ] && eval vim $f
 }
 
 # List functions
@@ -246,12 +247,13 @@ function taocl() {
 }
 
 # Customized shell cheatsheet
-function help() {
-	local doc="help"
-	if [ $# -ne 0 ]; then
-		doc="$1"
-	fi;
+function docs() {
+	local file
+	if [[ -e ${HOME}/.zshrc.d/docs/$1 ]]; then
+		file="$1"
+	else
+		file="help"
+	fi
 
-	sed -rn 's/^### ?//;T;p' "${HOME}/.zshrc.d/docs/${doc}"
+	sed -rn 's/^### ?//;T;p' "${HOME}/.zshrc.d/docs/${file}"
 }
-alias hp=help

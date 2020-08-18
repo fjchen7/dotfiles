@@ -40,7 +40,7 @@ alias src='source ~/.zshrc'
 
 # open file between terminal and folder
 alias t2f='ofd'  # open directory：iTerminal -> finder (need plugin osx)
-alias f2t='cdf'  # open directory：finder -> iterminal (need plugin osx)
+alias f2t='cdf'  # open direc¡tory：finder -> iterminal (need plugin osx)
 
 # python
 alias p3=python3
@@ -51,7 +51,7 @@ alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | 
 if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     alias cat='bat'
     alias -s md='open -a Typora' # open *.md with Typora by default
-    alias cht='cht.sh'
+    alias sed=gsed
     #alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
     alias ipy=ipython
     alias virtualenv2='virtualenv -p /usr/local/bin/python2'
