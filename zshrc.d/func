@@ -176,7 +176,7 @@ function fls() {
     echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //'
 }
 
-function help() {
+function func() {
     declare -f $1
 }
 
@@ -192,6 +192,12 @@ function taocl() {
 }
 
 # Customized shell cheatsheet
-function key() {
-	sed -rn 's/^### ?//;T;p' "${HOME}/.zshrc.d/doc"
+function help() {
+	local doc="help"
+	if [ $# -ne 0 ]; then
+		doc="$1"
+	fi;
+
+	sed -rn 's/^### ?//;T;p' "${HOME}/.zshrc.d/docs/${doc}"
 }
+alias hp=help
