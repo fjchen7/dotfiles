@@ -1,0 +1,5 @@
+### zsh
+###    zle -al  List all available ZLE widgets
+### bindkey -a  List all bound keys
+### showkey -a  Show codes sent by keyboard (only Linux)
+###
