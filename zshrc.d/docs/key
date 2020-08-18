@@ -1,40 +1,40 @@
 ### Shell Short Key
-###  Move Cursor
-###         ^a  Move to beginning-of-line
-###         ^e  Move to end-of-line
-###         ^b  Move char ←
-###         ^f  Move char →
-###        ^[b  Move word ←
-###        ^[f  Move word →
-###  Delete
-###         ^h  Delete char ←
-###         ^d  Delete char →
-###         ^w  Delete wird ←
-###        ^[d  Delete word →
-###         ^u  Delete to beginning-of-line
-###         ^k  Delete to end-of-line
-###  MISC
-###         ^z  Switch between shell and vim
-###       ^x^e  Open editor
-###       ^x^u  Undo
-###   ^j or ^m  Accept line
+###  *Move Cursor
+###             ^a    Move to beginning-of-line
+###             ^e    Move to end-of-line
+###             ^b    Move char ←
+###             ^f    Move char →
+###            ^[b    Move word ←
+###            ^[f    Move word →
+###  *Delete
+###             ^h    Delete char ←
+###             ^d    Delete char →
+###             ^w    Delete wird ←
+###            ^[d    Delete word →
+###             ^u    Delete to beginning-of-line
+###             ^k    Delete to end-of-line
+###  *MISC
+###             ^z    Switch between shell and vim
+###           ^x^e    Open editor
+###           ^x^u    Undo
+###       ^j or ^m    Accept line
 ###
 ### FZF
-###         ^m  Select line
-###   ^n or ^j  Down line in history
-###   ^p or ^k  Up line in history
+###             ^m    Select line
+###       ^n or ^j    Down line in history
+###       ^p or ^k    Up line in history
 ###
 ### Autosuggest
-### ^[J or ^[j  Autosuggest execute
+###     ^[J or ^[j    Autosuggest execute
 ###
 ### History
-###         !!  Last command
-###       !git  Last command starting with 'git'
-###         !$  Last argument
-###        ^[.  Cycles through previous arguments
-###         !^  1st argument
-###        !:2  2nd argument
-###       !:1-  All arguments
-###      !:2-4  2nd~4th arguments
+###             !!    Last command
+###           !git    Last command starting with 'git'
+###             !$    Last argument
+###            ^[.    Cycles through previous arguments
+###             !^    1st argument
+###            !:2    2nd argument
+###           !:1-    All arguments
+###          !:2-4    2nd~4th arguments
 ###
 ### Note: ^ is Ctrl, ^[ is Alt

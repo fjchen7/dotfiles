@@ -1,2 +1,2 @@
-### usage: help <doc-name>
-### available docs: key, zsh, help
+### usage: docs <documentation>
+### available documentations: key, zsh, help
