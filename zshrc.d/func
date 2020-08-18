@@ -176,7 +176,7 @@ function conf() {
 	# multiple compare
 	if [[ $1 =~ ("hosts"|"host"|"h") ]]; then
 		sudo vim "/etc/hosts"
-		exit 0
+		return
 	fi
 
 	local f="${HOME}"
@@ -204,20 +204,20 @@ function conf() {
 			;;
 		"docs" | "doc" | "d" )
 			f+="/.zshrc.d/docs/*"
-			echo $f
 			;;
 		* )
-			echo "available files to modify: zshrc(z), zshrc_local(l), alias(a), func(f), zle, docs(d), vim(v), tmux(t), hosts(h)"
-			f=""
+			echo "available files to modify: "
+			echo "        zshrc(z), zshrc_local(l), alias(a), func(f), zle, docs(d), vim(v), tmux(t), hosts(h)"
+			return
 			;;
 	esac
 
 	# expand wildcard: https://stackoverflow.com/a/4692028/10134408
-	[ -n $f ] && eval vim $f
+	eval vim $f
 }
 
 # List functions
-function func() {
+function lsfunc() {
 	case "$1" in
 		"-h" | "--help" )
 			echo "usage:"
@@ -229,7 +229,7 @@ function func() {
    			echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //' | less
 			;;
 		* )
-			local funcs=$(grep "^function" ~/.zshrc.d/* 2>/dev/null | cut -d' ' -f2 | sed 's/()//g')
+			local funcs=$(grep "^function" ~/.zshrc.d/**/* 2>/dev/null | cut -d' ' -f2 | sed 's/()//g')
    			echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //'
 			;;
 	esac
@@ -246,14 +246,4 @@ function taocl() {
 		xmlstarlet unesc | fmt -80 | iconv -t US
 }
 
-# Customized shell cheatsheet
-function docs() {
-	local file
-	if [[ -e ${HOME}/.zshrc.d/docs/$1 ]]; then
-		file="$1"
-	else
-		file="help"
-	fi
-
-	sed -rn 's/^### ?//;T;p' "${HOME}/.zshrc.d/docs/${file}"
-}
+source ${HOME}/.zshrc.d/docs/main
