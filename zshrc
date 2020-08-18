@@ -13,13 +13,13 @@ ZSH_DISABLE_COMPFIX=true
 
 plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump)
 
-[ -e ${HOME}/.zshrc_appearance ] && source ${HOME}/.zshrc_appearance
+source ${HOME}/.zshrc.d/appearance
 source $ZSH/oh-my-zsh.sh
-
 # source customized configuration in the end to avoid oh-my-zsh overwrite
-for file in ~/.{alias,func,zshrc_zle,zshrc_local}; do
+for file in ${HOME}/.zshrc.d/{alias,func,zle,local}; do
     [ -e ${file} ] && source ${file}
 done;
+[ -e ${HOME}/.zshrc_local ] && source ${HOME}/.zshrc_local
 
 
 
