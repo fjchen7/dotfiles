@@ -9,6 +9,7 @@
 ### History
 ###     ^[N or ^[n    Search history (forward)
 ###     ^[P or ^[p    Search history (backward)
+###             fc    Edit last command in editor
 ###
 ### CLI Replacement (https://devhints.io/bash#histor)
 ###             !!    Last command
