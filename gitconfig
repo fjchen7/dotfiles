@@ -22,6 +22,8 @@
 	st = status -sb
     b = branch
     ba = branch -a
+	# search and checkout to branch
+	cos = "!_() { git checkout $(git branch | grep $1 | awk '{print $NF}'); }; _"
 
     cm = commit
 	ac = !git add -A && git commit
