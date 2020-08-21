@@ -25,12 +25,12 @@ fi
 
 # soft-linked configurations
 softDotFiles=(
-	'zshrc' 'zshrc.d'
-	'vimrc' 'vimrc.d' 'vim/colors'
-	'tmux.conf'
-	'gitconfig' 'gitignore'
+    'zshrc' 'zshrc.d'
+    'vimrc' 'vimrc.d' 'vim/colors'
+    'tmux.conf'
+    'gitconfig' 'gitignore'
     'vim/colors'
-	)
+    )
 [ ! -e ${HOME}/.vim ] && mkdir ${HOME}/.vim
 for file in "${softDotFiles[@]}"; do
     if [[ ${KEEP_OLD_CONF} == "YES" ]]; then

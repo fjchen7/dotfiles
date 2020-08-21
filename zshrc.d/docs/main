@@ -4,24 +4,24 @@
 # Customized shell cheatsheet
 DOCS_DIR=$(dirname $0)
 function docs() {
-	local file
-	case "$1" in
-		"his"* | "h" )
-			file="history"
-			;;
-		"key" | "k" )
-			file="key"
-			;;
-		"zsh" | "z" )
-			file="zsh"
-			;;
-		"tmux" | "t" )
-			file="tmux"
-			;;
-		* )
-			file="main"
-			;;
-	esac
+    local file
+    case "$1" in
+        "his"* | "h" )
+            file="history"
+            ;;
+        "key" | "k" )
+            file="key"
+            ;;
+        "zsh" | "z" )
+            file="zsh"
+            ;;
+        "tmux" | "t" )
+            file="tmux"
+            ;;
+        * )
+            file="main"
+            ;;
+    esac
 
-	sed -rn 's/^### ?//;T;p' "${DOCS_DIR}/${file}"
+    sed -rn 's/^### ?//;T;p' "${DOCS_DIR}/${file}"
 }
