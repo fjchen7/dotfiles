@@ -1,5 +1,5 @@
 ### usage: docs <documentation>
-### available documentations: key(k), zsh(z), history(h)
+### available documentations: key(k), zsh(z), history(h), tmux(t)
 
 # Customized shell cheatsheet
 DOCS_DIR=$(dirname $0)
@@ -14,6 +14,9 @@ function docs() {
 			;;
 		"zsh" | "z" )
 			file="zsh"
+			;;
+		"tmux" | "t" )
+			file="tmux"
 			;;
 		* )
 			file="main"
