@@ -89,8 +89,8 @@ export CHEATCOLORS=true
 # --------------------------------------------------------------------------------------------- #
 # ------------------------------  macOS Specified Configuration ------------------------------- #
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	# nnn
-	export NNN_BMS='t:~/Documents/Notes;d:~/Desktop;D:~/Downloads'
+    # nnn
+    export NNN_BMS='t:~/Documents/Notes;d:~/Desktop;D:~/Downloads'
 fi
 
 echo "Oh My Zsh!"  # Welcome

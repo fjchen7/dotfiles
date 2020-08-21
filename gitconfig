@@ -1,17 +1,17 @@
 # This is Git's per-user configuration file.
 [core]
-	ignorecase = true
+    ignorecase = true
     # use diff-so-fancy for all diff output
     pager = diff-so-fancy --colors | less --tab=4 -FRX
-	excludesfile = ~/.gitignore
-	editor = vim
-	autocrlf = input
-	fileMode = false
+    excludesfile = ~/.gitignore
+    editor = vim
+    autocrlf = input
+    fileMode = false
     symlinks=true
-	# git speed up. http://t.ly/0Nhe
-	preloadindex = true
-	fscache = true
-	quotepath = off
+    # git speed up. http://t.ly/0Nhe
+    preloadindex = true
+    fscache = true
+    quotepath = off
 
 [push]
     default = simple
@@ -19,14 +19,14 @@
     co = checkout
     p = push
     s = status
-	st = status -sb
+    st = status -sb
     b = branch
     ba = branch -a
-	# search and checkout to branch
-	cos = "!_() { git checkout $(git branch | grep $1 | awk '{print $NF}'); }; _"
+    # search and checkout to branch
+    cos = "!_() { git checkout $(git branch | grep $1 | awk '{print $NF}'); }; _"
 
     cm = commit
-	ac = !git add -A && git commit
+    ac = !git add -A && git commit
     m = merge
 
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -39,25 +39,25 @@
     rs = remote -v
 
     loga = log --graph --decorate --name-status --all
-	alias = config --get-regexp ^alias\\.
+    alias = config --get-regexp ^alias\\.
 
 # Improved colors for the highlighted bits
 [color]
-	ui = true
+    ui = true
 [gui]
-	encoding = utf-8
+    encoding = utf-8
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "diff"]
-	meta = yellow
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = yellow
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 [color "grep"]
     linenumber = yellow bold
     match = red
@@ -67,6 +67,6 @@
 [include]
     path = ~/.gitconfig_local
 [credential]
-	# Permanently authenticating with Git repositories
-	# https://stackoverflow.com/a/28562712/10134408
-	helper = store
+    # Permanently authenticating with Git repositories
+    # https://stackoverflow.com/a/28562712/10134408
+    helper = store

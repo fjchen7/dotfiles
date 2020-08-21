@@ -5,6 +5,6 @@ source ~/.vimrc.d/basic.vim
 source ~/.vimrc.d/plugin.vim
 
 try
-	source ~/.vimrc.d/extra.vim
+    source ~/.vimrc.d/extra.vim
 catch
 endtry

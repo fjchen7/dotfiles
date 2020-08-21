@@ -44,7 +44,7 @@ cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 " 删除全部
-"cnoremap <C-K>		<C-U>
+"cnoremap <C-K>    <C-U>
 
 " 历史命令
 cnoremap <C-P> <Up>
