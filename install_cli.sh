@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # install command line tools if not found
 case "$OSTYPE" in
