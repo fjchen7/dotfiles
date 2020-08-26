@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ask if using soft links
 USE_SOFT_LINK="YES"
