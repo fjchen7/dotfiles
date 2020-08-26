@@ -1,16 +1,16 @@
 ### usage: docs <documentation>
-### available documentations: key(k), zsh(z), history(h), tmux(t)
+### available documentations: basic(b), zsh(z), history(h), tmux(t)
 
 # Customized shell cheatsheet
 DOCS_DIR=$(dirname $0)
-function docs() {
+function doc() {
     local file
     case "$1" in
         "his"* | "h" )
             file="history"
             ;;
-        "key" | "k" )
-            file="key"
+        "basic" | "b" )
+            file="basic"
             ;;
         "zsh" | "z" )
             file="zsh"
