@@ -1,0 +1,6 @@
+
+#!/usr/bin/env zsh
+#
+### only pull branch of HEAD
+
+git pull origin $(git rev-parse --abbrev-ref HEAD)
