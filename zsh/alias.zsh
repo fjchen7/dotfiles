@@ -21,8 +21,9 @@ alias gti='git'
 # utility
 alias e='exit'
 alias h="fc -l"
-alias tree="tree -aNC -I '.git|node_modules|bower_components' --dirsfirst"  # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
-alias eee='echo $1'
+# -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
+_tree() { tree -aNC -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst $@ | less -FRX }
+alias tree=_tree
 
 # quick source zshrc
 alias src='source ~/.zshrc'
