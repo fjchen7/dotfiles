@@ -4,4 +4,4 @@
 source _print-help "$(realpath $0)" "$@"
 
 # -perm +111 = with any of the executable bits set (+ means "any of these bits", 111 is the octal for the executable bit on owner, group and anybody)
-find $(realpath `dirname $0`) -perm +111 -type f -name "*" -exec basename {} \; | sort -n
+find $(realpath `dirname $0`) -perm +111 -type f -name "*" -not -name "_*" -exec basename {} \; | sort -n
