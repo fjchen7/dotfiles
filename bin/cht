@@ -8,4 +8,4 @@ url="cheat.sh"
 for i in "$@"; do
     url="${url}/$i"
 done
-curl "${url}"
+curl -s "${url}"
