@@ -8,28 +8,21 @@ alias lla='ls -Al'
 # only show hidden files
 alias l.='_f(){ if [ $# -eq 0 ]; then ls -d .*; else ( cd $1; ls -d .*; ) fi; }; _f'
 alias ll.='_f(){ if [ $# -eq 0 ]; then ls -ld .??*; else ( cd $1; ls -ld .??*; ) fi; }; _f'
-# easy ls and grep
-alias lg='ls -al | grep -i'
 
 # cd
+alias cdl='_f(){ cd $1; ls; }; _f'
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
-alias cds='_f(){ cd $1; ls; }'
 
 # git
 alias gti='git'
-alias pullhead='git pull origin $(git rev-parse --abbrev-ref HEAD)'
 
 # utility
 alias e='exit'
 alias h="fc -l"
 alias tree='tree -N -C'  # -N show Chinese file name; -C print with color
 alias eee='echo $1'
-alias als='alias | vim -R -'
-alias lspath="tr ':' '\n' <<< \"$PATH\""
-# https://github.com/chubin/cheat.sh#usage
-alias cht='_f() { url="cheat.sh"; for i in "$@"; do url="${url}/$i"; done; curl "${url}"; }; _f'
 
 GEO_API="ipinfo.io"
 alias ip="curl ${GEO_API}"
@@ -50,7 +43,6 @@ alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | 
 if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     alias cat='bat'
     alias -s md='open -a Typora' # open *.md with Typora by default
-    alias sed=gsed
     #alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
     alias ipy=ipython
     alias virtualenv2='virtualenv -p /usr/local/bin/python2'
