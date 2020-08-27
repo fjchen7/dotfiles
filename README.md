@@ -8,14 +8,15 @@ via curl
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/fjchen7/dotfiles/master/install.sh)"
 ```
 
-Require root password
+May require root password
 
-## Reference
+## Thanks
 
+- [holman/dotfiles](https://github.com/holman/dotfiles)
 - [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
 - [lewagon/dotfiles](https://github.com/lewagon/dotfiles)
 
-Alternative solutions
+## Alternative solutions
 
 - [lra/mackup](https://github.com/lra/mackup)
 - [Yet Another Dotfiles Manager (yadm)](https://yadm.io)

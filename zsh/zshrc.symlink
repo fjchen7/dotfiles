@@ -1,5 +1,6 @@
 # --------------------------------------------------------------------------------------------- #
 # ----------------------------------------------  zsh ----------------------------------------- #
+export DOTFILES_ROOT=${HOME}/.dotfiles
 export ZSH=~/.oh-my-zsh
 export ZSH_CUSTOM=${ZSH}/custom
 export ZSH_THEME=${ZSH}/themes
@@ -19,7 +20,7 @@ source $ZSH/oh-my-zsh.sh
 for file in ${HOME}/.zshrc.d/{alias,func,zle,local}; do
     [ -e ${file} ] && source ${file}
 done;
-[ -e ${HOME}/.zshrc_local ] && source ${HOME}/.zshrc_local
+[ -e ${HOME}/.zshrc.local ] && source ${HOME}/.zshrc.local
 
 
 

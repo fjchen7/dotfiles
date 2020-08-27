@@ -1,9 +1,131 @@
 #!/usr/bin/env bash
 
-# SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+set -e    # exit script when error happen
+set -u    # report error if visiting undeclared variable
 
-[ ! -e ${HOME}/.dotfiles ] && git clone https://github.com/fjchen7/dotfiles ~/.dotfiles
+export DOTFILES_ROOT="${HOME}/.dotfiles"
+[ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
 
-for file in ${HOME}/.dotfiles/install_{link,cli}.sh; do
-    bash ${file}
+print_info() {
+    printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+print_user() {
+    printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
+print_success() {
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+print_fail() {
+    printf "\r\033[2K  [\033[0;31mprint_fail\033[0m] $1\n"
+    echo ''
+    exit
+}
+
+setup_local_zshrc() {
+    local DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
+    if [[ ! -e ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink ]]; then
+        print_info 'setup zshrc.local'
+        cp ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink.example ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink
+        print_success 'zshrc.local'
+    fi
+}
+
+setup_local_gitconfig() {
+    local DOTFILES_GIT_ROOT=${DOTFILES_ROOT}/git
+    if [[ ! -e ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink ]]; then
+        print_info 'setup gitconfig.local'
+
+        print_user ' - What is your github author name?'
+        read -e git_authorname
+        print_user ' - What is your github author email?'
+        read -e git_authoremail
+
+        sed -e "s/AUTHORNAME/${git_authorname}/g" -e "s/AUTHOREMAIL/${git_authoremail}/g" \
+            ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink.example > ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink
+
+        print_success 'gitconfig.local'
+    fi
+}
+
+link_file() {
+    local src=$1 dst=$2
+
+    local overwrite= backup= skip=
+    local action=
+
+    # -f file, -d directory, -L symlink
+    if [[ -f "$dst" ]] || [[ -d "$dst" ]] || [[ -L "$dst" ]]; then
+        if [[ "$overwrite_all" == "false" ]] && [[ "$backup_all" == "false" ]] && [[ "$skip_all" == "false" ]]; then
+            local currentSrc="$(readlink $dst)"
+
+            if [[ "$currentSrc" == "$src" ]]; then
+                skip=true;
+            else
+                print_user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+                [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+
+                read -n 1 action
+                case "$action" in
+                    o )
+                        overwrite=true;;
+                    O )
+                        overwrite_all=true;;
+                    b )
+                        backup=true;;
+                    B )
+                        backup_all=true;;
+                    s )
+                        skip=true;;
+                    S )
+                        skip_all=true;;
+                    * )
+                        ;;
+                esac
+            fi
+        fi
+
+        overwrite=${overwrite:-$overwrite_all}
+        backup=${backup:-$backup_all}
+        skip=${skip:-$skip_all}
+
+        if [[ "$overwrite" == "true" ]]; then
+            rm -rf "$dst"
+            print_success "removed $dst"
+        fi
+
+        if [[ "$backup" == "true" ]]; then
+            mv "$dst" "${dst}.backup"
+            print_success "moved $dst to ${dst}.backup"
+        fi
+    fi
+
+    if [[ "$skip" == "true" ]]; then
+        print_success "skipped $src"
+    else  # $skip == "false" or empty
+        ln -s "$1" "$2"
+        print_success "linked $1 to $2"
+    fi
+}
+
+install_dotfiles() {
+    print_info 'installing dotfiles'
+
+    local overwrite_all=false backup_all=false skip_all=false
+    for src in $(find "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink'); do
+        dst="$HOME/.$(basename "${src%.*}")"
+        link_file "$src" "$dst"
+    done
+}
+
+setup_local_zshrc
+setup_local_gitconfig
+install_dotfiles
+
+# pre install
+declare -A cmds=( ["python3"]="python3.8" ["pip3"]="python3-pip" )
+for k in "${!cmds[@]}"; do
+    # -z: empty string
+    [ -z "$(which $k)" ] && sudo apt-get -y install ${cmds[$k]}
 done
+# find and run all dotfiles installers iteratively
+find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -name install.sh -exec readlink {} \; | while read installer ; do sh -c "${installer}" ; done
