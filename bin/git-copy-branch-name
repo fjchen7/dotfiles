@@ -1,10 +1,7 @@
 #!/usr/bin/env zsh
 #
 ### Copy the current branch name to the clipboard.
-if [[ $1 =~ ("-h"|"--help") ]]; then
-    source print-comment "$(realpath $0)" $1
-    exit 0
-fi
+source _print-help "$(realpath $0)" "$@"
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 echo $branch

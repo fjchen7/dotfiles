@@ -1,10 +1,7 @@
 #!/usr/bin/env zsh
 #
 ### Quick search in a directory for a string ($@).
-if [[ $1 =~ ("-h"|"--help") ]]; then
-    source print-comment "$(realpath $0)" $1
-    exit 0
-fi
+source _print-help "$(realpath $0)" "$@"
 
 set -e
 # use -iru to search directories ack usually ignores (like .git)

@@ -2,6 +2,7 @@
 #
 ### show cheatsheet
 ### https://github.com/chubin/cheat.sh#usage
+source _print-help "$(realpath $0)" "$@"
 
 url="cheat.sh"
 for i in "$@"; do

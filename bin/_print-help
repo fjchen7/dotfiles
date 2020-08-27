@@ -4,4 +4,7 @@
 ###
 ### https://samizdat.dev/help-message-for-shell-scripts/
 
-sed -rn 's/^### ?//;T;p' "$1"
+if [[ $2 =~ ("-h"|"--help") ]]; then
+    sed -rn 's/^### ?//;T;p' "$1"
+    exit 0
+fi

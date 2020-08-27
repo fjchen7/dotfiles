@@ -4,7 +4,6 @@
 ### available documentations: basic(b), zsh(z), history(h), tmux(t)
 
 DOCS_ROOT="$(dirname $0)/_docs"
-
 file=
 case "$1" in
     "his"* | "h" )

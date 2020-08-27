@@ -6,9 +6,6 @@
 ### file or three in your working directory, and you know you want to immediately
 ### edit them in your editor next. Why waste time clicking around like some sort
 ### of plebian when you can just run another command?
-if [[ $1 =~ ("-h"|"--help") ]]; then
-    source print-comment "$(realpath $0)" $1
-    exit 0
-fi
+source _print-help "$(realpath $0)" "$@"
 
 $EDITOR $(git ls-files --others --exclude-standard)

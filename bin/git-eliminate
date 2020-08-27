@@ -7,10 +7,7 @@
 ### Examples
 ###
 ###   git eliminate branch-name
-if [[ $1 =~ ("-h"|"--help") ]]; then
-    source print-comment "$(realpath $0)" $1
-    exit 0
-fi
+source _print-help "$(realpath $0)" "$@"
 
 git branch -D $1
 git push origin :$1
