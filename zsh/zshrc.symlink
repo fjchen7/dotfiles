@@ -13,7 +13,7 @@ plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions aut
 source ${DOTFILES_ZSH_ROOT}/appearance.zsh
 source ${ZSH}/oh-my-zsh.sh
 # source customized configuration in the end to avoid oh-my-zsh overwrite
-for file in ${DOTFILES_ZSH_ROOT}/{config,plugins,aliases,paths,zle}.zsh; do
+for file in ${DOTFILES_ZSH_ROOT}/{config,plugin,alias,path,zle}.zsh; do
     [ -e ${file} ] && source ${file}
 done;
 [ -e ${HOME}/.zshrc.local ] && source ${HOME}/.zshrc.local
