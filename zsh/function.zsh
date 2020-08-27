@@ -82,15 +82,6 @@ function server() {
     python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port";
 }
 
-# Start a PHP server from a directory, optionally specifying the port
-# (Requires PHP 5.4.0+.)
-function phpserver() {
-    local port="${1:-4000}";
-    local ip=$(ipconfig getifaddr en1);
-    sleep 1 && open "http://${ip}:${port}/" &
-    php -S "${ip}:${port}";
-}
-
 # Compare original and gzipped file size
 function gz() {
     local origsize=$(wc -c < "$1");
@@ -149,76 +140,3 @@ if [ ! $(uname -s) = 'Darwin' ]; then
         alias open='xdg-open';
     fi
 fi
-
-# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
-# the `.git` directory, listing directories first. The output gets piped into
-# `less` with options to preserve color and line numbers, unless the output is
-# small enough for one screen.
-function tre() {
-    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
-}
-
-
-# Quick modify configuration
-function conf() {
-    # multiple compare
-    if [[ $1 =~ ("hosts"|"host"|"h") ]]; then
-        sudo vim "/etc/hosts"
-        return
-    fi
-
-    local f="${HOME}"
-    case "$1" in
-        "vim" | "v" )
-            f+="/.vimrc.d/*.vim"
-            ;;
-        "zshrc" | "zrc" | "z" )
-            f+="/.zshrc"
-            ;;
-        "zshrc_local" | "zrcl" | "local" | "zl" )
-            f+="/.zshrc_local"
-            ;;
-        "tmux" | "tmux_conf" | "t" )
-            f+="/.tmux.conf"
-            ;;
-        "alias" | "als" | "a" )
-            f+="/.zshrc.d/alias"
-            ;;
-        "function" | "func" | "f" )
-            f+="/.zshrc.d/func"
-            ;;
-        "zle" )
-            f+="/.zshrc.d/zle"
-            ;;
-        "docs" | "doc" | "d" )
-            f+="/.zshrc.d/docs/*"
-            ;;
-        * )
-            echo "available files to modify: "
-            echo "    zshrc(z), zshrc_local(zl), alias(a), func(f), zle, docs(d), vim(v), tmux(t), hosts(h)"
-            return
-            ;;
-    esac
-
-    # expand wildcard: https://stackoverflow.com/a/4692028/10134408
-    eval vim $f
-}
-
-# List functions
-function lsfunc() {
-    case "$1" in
-        "-h" | "--help" )
-            echo "usage:"
-            echo "  func       List user-defined functions"
-            echo "  func -a    List all functions"
-            ;;
-        "-a" )
-            local funcs=$(declare -f $1 | grep "^[a-zA-Z].*() {" | cut -d' ' -f1)
-            echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //' | less
-            ;;
-        * )
-            local funcs=$(grep "^function" ~/.zshrc.d/**/* 2>/dev/null | cut -d' ' -f2 | sed 's/()//g')
-            echo ${funcs} | awk '{print length, $0}' | sort -n | sed 's/.* //'
-            ;;
-    esac
-}

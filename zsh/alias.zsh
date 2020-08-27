@@ -21,7 +21,7 @@ alias gti='git'
 # utility
 alias e='exit'
 alias h="fc -l"
-alias tree='tree -N -C'  # -N show Chinese file name; -C print with color
+alias tree="tree -aNC -I '.git|node_modules|bower_components' --dirsfirst"  # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias eee='echo $1'
 
 GEO_API="ipinfo.io"
@@ -55,7 +55,4 @@ if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     # proxy
     alias proxy="export http_proxy=http://127.0.0.1:1080;export https_proxy=http://127.0.0.1:1080;curl ${GEO_API}"
     alias unproxy="unset http_proxy;unset https_proxy;curl ${GEO_API}"
-
-    # config
-    alias kar='open $HOME/.config/karabiner/assets/complex_modifications/modifier.json'
 fi
