@@ -17,6 +17,7 @@
 #     - `bindkey '\eb'`: see <alt-b> maps to which zle widget.
 #     - `zle -la`: list all available zle widges.
 
+
 # <ctrl-z> switch Vim and ZSH
 fancy-ctrl-z () {
     if [[ $#BUFFER -eq 0 ]]; then
@@ -29,12 +30,3 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z  # Here ^z can be replace by \32 found by `showkey -a`
-
-# zsh-autosuggestions key bind
-# ^[ is Alt
-bindkey '^[J' autosuggest-execute # Accepts and executes the current suggestion.
-bindkey '^[j' autosuggest-execute # Accepts and executes the current suggestion.
-# bindkey '^[C' autosuggest-clear # Clears the current suggestion.
-
-# make ^u has the same behaviour with that in Bash: delete command to beginning-of-line
-bindkey '^u' backward-kill-line

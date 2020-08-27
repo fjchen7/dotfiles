@@ -150,16 +150,6 @@ if [ ! $(uname -s) = 'Darwin' ]; then
     fi
 fi
 
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-function o() {
-    if [ $# -eq 0 ]; then
-        open .;
-    else
-        open "$@";
-    fi;
-}
-
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
@@ -232,16 +222,3 @@ function lsfunc() {
             ;;
     esac
 }
-
-# Random tip from the-art-of-command-line
-# https://github.com/jlevy/the-art-of-command-line#one-liners
-function taocl() {
-    curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md |
-        sed '/cowsay[.]png/d' |
-        pandoc -f markdown -t html |
-        xmlstarlet fo --html --dropdtd |
-        xmlstarlet sel -t -v "(html/body/ul/li[count(p)>0])[$RANDOM mod last()+1]" |
-        xmlstarlet unesc | fmt -80 | iconv -t US
-}
-
-source ${HOME}/.zshrc.d/docs/main
