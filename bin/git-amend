@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+#
+### Use the last commit message and amend your stuffs.
+if [[ $1 =~ ("-h"|"--help") ]]; then
+    source print-comment "$(realpath $0)" $1
+    exit 0
+fi
+
+git commit --amend -C HEAD
