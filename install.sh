@@ -6,44 +6,31 @@ set -u    # report error if visiting undeclared variable
 export DOTFILES_ROOT="${HOME}/.dotfiles"
 [ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
 
-print_info() {
-    printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-print_user() {
-    printf "\r  [ \033[0;33m??\033[0m ] $1\n"
-}
-print_success() {
-    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-print_fail() {
-    printf "\r\033[2K  [\033[0;31mprint_fail\033[0m] $1\n"
-    echo ''
-    exit
-}
+source ${DOTFILES_ROOT}/common/helper.sh
 
 setup_local_zshrc() {
     local DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
     if [[ ! -e ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink ]]; then
-        print_info 'setup zshrc.local'
+        info 'setup zshrc.local'
         cp ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink.example ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink
-        print_success 'zshrc.local'
+        success 'zshrc.local'
     fi
 }
 
 setup_local_gitconfig() {
     local DOTFILES_GIT_ROOT=${DOTFILES_ROOT}/git
     if [[ ! -e ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink ]]; then
-        print_info 'setup gitconfig.local'
+        info 'setup gitconfig.local'
 
-        print_user ' - What is your github author name?'
+        ask ' - What is your github author name?'
         read -e git_authorname
-        print_user ' - What is your github author email?'
+        ask ' - What is your github author email?'
         read -e git_authoremail
 
         sed -e "s/AUTHORNAME/${git_authorname}/g" -e "s/AUTHOREMAIL/${git_authoremail}/g" \
             ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink.example > ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink
 
-        print_success 'gitconfig.local'
+        success 'gitconfig.local'
     fi
 }
 
@@ -61,7 +48,7 @@ link_file() {
             if [[ "$currentSrc" == "$src" ]]; then
                 skip=true;
             else
-                print_user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+                ask "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
                 [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
 
                 read -n 1 action
@@ -90,25 +77,25 @@ link_file() {
 
         if [[ "$overwrite" == "true" ]]; then
             rm -rf "$dst"
-            print_success "removed $dst"
+            success "removed $dst"
         fi
 
         if [[ "$backup" == "true" ]]; then
             mv "$dst" "${dst}.backup"
-            print_success "moved $dst to ${dst}.backup"
+            success "moved $dst to ${dst}.backup"
         fi
     fi
 
     if [[ "$skip" == "true" ]]; then
-        print_success "skipped $src"
+        success "skipped $src"
     else  # $skip == "false" or empty
         ln -s "$1" "$2"
-        print_success "linked $1 to $2"
+        success "linked $1 to $2"
     fi
 }
 
 install_dotfiles() {
-    print_info 'installing dotfiles'
+    info 'installing dotfiles'
 
     local overwrite_all=false backup_all=false skip_all=false
     for src in $(find "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink'); do
