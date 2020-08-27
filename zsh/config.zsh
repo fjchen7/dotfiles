@@ -4,7 +4,12 @@ export PYTHONIOENCODING='UTF-8';
 export EDITOR='code'
 
 export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
-export LESS='-iMs'  # -i: ignore case at search; -M: more information; -s: combine multiple blank lines into one line, -C:...
+# -i: ignore case at search
+# -M: more information
+# -s: combine multiple blank lines into one line
+# -F: quit if screen can shows all content
+# -R: not show like ESC[ char
+export LESS='-iMsFR'
 
 # history
 HISTFILE=~/.zsh_history
