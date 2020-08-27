@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+#
+### Delete all local branches that have been merged into HEAD. Stolen from
+### our favorite @tekkub:
+###
+###   https://plus.google.com/115587336092124934674/posts/dXsagsvLakJ
+if [[ $1 =~ ("-h"|"--help") ]]; then
+    source print-comment "$(realpath $0)" $1
+    exit 0
+fi
+
+git branch -d `git branch --merged | grep -v '^*' | grep -v 'master' | tr -d '\n'`

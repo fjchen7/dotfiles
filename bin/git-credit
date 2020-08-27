@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+#
+### A very slightly quicker way to credit an author on the latest commit.
+#
+### $1 - The full name of the author.
+### $2 - The email address of the author.
+#
+### Examples
+#
+###   git credit "Zach Holman" zach@example.com
+#
+if [[ $1 =~ ("-h"|"--help") ]]; then
+    source print-comment "$(realpath $0)" $1
+    exit 0
+fi
+
+git commit --amend --author "$1 <$2>" -C HEAD
