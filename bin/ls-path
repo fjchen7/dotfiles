@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+#
+### List ${PATH} line by line
+if [[ $1 =~ ("-h"|"--help") ]]; then
+    source print-comment "$(realpath $0)" $1
+    exit 0
+fi
+
+echo $PATH | tr ':' '\n'

@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+#
+### show cheatsheet
+### https://github.com/chubin/cheat.sh#usage
+
+url="cheat.sh"
+for i in "$@"; do
+    url="${url}/$i"
+done
+curl "${url}"

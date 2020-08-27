@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+#
+### easy ls and grep
+### usage
+###     ls-grep foo    ls current directory and grep "foo"
+###     ls-grep ~ foo    ls ~ and grep "foo"
+
+if [[ $# == 1 ]]; then
+    ls -al $(pwd) | grep -i $1
+else
+    ls -al $1 | grep -i $2
+fi

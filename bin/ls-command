@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+#
+### List ${PATH} line by line
+if [[ $1 =~ ("-h"|"--help") ]]; then
+    source print-comment "$(realpath $0)" $1
+    exit 0
+fi
+
+# -perm +111 = with any of the executable bits set (+ means "any of these bits", 111 is the octal for the executable bit on owner, group and anybody)
+find $(realpath `dirname $0`) -perm +111 -type f -name "*" -exec basename {} \; | sort -n
