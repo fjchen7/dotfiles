@@ -63,9 +63,9 @@
     match = red
     filename = magenta
 
-# Inlucde local config
+# Inclucde local config
 [include]
-    path = ~/.gitconfig_local
+    path = ~/.gitconfig.local
 [credential]
     # Permanently authenticating with Git repositories
     # https://stackoverflow.com/a/28562712/10134408

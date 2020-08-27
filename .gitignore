@@ -1,3 +1,6 @@
+git/gitconfig.local.symlink
+zsh/zshrc.local.symlink
+
 # Compiled Python files
 *.pyc
 
