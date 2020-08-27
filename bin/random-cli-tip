@@ -2,6 +2,7 @@
 #
 ### Random tip from the-art-of-command-line
 ### https://github.com/jlevy/the-art-of-command-line#one-liners
+source _print-help "$(realpath $0)" "$@"
 
 curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md |
         sed '/cowsay[.]png/d' |
