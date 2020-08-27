@@ -1,0 +1,69 @@
+#!/usr/bin/env zsh
+#
+### Available files to edit:
+###     dotfiles(dot)
+###     zsh(z)
+###     vim(v)
+###     tmux(t)
+###     docs(d)
+###     hosts(h)
+###     git(g)
+###     bin(b) <binary>    create and open new one if <binary> is inexistent
+###     karabiner(k)
+
+edit_bin() {
+    source ${DOTFILES_ROOT}/common/helper.sh
+    local file=$1
+    if [[ -z $1 ]]; then
+        info "Existent binaries: "
+        ls-command | while read i; do echo -e "\t$i"; done
+        echo ''
+        ask "Please input binary name you want to edit:"
+        read file
+    fi
+
+    file=${DOTFILES_ROOT}/bin/${file}
+    if [[ ! -e ${file} ]]; then
+        touch ${file}
+        chmod 755 ${file}
+        echo '#!/usr/bin/env zsh' >> ${file}
+        echo '#' >> ${file}
+        echo '### Your documentations' >> ${file}
+        echo 'source _print-help "$(realpath $0)" "$@"' >> ${file}
+    fi
+
+    exec "$EDITOR" --reuse-window ${file}
+}
+
+case "$1" in
+    "hosts" | "host" | "h" )
+        exec sudo "$EDITOR" --reuse-window "/etc/hosts"
+        ;;
+    "dotfiles" | "dot" )
+        exec "$EDITOR" ${DOTFILES_ROOT}
+        ;;
+    "vim" | "v" )
+        exec "$EDITOR" ${DOTFILES_ROOT}/vim/vimrc.d.symlink
+        ;;
+    "zsh" | "z" )
+        exec "$EDITOR" ${DOTFILES_ROOT}/zsh
+        ;;
+    "git" | "g" )
+        exec "$EDITOR" ${DOTFILES_ROOT}/git
+        ;;
+    "tmux" | "tmux.conf" | "t" )
+        exec "$EDITOR" --reuse-window ${DOTFILES_ROOT}/tmux/tmux.conf.symlink
+        ;;
+    "docs" | "doc" | "d" )
+        exec "$EDITOR" ${DOTFILES_ROOT}/bin/_docs
+        ;;
+    "b" | "bin" )
+        edit_bin $2
+        ;;
+    "karabiner" | "kar" | "k" )
+        exec "$EDITOR" $HOME/.config/karabiner/assets/complex_modifications/modifier.json
+        ;;
+    * )
+        source _print-help "$(realpath $0)" "-h"
+        ;;
+esac

@@ -3,8 +3,4 @@
 ### `o` with no arguments opens the current directory, otherwise opens the given location
 source _print-help "$(realpath $0)" "$@"
 
-if [ $# -eq 0 ]; then
-    open .
-else
-    open "$@"
-fi
+open "${@:-.}"

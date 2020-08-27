@@ -24,9 +24,6 @@ alias h="fc -l"
 alias tree="tree -aNC -I '.git|node_modules|bower_components' --dirsfirst"  # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias eee='echo $1'
 
-GEO_API="ipinfo.io"
-alias ip="curl ${GEO_API}"
-
 # quick source zshrc
 alias src='source ~/.zshrc'
 
@@ -38,7 +35,8 @@ alias f2t='cdf'  # open direc¡tory：finder -> iterminal (need plugin osx)
 alias p3=python3
 alias python=python3
 alias python2=python2.7
-alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U' # update all python package
+# update all python packages
+alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U'
 
 if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     alias cat='bat'
@@ -53,6 +51,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     alias upgrade='pip3-upgrade-all && brew-upgrade-all'
 
     # proxy
-    alias proxy="export http_proxy=http://127.0.0.1:1080;export https_proxy=http://127.0.0.1:1080;curl ${GEO_API}"
-    alias unproxy="unset http_proxy;unset https_proxy;curl ${GEO_API}"
+    alias proxy="export http_proxy=http://127.0.0.1:1080;export https_proxy=http://127.0.0.1:1080; ip"
+    alias unproxy="unset http_proxy;unset https_proxy; ip"
 fi

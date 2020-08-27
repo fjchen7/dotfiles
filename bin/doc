@@ -1,10 +1,9 @@
 #!/usr/bin/env zsh
 #
 ### Usage: doc <documentation>
-### available documentations: basic(b), zsh(z), history(h), tmux(t)
+### Available documentations: basic(b), zsh(z), history(h), tmux(t)
 
 DOCS_ROOT="$(dirname $0)/_docs"
-file=
 case "$1" in
     "his"* | "h" )
         file="history"
@@ -24,5 +23,4 @@ case "$1" in
         ;;
 esac
 
-echo ${DOCS_ROOT}/${file}
 sed -rn 's/^### ?//;T;p' "${DOCS_ROOT}/${file}"
