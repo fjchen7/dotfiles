@@ -9,15 +9,17 @@ _print_help "$(realpath $0)" "$@"
 
 case "$1" in
     "-s" )
+        shift
         where "$@"
         ;;
     "-f" )
-        whence -v "$@"
+        shift
+        whence -v $@
         ;;
     "-a" )
         PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias '$2"
         ;;
     * )
-        where "$@"
+        which "$@"
         ;;
 esac
