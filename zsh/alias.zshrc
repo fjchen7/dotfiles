@@ -2,15 +2,21 @@ alias cl='clear'
 alias cls='clear'
 
 # ls
+alias ls='ls -F --color=tty'
 alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -Al'
-# only show hidden files
-alias l.='_f(){ if [ $# -eq 0 ]; then ls -d .*; else ( cd $1; ls -d .*; ) fi; }; _f'
-alias ll.='_f(){ if [ $# -eq 0 ]; then ls -ld .??*; else ( cd $1; ls -ld .??*; ) fi; }; _f'
+# only list hidden files (dotfiles)
+alias l.='_f() { (cd ${1:-.}; ls -d .*) }; _f'
+alias ll.='_f() { (cd ${1:-.}; ls -ld .??*) }; _f'
+# only list symlinks
+alias lls='_f() { (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
+# only list directories
+alias lld='_f() { (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type d -not -path "." | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
+
 
 # cd
-alias cdl='_f(){ cd $1; ls; }; _f'
+alias cdl='_f() { cd $1; ls }; _f'
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
