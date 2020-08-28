@@ -4,7 +4,7 @@
 ### usage
 ###     ls-grep foo    ls current directory and grep "foo"
 ###     ls-grep ~ foo    ls ~ and grep "foo"
-source _print-help "$(realpath $0)" "$@"
+_print_help "$(realpath $0)" "$@"
 
 if [[ $# == 1 ]]; then
     ls -al $(pwd) | grep -i $1
