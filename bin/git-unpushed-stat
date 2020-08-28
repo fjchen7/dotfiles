@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #
 ### Show the diffstat of everything you haven't pushed yet.
-source _print-help "$(realpath $0)" "$@"
+_print_help "$(realpath $0)" "$@"
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 count=$(git rev-list --count HEAD origin/$branch...HEAD)

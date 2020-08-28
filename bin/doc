@@ -19,9 +19,8 @@ case "$1" in
         file+="tmux"
         ;;
     * )
-        sed -rn 's/^### ?//;T;p' "$(realpath $0)"
-        exit 0
+        file="$(realpath $0)"
         ;;
 esac
 
-sed -rn 's/^### ?//;T;p' "${file}"
+_print_help "${file}" "-h"
