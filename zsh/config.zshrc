@@ -29,7 +29,8 @@ export HOMEBREW_NO_AUTO_UPDATE=1    # https://github.com/Homebrew/brew/issues/16
 DISABLE_AUTO_UPDATE="false"
 
 # skip the verification of insecure directories
-ZSH_DISABLE_COMPFIX=true
+# if it doesn't work, try compaudit | xargs chmod g-w,o-w
+ZSH_DISABLE_COMPFIX="true"
 
 # prevent > overwriting existent file
 # using >| for write forcedly
