@@ -6,31 +6,31 @@ set -u    # report error if visiting undeclared variable
 export DOTFILES_ROOT="${HOME}/.dotfiles"
 [ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
 
-source ${DOTFILES_ROOT}/common/helper.sh
+source ${DOTFILES_ROOT}/common/_helper
 
 setup_local_zshrc() {
     local DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
     if [[ ! -e ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink ]]; then
-        info 'setup zshrc.local'
+        _info 'setup zshrc.local'
         cp ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink.example ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink
-        success 'zshrc.local'
+        _success 'zshrc.local'
     fi
 }
 
 setup_local_gitconfig() {
     local DOTFILES_GIT_ROOT=${DOTFILES_ROOT}/git
     if [[ ! -e ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink ]]; then
-        info 'setup gitconfig.local'
+        _info 'setup gitconfig.local'
 
-        ask ' - What is your github author name?'
+        _ask ' - What is your github author name?'
         read -e git_authorname
-        ask ' - What is your github author email?'
+        _ask ' - What is your github author email?'
         read -e git_authoremail
 
         sed -e "s/AUTHORNAME/${git_authorname}/g" -e "s/AUTHOREMAIL/${git_authoremail}/g" \
             ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink.example > ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink
 
-        success 'gitconfig.local'
+        _success 'gitconfig.local'
     fi
 }
 
@@ -48,7 +48,7 @@ link_file() {
             if [[ "$currentSrc" == "$src" ]]; then
                 skip=true;
             else
-                ask "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+                _ask "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
                 [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
 
                 read -n 1 action
@@ -77,25 +77,25 @@ link_file() {
 
         if [[ "$overwrite" == "true" ]]; then
             rm -rf "$dst"
-            success "removed $dst"
+            _success "removed $dst"
         fi
 
         if [[ "$backup" == "true" ]]; then
             mv "$dst" "${dst}.backup"
-            success "moved $dst to ${dst}.backup"
+            _success "moved $dst to ${dst}.backup"
         fi
     fi
 
     if [[ "$skip" == "true" ]]; then
-        success "skipped $src"
+        _success "skipped $src"
     else  # $skip == "false" or empty
         ln -s "$1" "$2"
-        success "linked $1 to $2"
+        _success "linked $1 to $2"
     fi
 }
 
 install_dotfiles() {
-    info 'installing dotfiles'
+    _info 'installing dotfiles'
 
     local overwrite_all=false backup_all=false skip_all=false
     for src in $(find "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink'); do

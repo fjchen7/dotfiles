@@ -1,0 +1,23 @@
+_info() {
+    printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+_ask() {
+    printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
+_success() {
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+_fail() {
+    printf "\r\033[2K  [\033[0;31mfail\033[0m] $1\n"
+    echo ''
+    exit
+}
+
+# Print comment starting with ###
+# https://samizdat.dev/help-message-for-shell-scripts/
+_print_help() {
+    if [[ $2 =~ ("-h"|"--help") ]]; then
+        sed -rn 's/^### ?//;T;p' "$1"
+        exit 0
+    fi
+}

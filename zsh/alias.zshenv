@@ -39,7 +39,11 @@ alias python2=python2.7
 # update all python packages
 alias pip3-upgrade-all='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U'
 
-if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
+# If we're on a Mac
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    # make sed compatible with that in linux version
+    alias sed=gsed
+
     alias cat='bat'
     alias -s md='open -a Typora' # open *.md with Typora by default
     #alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
@@ -54,4 +58,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then    # macOS alias
     # proxy
     alias proxy="export http_proxy=http://127.0.0.1:1080;export https_proxy=http://127.0.0.1:1080; ip"
     alias unproxy="unset http_proxy;unset https_proxy; ip"
+else  # If we're on Linux or Windows
+    # Normalize `open`
+    if grep -q Microsoft /proc/version; then
+        # Ubuntu on Windows using the Linux subsystem
+        alias open='explorer.exe';
+    else
+        alias open='xdg-open';
+    fi
 fi
