@@ -12,13 +12,18 @@ export DOTFILES_ROOT=${HOME}/.dotfiles
 export DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
 export VIMRC=$HOME/.vim_runtime/vimrcs
 
-# source all *.zshenv
-typeset -U zshenv_files
-zshenv_files=(${DOTFILES_ROOT}/**/*.zshenv)
-# :# usgae: http://zsh.sourceforge.net/Doc/Release/Expansion.html
-for file in ${zshenv_files}; do
-    source $file
-done
-unset zshenv_files
+# If we're on a Mac
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    # make sed compatible with that in linux version
+    alias sed=gsed
+else  # If we're on Linux or Windows
+    # Normalize `open`
+    if grep -q Microsoft /proc/version; then
+        # Ubuntu on Windows using the Linux subsystem
+        alias open='explorer.exe';
+    else
+        alias open='xdg-open';
+    fi
+fi
 
 source ${DOTFILES_ROOT}/common/_helper
