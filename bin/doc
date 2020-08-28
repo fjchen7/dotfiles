@@ -1,15 +1,16 @@
 #!/usr/bin/env zsh
 #
 ### Usage: doc <documentation>
-### Available documentations: basic(b), zsh(z), history(h), tmux(t)
+### Available documentations: general(g), zsh(z), history(h), tmux(t)
 
 DOCS_ROOT="$(dirname $0)/_docs"
+file=${DOCS_ROOT}/
 case "$1" in
     "his"* | "h" )
-        file="history"
+        file+="history"
         ;;
-    "basic" | "b" )
-        file+="basic"
+    "general" | "g" )
+        file+="general"
         ;;
     "zsh" | "z" )
         file+="zsh"
@@ -23,4 +24,4 @@ case "$1" in
         ;;
 esac
 
-sed -rn 's/^### ?//;T;p' "${DOCS_ROOT}/${file}"
+sed -rn 's/^### ?//;T;p' "${file}"
