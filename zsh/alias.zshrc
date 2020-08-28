@@ -22,8 +22,7 @@ alias gti='git'
 alias e='exit'
 alias h="fc -l"
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
-__tree() { tree -aNC -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst $@ | less -FRX }
-alias tree=__tree
+alias tree='_f() { tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
 # Git’s colored diff
 alias diffg='_f() { git diff --no-index --color-words "$@" }; _f'
 
