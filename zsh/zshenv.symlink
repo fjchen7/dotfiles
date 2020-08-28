@@ -26,4 +26,5 @@ else  # If we're on Linux or Windows
     fi
 fi
 
+source ${DOTFILES_ZSH_ROOT}/path.zshrc
 source ${DOTFILES_ROOT}/common/_helper

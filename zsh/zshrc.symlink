@@ -3,7 +3,7 @@ plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions aut
 
 typeset -U zshrc_files
 zshrc_files=( ${DOTFILES_ZSH_ROOT}/appearance.zshrc ${ZSH}/oh-my-zsh.sh )
-zshrc_files+=( ${DOTFILES_ZSH_ROOT}/{config,appearance,path,zle,alias}.zshrc )
+zshrc_files+=( ${DOTFILES_ZSH_ROOT}/{plugin,config,zle,alias}.zshrc )
 zshrc_files+=( ${HOME}/.zshrc.local )
 for file in ${zshrc_files}; do
     source $file
@@ -18,6 +18,8 @@ for file in ${zshrc_files}; do
 done
 unset zshrc_files
 
+# autoload loads script as function by searching $fpath
+# https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
 compinit
