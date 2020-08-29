@@ -32,6 +32,10 @@ DISABLE_AUTO_UPDATE="false"
 # if it doesn't work, try compaudit | xargs chmod g-w,o-w
 ZSH_DISABLE_COMPFIX="true"
 
+# avoid line end with % when using `printf`
+# https://unix.stackexchange.com/a/167600
+export PROMPT_EOL_MARK=''
+
 # prevent > overwriting existent file
 # using >| for write forcedly
 # set -o noclobber
