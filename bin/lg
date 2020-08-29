@@ -1,11 +1,12 @@
 #!/usr/bin/env zsh
 #
-### easy ls and grep
-### usage
+### Easy ls and grep
+### Usage:
 ###     ls-grep foo    ls current directory and grep "foo"
 ###     ls-grep ~ foo    ls ~ and grep "foo"
-_print_help "$(realpath $0)" "$@"
+[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
 
+alias grep="\grep --color=always --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
 if [[ $# == 1 ]]; then
     ls -al $(pwd) | grep -i $1
 else

@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 #
 ### Use the last commit message and amend your stuffs.
-_print_help "$(realpath $0)" "$@"
+[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
 
 git commit --amend -C HEAD
 
 if [[ $1 =~ ("-f"|"--force") ]]; then
     git push -f
-    _success "force pushed"
+    _print_ok "force pushed"
 fi

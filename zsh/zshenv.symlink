@@ -31,4 +31,4 @@ alias python=python3
 alias pip=pip3
 
 source ${DOTFILES_ZSH_ROOT}/path.zshrc
-source ${DOTFILES_ROOT}/common/_helper
+source ${DOTFILES_ROOT}/bin/_msg

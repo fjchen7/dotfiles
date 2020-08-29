@@ -3,7 +3,12 @@
 ### Show private cheat sheet
 ###
 ### Usage: cht -x <documentation>
-###     available documentations: general(g), zsh(z), history(h), tmux(t)
+### Available documentations:
+###     general(g)
+###     history(h)
+###     tmux(t)
+###     zsh(z)
+
 file=${DOTFILES_ROOT}/bin/_cht
 if [[ "$1" == "-x" ]]; then
     file="$(dirname $0)/_cht/"
@@ -24,7 +29,7 @@ if [[ "$1" == "-x" ]]; then
             file="$(realpath $0)"
             ;;
     esac
-    _print_help "${file}" "-h"
+    _print_help "${file}"
 else
     # https://github.com/chubin/cheat.sh
     /usr/local/bin/cht $@
