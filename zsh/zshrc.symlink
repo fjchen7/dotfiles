@@ -21,7 +21,6 @@ unset zshrc_files
 # autoload loads script as function by searching $fpath
 # https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
 # initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
+autoload -U compinit && compinit -u
 
 echo "Oh My Zsh!"  # Welcome

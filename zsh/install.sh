@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [[ -z "$(command -v fzf)" ]]; then
     git clone --depth=1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
     bash ${HOME}/.fzf/install
@@ -9,11 +11,12 @@ fi
 [ -z "$(command -v zsh)" ] && sudo apt install zsh
 [ ! -e ${HOME}/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# zsh plugin: autojump
-if [[ ! -e ${HOME}/.autojump ]]; then
-    git clone git://github.com/wting/autojump.git ${HOME}/autojump
-    (cd ${HOME}/autojump; python3 ./install.py)
-    rm -rf ${HOME}/autojump
+# autojump
+# In macOS brew install autojump
+if [[ ! -e ${HOME}/.autojump ]] && [[ "$(uname -s)" != "Darwin" ]]; then
+    git clone git://github.com/wting/autojump.git
+    (cd autojump; python3 ./install.py)
+    rm -rf autojump
 fi
 
 # zsh plugins
