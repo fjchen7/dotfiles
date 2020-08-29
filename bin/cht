@@ -1,11 +1,31 @@
 #!/usr/bin/env zsh
 #
-### show cheatsheet
-### https://github.com/chubin/cheat.sh#usage
-_print_help "$(realpath $0)" "$@"
-
-url="cheat.sh"
-for i in "$@"; do
-    url="${url}/$i"
-done
-curl -s "${url}"
+### Show private cheat sheet
+###
+### Usage: cht -x <documentation>
+###     available documentations: general(g), zsh(z), history(h), tmux(t)
+file=${DOTFILES_ROOT}/bin/_cht
+if [[ "$1" == "-x" ]]; then
+    file="$(dirname $0)/_cht/"
+    case "$2" in
+        "his"* | "h" )
+            file+="history"
+            ;;
+        "general" | "g" )
+            file+="general"
+            ;;
+        "zsh" | "z" )
+            file+="zsh"
+            ;;
+        "tmux" | "t" )
+            file+="tmux"
+            ;;
+        * )
+            file="$(realpath $0)"
+            ;;
+    esac
+    _print_help "${file}" "-h"
+else
+    # https://github.com/chubin/cheat.sh
+    /usr/local/bin/cht $@
+fi
