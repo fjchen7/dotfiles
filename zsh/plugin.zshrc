@@ -35,7 +35,9 @@ export CHEATCOLORS=true
 # ^[ is Alt
 bindkey '^[J' autosuggest-execute # Accepts and executes the current suggestion.
 bindkey '^[j' autosuggest-execute # Accepts and executes the current suggestion.
-# bindkey '^[C' autosuggest-clear # Clears the current suggestion.
+# Ctrl / Alt + m / M: accept line and execute command
+bindkey '^[m' accept-line
+bindkey '^[M' accept-line
 
 # make ^u has the same behaviour with that in Bash: delete command to beginning-of-line
 bindkey '^u' backward-kill-line
