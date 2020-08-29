@@ -1,8 +1,8 @@
 if [[ "$(uname -s)" == "Darwin" ]]; then
     alias ls='ls -F -G'
 
-    alias proxy="export http_proxy=http://127.0.0.1:1080;export https_proxy=http://127.0.0.1:1080; ip"
-    alias unproxy="unset http_proxy;unset https_proxy; ip"
+    alias proxy="export http_proxy=http://127.0.0.1:1080; export https_proxy=http://127.0.0.1:1080; ip"
+    alias unproxy="unset http_proxy; unset https_proxy; ip"
 else
     alias ls='ls -F --colors=auto'
 fi
@@ -46,7 +46,5 @@ alias f2t='cdf'  # finder -> iterminal (need plugin osx)
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias tree='_f() { tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
 [ -n "$(command -v bat)" ] && alias cat=bat
-
-# functionality
-# Git’s colored diff
-alias diffg='_f() { git diff --no-index --color-words "$@" }; _f'
+[ -n "$(command -v git)" ] && alias diff='_f() { git diff --no-index --color-words "$@" }; _f'    # Git’s colored diff
+alias cht=${DOTFILES_ROOT}/bin/cht
