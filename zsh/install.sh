@@ -1,13 +1,12 @@
-
 #!/usr/bin/env bash
 
-if [[ -z "$(which fzf)" ]]; then
+if [[ -z "$(command -v fzf)" ]]; then
     git clone --depth=1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
     bash ${HOME}/.fzf/install
 fi
 
 # zsh
-[ -z "$(which zsh)" ] && sudo apt install zsh
+[ -z "$(command -v zsh)" ] && sudo apt install zsh
 [ ! -e ${HOME}/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # zsh plugin: autojump

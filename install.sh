@@ -109,7 +109,7 @@ setup_local_gitconfig
 install_dotfiles
 
 # pre install
-[ -z "$(which python3)" ] && sudo apt-get -y install python3.8
-[ -z "$(which pip3)" ] && sudo apt-get -y install python3-pip
+[ -z "$(command -v python3)" ] && sudo apt-get -y install python3.8
+[ -z "$(command -v pip3)" ] && sudo apt-get -y install python3-pip
 # find and run all dotfiles installers iteratively
 find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -name install.sh -exec readlink {} \; | while read installer ; do sh -c "${installer}" ; done
