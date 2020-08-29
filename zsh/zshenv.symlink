@@ -26,5 +26,10 @@ else  # If we're on Linux or Windows
     fi
 fi
 
+# python aliases
+alias p3=python3
+alias python=python3
+alias python2=python2.7
+
 source ${DOTFILES_ZSH_ROOT}/path.zshrc
 source ${DOTFILES_ROOT}/common/_helper
