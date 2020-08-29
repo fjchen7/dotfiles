@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 #
 ### `o` with no arguments opens the current directory, otherwise opens the given location
-_print_help "$(realpath $0)" "$@"
+[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
 
 open "${@:-.}"

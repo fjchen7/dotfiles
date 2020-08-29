@@ -3,34 +3,36 @@
 #set -e    # exit script when error happen
 #set -u    # report error if visiting undeclared variable
 
-export DOTFILES_ROOT="${HOME}/.dotfiles"
-[ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
-
-source ${DOTFILES_ROOT}/common/_helper
+setup() {
+    export DOTFILES_ROOT="${HOME}/.dotfiles"
+    [ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
+    source ${DOTFILES_ROOT}/bin/_msg    # print helper functions
+    [ ! -e "${HOME}/.local" ] && mkdir -p "${HOME}/.local"
+}
 
 setup_local_zshrc() {
     local DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
     if [[ ! -e ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink ]]; then
-        _info 'setup zshrc.local'
+        _print_info 'setup zshrc.local'
         cp ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink.example ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink
-        _success 'zshrc.local'
+        _print_ok 'zshrc.local'
     fi
 }
 
 setup_local_gitconfig() {
     local DOTFILES_GIT_ROOT=${DOTFILES_ROOT}/git
     if [[ ! -e ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink ]]; then
-        _info 'setup gitconfig.local'
+        _print_info 'setup gitconfig.local'
 
-        _ask ' - What is your github author name?'
+        _print_ask ' - What is your github author name?'
         read -e git_authorname
-        _ask ' - What is your github author email?'
+        _print_ask ' - What is your github author email?'
         read -e git_authoremail
 
         sed -e "s/AUTHORNAME/${git_authorname}/g" -e "s/AUTHOREMAIL/${git_authoremail}/g" \
             ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink.example > ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink
 
-        _success 'gitconfig.local'
+        _print_ok 'gitconfig.local'
     fi
 }
 
@@ -48,7 +50,7 @@ link_file() {
             if [[ "$currentSrc" == "$src" ]]; then
                 skip=true;
             else
-                _ask "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+                _print_ask "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
                 [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
 
                 read -n 1 action
@@ -77,25 +79,25 @@ link_file() {
 
         if [[ "$overwrite" == "true" ]]; then
             rm -rf "$dst"
-            _success "removed $dst"
+            _print_ok "removed $dst"
         fi
 
         if [[ "$backup" == "true" ]]; then
             mv "$dst" "${dst}.backup"
-            _success "moved $dst to ${dst}.backup"
+            _print_ok "moved $dst to ${dst}.backup"
         fi
     fi
 
     if [[ "$skip" == "true" ]]; then
-        _success "skipped ${src/${DOTFILES_ROOT}\//}"
+        _print_ok "skipped ${src/${DOTFILES_ROOT}\//}"
     else  # $skip == "false" or empty
         ln -s "$1" "$2"
-        _success "linked $1 to $2"
+        _print_ok "linked $1 to $2"
     fi
 }
 
 install_dotfiles() {
-    _info 'installing dotfiles'
+    _print_info 'installing dotfiles'
 
     local overwrite_all=false backup_all=false skip_all=false
     for src in $(find "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink'); do
@@ -105,15 +107,16 @@ install_dotfiles() {
 }
 
 install_tools() {
-    _info "installing tools and dependencies"
+    _print_info "installing tools and dependencies"
 
     # pre install
     [ -z "$(command -v python3)" ] && sudo apt-get -y install python3.8
     [ -z "$(command -v pip3)" ] && sudo apt-get -y install python3-pip
     # find and run all dotfiles installers iteratively
-    find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read installer; do sh -c "${installer}"; _success "installed: ${installer/${DOTFILES_ROOT}\//}"; done
+    find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read installer; do sh -c "${installer}"; _print_ok "installed: ${installer/${DOTFILES_ROOT}\//}"; done
 }
 
+setup
 setup_local_zshrc
 setup_local_gitconfig
 install_dotfiles

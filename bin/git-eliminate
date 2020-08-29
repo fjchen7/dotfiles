@@ -7,7 +7,7 @@
 ### Examples
 ###
 ###   git eliminate branch-name
-_print_help "$(realpath $0)" "$@"
+[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
 
 git branch -D $1
 git push origin :$1

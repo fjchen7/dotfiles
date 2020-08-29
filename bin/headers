@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 #
-### print headers received from server
+### Print headers received from server
 ###
 ### https://github.com/rtomayko/dotfiles/blob/rtomayko/.local/bin/headers
-_print_help "$(realpath $0)" "$@"
+[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
 
 curl -sv "$@" 2>&1 >/dev/null |
     grep -v "^\*" |

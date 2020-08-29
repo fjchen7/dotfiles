@@ -43,6 +43,7 @@ alias t2f='ofd'  # iTerminal -> finder (need plugin osx)
 alias f2t='cdf'  # finder -> iterminal (need plugin osx)
 
 # command replacement
+alias grep='grep --color=always --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias tree='_f() { tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
 [ -n "$(command -v bat)" ] && alias cat=bat

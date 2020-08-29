@@ -9,32 +9,32 @@
 
 upgrade_brew_cask() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
-        _info "begin to upgrade brew cask"
+        _print_info "begin to upgrade brew cask"
         brew upgrade
         brew cask reinstall `brew cask outdated`
-        _success " end to upgrade brew cask packages\n"
+        _print_ok " end to upgrade brew cask packages\n"
     fi
 }
 upgrade_brew() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
-        _info "begin to upgrade brew packages"
+        _print_info "begin to upgrade brew packages"
         brew upgrade
         brew upgrade `brew outdated`
-        _success "end to upgrade brew packages\n"
+        _print_ok "end to upgrade brew packages\n"
     fi
 }
 upgrade_pip() {
-    _info "begin to upgrade python3 packages"
+    _print_info "begin to upgrade python3 packages"
     pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U
-    _success "end to upgrade python3 packages\n"
+    _print_ok "end to upgrade python3 packages\n"
 }
 upgrade_apt() {
     if [[ "$(uname -s)" == "Linux" ]]; then
-        _info "begin to upgrade apt packages"
+        _print_info "begin to upgrade apt packages"
         sudo apt-get upgrade -y
         sudo apt-get upgrade -y
         sudo apt-get dist-upgrade
-        _success "end to upgrade apt packages\n"
+        _print_ok "end to upgrade apt packages\n"
     fi
 }
 
@@ -57,6 +57,6 @@ case "$1" in
         upgrade_apt
         ;;
     * )
-        _print_help "$(realpath $0)" -h
+        _print_help "$(realpath $0)"
         ;;
 esac
