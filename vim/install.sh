@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-
-DOTFILES_VIM_ROOT="$( dirname "$(readlink -f "$0")" )"
-HOME_VIM="${HOME_VIM}"
+VIM_DOTFILES_ROOT="$(dirname $0)"
+VIM_HOME="${HOME}/.vim"
 # install vim plugin manager
-[ ! -e ${HOME_VIM} ] && mkdir ${HOME_VIM}
-[ ! -e ${HOME_VIM}/bundle ] && mkdir -p ${HOME_VIM}/bundle
-[ ! -e ${HOME_VIM}/bundle/Vundle.vim ] && git clone https://github.com/VundleVim/Vundle.vim.git ${HOME_VIM}/bundle/Vundle.vim
+[ ! -e ${VIM_HOME} ] && mkdir ${VIM_HOME}
+[ ! -e ${VIM_HOME}/bundle ] && mkdir -p ${VIM_HOME}/bundle
+[ ! -e ${VIM_HOME}/bundle/Vundle.vim ] && git clone https://github.com/VundleVim/Vundle.vim.git ${VIM_HOME}/bundle/Vundle.vim
 
-if [[ ! -d ${HOME_VIM}/colors ]]; then
-    rm -rf ${HOME_VIM}/colors > /dev/null 2>&1
-    mkdir -p ${HOME_VIM}/colors
+if [[ ! -d ${VIM_HOME}/colors ]]; then
+    rm -rf ${VIM_HOME}/colors > /dev/null 2>&1
+    mkdir -p ${VIM_HOME}/colors
 fi
-cp -f ${DOTFILES_VIM_ROOT}/colors/* ${HOME_VIM}/colors/
+
+( cd "${VIM_DOTFILES_ROOT}/colors"; find . -not -path "." -exec basename {} \; | xargs -I _ sh -c "[ ! -e ${VIM_HOME}/colors/_ ] && cp ${VIM_DOTFILES_ROOT}/colors/_ ${VIM_HOME}/colors/" )
