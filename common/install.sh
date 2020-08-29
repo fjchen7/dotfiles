@@ -13,3 +13,9 @@ done
 
 # https://github.com/chubin/cheat.sh
 [ ! -e "/usr/local/bin/cht" ] && curl -s https://cht.sh/:cht.sh > /usr/local/bin/cht && chmod +x /usr/local/bin/cht
+
+# If we're on a Mac
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    brew info coreutils > /dev/null 2>&1
+    [ $? == "1" ] && brew install coreutils
+fi
