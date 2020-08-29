@@ -7,34 +7,41 @@
 ###        --apt          apt packages
 ###    -a, --all          everything
 
+info_begin() {
+    printf "\r${CLEAR_SCRRN}..[ Begin ] upgrading ${UPURPLE}$1${COLOR_OFF} $2\n"
+}
+info_end() {
+    printf "\r${CLEAR_SCRRN}..[ End ] upgrading ${UPURPLE}$1${COLOR_OFF} $2\n\n"
+}
+
 upgrade_brew_cask() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
-        _print_info "begin to upgrade brew cask"
+        info_begin "BREW CASK" "packages"
         brew upgrade
         brew cask reinstall `brew cask outdated`
-        _print_ok " end to upgrade brew cask packages\n"
+        info_end "BREW CASK" "packages"
     fi
 }
 upgrade_brew() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
-        _print_info "begin to upgrade brew packages"
+        info_begin "BREW" "packages"
         brew upgrade
         brew upgrade `brew outdated`
-        _print_ok "end to upgrade brew packages\n"
+        info_end "BREW" "packages"
     fi
 }
 upgrade_pip() {
-    _print_info "begin to upgrade python3 packages"
+    info_begin "PYTHON3" "packages"
     pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U
-    _print_ok "end to upgrade python3 packages\n"
+    info_end "PYTHON3" "packages"
 }
 upgrade_apt() {
     if [[ "$(uname -s)" == "Linux" ]]; then
-        _print_info "begin to upgrade apt packages"
+        info_begin "APT" "packages"
         sudo apt-get upgrade -y
         sudo apt-get upgrade -y
         sudo apt-get dist-upgrade
-        _print_ok "end to upgrade apt packages\n"
+        info_end "APT" "packages"
     fi
 }
 
