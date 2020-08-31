@@ -15,8 +15,10 @@ case "$1" in
     "-f" )
         shift
         whence -v $@
+        which $@
         ;;
     "-a" )
+        which $2
         PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias '$2"
         ;;
     * )

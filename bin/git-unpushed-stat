@@ -6,11 +6,10 @@
 branch=$(git rev-parse --abbrev-ref HEAD)
 count=$(git rev-list --count HEAD origin/$branch...HEAD)
 
-if [ "$count" -eq "1" ]
-then
-  s=''
+if [[ "$count" -eq "1" ]]; then
+    s=''
 else
-  s='s'
+    s='s'
 fi
 
 git diff --stat origin/$branch..HEAD

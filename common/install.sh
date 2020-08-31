@@ -12,7 +12,7 @@ for k in "${cmds[@]}"; do
 done
 
 # https://github.com/chubin/cheat.sh
-[ ! -e "/usr/local/bin/cht" ] && curl -s https://cht.sh/:cht.sh > /usr/local/bin/cht && chmod +x /usr/local/bin/cht
+[ ! -e "/usr/local/bin/cht" ] && curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht && sudo chmod +x /usr/local/bin/cht
 
 # If we're on a Mac
 if [[ "$(uname -s)" == "Darwin" ]]; then

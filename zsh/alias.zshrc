@@ -1,11 +1,15 @@
-if [[ "$(uname -s)" == "Darwin" ]]; then
-    alias ls='ls -F -G'
-
-    alias proxy="export http_proxy=http://127.0.0.1:1080; export https_proxy=http://127.0.0.1:1080; ip"
-    alias unproxy="unset http_proxy; unset https_proxy; ip"
-else
-    alias ls='ls -F --colors=auto'
-fi
+case "$OSTYPE" in
+    darwin* )
+        alias ls='ls -F -G'
+        alias proxy="export http_proxy=http://127.0.0.1:1080; export https_proxy=http://127.0.0.1:1080; ip"
+        alias unproxy="unset http_proxy; unset https_proxy; ip"
+        ;;
+    linux* )
+        alias ls='ls -F --color=auto'
+        ;;
+    * )
+        ;;
+esac
 
 # clear
 alias cl='clear'
@@ -37,10 +41,12 @@ alias gti='git'    # avoid typo
 alias e='exit'
 alias h="fc -l"
 alias ipy=ipython
-alias src='source ~/.zshrc'
 # open file between terminal and folder
-alias t2f='ofd'  # iTerminal -> finder (need plugin osx)
-alias f2t='cdf'  # finder -> iterminal (need plugin osx)
+
+# utilities
+alias cht=${DOTFILES_ROOT}/bin/cht
+alias src='source ~/.zshrc'
+alias ip="curl -s "ipinfo.io" | jq"
 
 # command replacement
 alias grep='grep --color=always --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
@@ -48,4 +54,3 @@ alias grep='grep --color=always --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox
 alias tree='_f() { tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
 [ -n "$(command -v bat)" ] && alias cat=bat
 [ -n "$(command -v git)" ] && alias diff='_f() { git diff --no-index --color-words "$@" }; _f'    # Git’s colored diff
-alias cht=${DOTFILES_ROOT}/bin/cht
