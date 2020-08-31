@@ -20,15 +20,22 @@ alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -Al'
 # only list hidden files (dotfiles)
-alias l.='_f() { (cd ${1:-.}; ls -d .*) }; _f'
-alias ll.='_f() { (cd ${1:-.}; ls -ld .??*) }; _f'
+alias l.='_f(){ (cd ${1:-.}; ls -d .*)}; _f'
+alias ll.='_f(){ (cd ${1:-.}; ls -ld .??*)}; _f'
 # only list symlinks
-alias lls='_f() { (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
+alias lls='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
 # only list directories
-alias lld='_f() { (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type d -not -path "." | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
+alias lld='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type d -not -path "." | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
+# ls and grep
+alias lg='
+    _f() {
+        local dir=$PWD
+        [[ $# != 1 ]] && dir=$1 && shift
+        ls -al $dir | grep -i $1
+    }; _f'
 
 # cd
-alias cdls='_f() { cd $1; ls }; _f'
+alias cdls='_f(){ cd $1; ls }; _f'
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
@@ -41,16 +48,15 @@ alias gti='git'    # avoid typo
 alias e='exit'
 alias h="fc -l"
 alias ipy=ipython
-# open file between terminal and folder
 
 # utilities
-alias cht=${DOTFILES_ROOT}/bin/cht
 alias src='source ~/.zshrc'
 alias ip="curl -s "ipinfo.io" | jq"
 
 # command replacement
-alias grep='grep --color=always --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+#alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
-alias tree='_f() { tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
+alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
 [ -n "$(command -v bat)" ] && alias cat=bat
-[ -n "$(command -v git)" ] && alias diff='_f() { git diff --no-index --color-words "$@" }; _f'    # Git’s colored diff
+[ -n "$(command -v git)" ] && alias diff='_f(){ git diff --no-index --color-words "$@" }; _f'    # Git’s colored diff
+alias cht=${DOTFILES_ROOT}/bin/cht
