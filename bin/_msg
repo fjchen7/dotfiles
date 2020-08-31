@@ -77,7 +77,6 @@ ON_IWHITE='\033[0;107m'   # White
 
 
 _print_info() {
-    printf "\r  [ \033[00;34m..\033[0m ] $1\n"
     printf "\r  [ ${BLUE}..${COLOR_OFF} ] $1\n"
 
 }

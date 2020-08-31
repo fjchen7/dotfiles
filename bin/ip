@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-#
-### Show IP address info
-[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
-
-curl -s "ipinfo.io" | jq
