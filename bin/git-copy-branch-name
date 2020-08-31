@@ -4,5 +4,4 @@
 [[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
 
 branch=$(git rev-parse --abbrev-ref HEAD)
-echo $branch
 echo $branch | tr -d '\n' | tr -d ' ' | pbcopy
