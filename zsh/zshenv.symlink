@@ -19,7 +19,7 @@ case "$OSTYPE" in
         ;;
     linux* )
         # `open_command` is zsh builtin functions
-        alias open="_f() { open_command ${@:-.} }; _f"
+        alias open="_f(){ open_command ${@:-.} }; _f"
         ;;
     * )
         ;;
