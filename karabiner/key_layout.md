@@ -1,18 +1,21 @@
-Hype Key
-| Modofied Keys | Functionality |
-| ---------------- | ------------- |
-| CapsLock (press) | Hype Key |
-| CapsLock | Esc |
+## Map
 
-Navigations
+### Hype Key
+
+| Modofied Keys    | Functionality |
+| ---------------- | ------------- |
+| CapsLock (press) | Hype Key      |
+| CapsLock         | Esc           |
+
+### Navigations
 
 | Modofied Keys | Functionality             |
 | ------------- | ------------------------- |
 | J/K           | Previous/Next Tab         |
-| cmd+M/N       | Next/Previous Desktop     |
-| M/N           | Next/Previous Application |
+| cmd+./,       | Next/Previous Desktop     |
+| ./,           | Next/Previous Application |
 
-System Operations
+### System Operations
 
 | Modofied Keys | Functionality             |
 | ------------- | ------------------------- |
@@ -24,7 +27,7 @@ System Operations
 | LEFT          | Notification Center       |
 | cmd+UP        | Show Desktop              |
 
-Mouse and arrows
+### Mouse and arrows
 
 | Modofied Keys | Functionality             |
 | ------------- | ------------------------- |
@@ -34,7 +37,7 @@ Mouse and arrows
 | cmd+U/I       | Page down/up              |
 | shift+J/K/H/L | Down/Up/Left/Right select |
 
-Appications
+### Appications
 
 | Modofied Keys | Functionality     |
 | ------------- | ----------------- |
@@ -45,7 +48,7 @@ Appications
 | cmd+R         | Dash              |
 | T             | Ticktick          |
 | cmd+T         | Add Ticktick Task |
-| A             | Moom              |
+| cmd+M         | Moom              |
 | S             | VSCode            |
 | cmd+S         | Turn on /of v2ray |
 | D             | iTerm             |
@@ -55,6 +58,34 @@ Appications
 | V             |                   |
 | Y             | Youdao            |
 | U             | Unclutter         |
+
+## Set up
+
+I assign shortcuts`⌃⌥⇧+F1~F12` and `⌃⌥⇧+1~F9` for applications / system functionality, and then make hyper shortcuts map to them.
+
+| key | Application / System Functionality |
+| :-- | :--------------------------------- |
+| F1  | Show Launchpad                     |
+| F2  | Application Windows                |
+| F3  | Mission Control                    |
+| F4  | Show Notification Center           |
+| F5  |                                    |
+| F6  |                                    |
+| F7  | Move left a space                  |
+| F8  | Move right a space                 |
+| F9  |                                    |
+| F10 |                                    |
+| F11 | Show Desktop                       |
+| F12 | iTerm2                             |
+| 1   | Alfred                             |
+| 2   | turn of/on v2ray                   |
+| 3   | Dash                               |
+| 4   | Tick                               |
+| 5   | Tick Quick Task                    |
+| 6   | Moon                               |
+| 7   | Unclutter                          |
+| 8   |                                    |
+| 0   |                                    |
 
 ## Reference
 
