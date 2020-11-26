@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -e    # exit script when error happen
+#set -e    # exit script when error happens
 #set -u    # report error if visiting undeclared variable
 
 setup() {
@@ -112,8 +112,8 @@ install_tools() {
     # pre install
     [ -z "$(command -v python3)" ] && sudo apt-get -y install python3.8
     [ -z "$(command -v pip3)" ] && sudo apt-get -y install python3-pip
-    # find and run all dotfiles installers iteratively
-    find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read installer; do sh -c "${installer}"; _print_ok "installed: ${installer/${DOTFILES_ROOT}\//}"; done
+    # find and run all dotfiles lines iteratively
+    find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read line; do sh -c "${line}"; _print_ok "installed: ${line/${DOTFILES_ROOT}\//}"; done
 }
 
 setup

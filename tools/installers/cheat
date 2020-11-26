@@ -1,0 +1,4 @@
+# https://github.com/chubin/cheat.sh
+
+#darwin #linux
+[ ! -e "/usr/local/bin/cht" ] && curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht && sudo chmod +x /usr/local/bin/cht
