@@ -9,11 +9,10 @@
 
 ### Navigations
 
-| Modofied Keys | Functionality             |
-| ------------- | ------------------------- |
-| J/K           | Previous/Next Tab         |
-| cmd+./,       | Next/Previous Desktop     |
-| ./,           | Next/Previous Application |
+| Modofied Keys | Functionality         |
+| ------------- | --------------------- |
+| J/K           | Previous/Next Tab     |
+| ./,           | Next/Previous Desktop |
 
 ### System Operations
 
@@ -77,7 +76,7 @@ I assign shortcuts`⌃⌥⇧+F1~F12` and `⌃⌥⇧+1~F9` for applications / sys
 | F10 |                                    |
 | F11 | Show Desktop                       |
 | F12 | iTerm2                             |
-| 1   | Alfred                             |
+| 1   | Spotlight                          |
 | 2   | turn of/on v2ray                   |
 | 3   | Dash                               |
 | 4   | Tick                               |
