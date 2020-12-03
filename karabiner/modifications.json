@@ -141,7 +141,6 @@
                         "key_code": "comma",
                         "modifiers": {
                             "mandatory": [
-                                "left_command",
                                 "right_control",
                                 "right_command",
                                 "right_shift",
@@ -168,7 +167,6 @@
                         "key_code": "period",
                         "modifiers": {
                             "mandatory": [
-                                "left_command",
                                 "right_control",
                                 "right_command",
                                 "right_shift",
@@ -185,49 +183,6 @@
                                 "left_control",
                                 "left_shift"
                             ]
-                        }
-                    ],
-                    "type": "basic"
-                },
-
-                {
-                    "description": "Next Application",
-                    "from": {
-                        "key_code": "period",
-                        "modifiers": {
-                            "mandatory": [
-                                "right_control",
-                                "right_command",
-                                "right_shift",
-                                "right_option"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "tab",
-                            "modifiers": ["left_command"]
-                        }
-                    ],
-                    "type": "basic"
-                },
-                {
-                    "description": "Previous Application",
-                    "from": {
-                        "key_code": "comma",
-                        "modifiers": {
-                            "mandatory": [
-                                "right_control",
-                                "right_command",
-                                "right_shift",
-                                "right_option"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "tab",
-                            "modifiers": ["left_command", "left_shift"]
                         }
                     ],
                     "type": "basic"
@@ -760,7 +715,7 @@
                 },
 
                 {
-                    "description": "Launch Alfred",
+                    "description": "Launch Spotlight",
                     "from": {
                         "key_code": "spacebar",
                         "modifiers": {
