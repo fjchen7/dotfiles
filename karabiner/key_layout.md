@@ -32,8 +32,8 @@
 | ------------- | ------------------------- |
 | Enter         | Left Click                |
 | cmd+Enter     | Right Click               |
+| cmd+D/U       | Page down/up              |
 | cmd+J/K/H/L   | Down/Up/Left/Right        |
-| cmd+U/I       | Page down/up              |
 | shift+J/K/H/L | Down/Up/Left/Right select |
 
 ### Appications
@@ -49,7 +49,7 @@
 | cmd+T         | Add Ticktick Task |
 | cmd+M         | Moom              |
 | S             | VSCode            |
-| cmd+S         | Turn on /of v2ray |
+| cmd+S         | Turn on/off v2ray |
 | D             | iTerm             |
 | F             | Obsidian          |
 | cmd+F         | Typora            |
@@ -60,7 +60,7 @@
 
 ## Set up
 
-I assign shortcuts`⌃⌥⇧+F1~F12` and `⌃⌥⇧+1~F9` for applications / system functionality, and then make hyper shortcuts map to them.
+I assign shortcuts`⌃⌘⌥⇧+F1~F12` and `⌃⌘⌥⇧+1~F9` for applications / system functionality, and make hyper shortcuts map to them.
 
 | key | Application / System Functionality |
 | :-- | :--------------------------------- |
