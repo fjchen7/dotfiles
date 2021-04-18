@@ -20,9 +20,9 @@
 | ------------- | ------------------------- |
 | cmd+W         | Close All                 |
 | cmd+C         | SIGINT                    |
-| UP            | Expose (All Applications) |
-| RIGHT         | Mission Control           |
+| UP            | Mission Control           |
 | DOWN          | Application Windows       |
+| RIGHT         | Expose (All Applications) |
 | LEFT          | Notification Center       |
 | cmd+UP        | Show Desktop              |
 
