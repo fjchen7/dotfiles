@@ -26,7 +26,7 @@ setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line bei
 # auto-update
 export UPDATE_ZSH_DAYS=13
 export HOMEBREW_NO_AUTO_UPDATE=1    # https://github.com/Homebrew/brew/issues/1670
-DISABLE_AUTO_UPDATE="false"
+DISABLE_AUTO_UPDATE="true"
 
 # skip the verification of insecure directories
 # if it doesn't work, try compaudit | xargs chmod g-w,o-w
