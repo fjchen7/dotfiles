@@ -32,5 +32,5 @@ if [[ "$1" == "-x" ]]; then
     _print_help "${file}"
 else
     # https://github.com/chubin/cheat.sh
-    /usr/local/bin/cht $@
+    /usr/local/bin/cht.sh $@
 fi
