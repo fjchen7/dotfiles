@@ -13,9 +13,9 @@ export LESS='-iMsFR'
 
 # history
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-HISTCONTROL='ignoreboth' # Omit duplicates and commands that begin with a space from history.
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTCONTROL='ignoreboth' # don't show duplicates and commands that begin with a space in history.
 setopt SHARE_HISTORY  # adds history incrementally and share it across sessions
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
