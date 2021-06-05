@@ -42,6 +42,7 @@ export TLDR_LANGUAGE="es"
 export TLDR_CACHE_ENABLED=0
 
 # navi configuration
+# below two environment is only used by me
 export TLDR_PERSONAL_SOURCE_PATH=${DOTFILES_ROOT}/cheatsheets/tldr  # not used by tldr python client, but by my navi cmd.
 export NAVI_PERSONAL_SOURCE_PATH=${DOTFILES_ROOT}/cheatsheets/navi
 
