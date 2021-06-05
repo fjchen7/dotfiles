@@ -31,5 +31,19 @@ alias o=open
 alias python=python3
 alias pip=pip3
 
+# tldr python client
+# https://github.com/tldr-pages/tldr-python-client
+export TLDR_COLOR_NAME="cyan"
+export TLDR_COLOR_DESCRIPTION="white"
+export TLDR_COLOR_EXAMPLE="green"
+export TLDR_COLOR_COMMAND="red"
+export TLDR_COLOR_PARAMETER="white"
+export TLDR_LANGUAGE="es"
+export TLDR_CACHE_ENABLED=0
+
+# navi configuration
+export TLDR_PERSONAL_SOURCE_PATH=${DOTFILES_ROOT}/cheatsheets/tldr  # not used by tldr python client, but by my navi cmd.
+export NAVI_PERSONAL_SOURCE_PATH=${DOTFILES_ROOT}/cheatsheets/navi
+
 source ${DOTFILES_ZSH_ROOT}/path.zshrc
 source ${DOTFILES_ROOT}/bin/_msg
