@@ -1,0 +1,12 @@
+% cheatsheet, personal
+$ cheatsheet: find ${TLDR_PERSONAL_SOURCE_PATH} -type f -name '*.md' -exec basename {} .md ';'
+
+# TLDR cheatsheet
+tldr -s file://${TLDR_PERSONAL_SOURCE_PATH} -p common <cheatsheet>
+
+# Edit cheatsheet by vscode
+find ${TLDR_PERSONAL_SOURCE_PATH} -name <cheatsheet>.md -exec code {} +
+
+% configs, personal
+# Open dotfile by vscode
+code ${DOTFILES_ROOT}
