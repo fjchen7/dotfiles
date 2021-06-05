@@ -39,5 +39,6 @@ bindkey '^[j' autosuggest-execute # Accepts and executes the current suggestion.
 bindkey '^[m' accept-line
 bindkey '^[M' accept-line
 
-# make ^u has the same behaviour with that in Bash: delete command to beginning-of-line
+# let ^u has the same behaviour with that in Bash: delete command to beginning-of-line
 bindkey '^u' backward-kill-line
+bindkey '^k' kill-whole-line
