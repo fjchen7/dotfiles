@@ -7,7 +7,7 @@ fpath=(${ZSH_CUSTOM}/themes/spaceship-prompt $fpath)
 # fzf
 # https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
 export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --extended --cycle"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --extended --cycle -e"
 # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --extended --cycle --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
