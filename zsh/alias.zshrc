@@ -71,7 +71,6 @@ alias timestamp='date "+%Y%m%dT%H%M%S"'
 alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
 [ -n "$(command -v bat)" ] && alias cat=bat
 [ -n "$(command -v git)" ] && alias diff='_f(){ git diff --no-index --color-words "$@" }; _f'    # Git’s colored diff
-alias cht=${DOTFILES_ROOT}/bin/cht
 
 # others
 alias -s md='open -a Typora'    # open *.md with Typora by default
