@@ -1,8 +1,8 @@
 case "$OSTYPE" in
     darwin* )
         alias ls='ls -F -G'
-        alias proxy="export http_proxy=http://127.0.0.1:1087; export https_proxy=http://127.0.0.1:1087; ip"
-        alias unproxy="unset http_proxy; unset https_proxy; ip"
+        alias proxy="export http_proxy=http://127.0.0.1:1087; export https_proxy=http://127.0.0.1:1087; info-ip"
+        alias unproxy="unset http_proxy; unset https_proxy; info-ip"
         ;;
     linux* )
         alias ls='ls -F --color=auto'
@@ -43,12 +43,13 @@ alias 'ls?'='_f() {
     }; _f'
 alias 'ps?'='_quick_grep "ps aux" $@'
 alias 'alias?'='_quick_grep "alias" $@'
+alias 'env?'='_quick_grep "env" $@'
 
 # more efficient
 alias 'vim$'="vim -c \"normal '0\""  # open last file
 alias ':q'='exit'
-alias src='source ~/.zshrc'
 alias h="fc -l"
+alias src-zsh='source ~/.zshrc'
 alias tmux-new='_f(){ tmux new-session -t ${1:-default} }; _f'
 
 # customized ls and info
@@ -57,10 +58,11 @@ alias 'info-shell-pid'='echo $$'
 alias 'info-shell-name'='echo $0'
 alias 'info-shell'='echo $SHELL'
 alias 'info-distribution'='cat /etc/issue'
+alias 'info-ip'='curl -s "cip.cc"'
+#alias ip='curl -s "ipinfo.io" | jq'
 
 # utility
 alias ipy=ipython
-alias ip='curl -s "ipinfo.io" | jq'
 alias timestamp='date "+%Y%m%dT%H%M%S"'
 
 # command replacement
