@@ -14,15 +14,6 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# tldr
-export TLDR_COLOR_BLANK="white"
-export TLDR_COLOR_NAME="cyan"
-export TLDR_COLOR_DESCRIPTION="white"
-export TLDR_COLOR_EXAMPLE="green"
-export TLDR_COLOR_COMMAND="red"
-export TLDR_COLOR_PARAMETER="white"
-export TLDR_CACHE_ENABLED=1
-
 # thefuck
 eval $(thefuck --alias)
 

@@ -75,6 +75,9 @@ alias cht=${DOTFILES_ROOT}/bin/cht
 alias -s md='open -a Typora'    # open *.md with Typora by default
 alias gti='git'    # avoid typo
 
+# navi
+alias nvi="navi --path '${NAVI_PERSONAL_SOURCE_PATH}' --fzf-overrides '--with-nth 2,1'"
+
 # helper functions
 function _quick_grep {
         [[ "$#" == 0 ]] && exit 1

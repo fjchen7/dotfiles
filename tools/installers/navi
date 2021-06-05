@@ -1,0 +1,7 @@
+# https://github.com/denisidoro/navi
+
+# cmd
+navi
+
+# linux
+bash <(curl -sL https://raw.githubusercontent.com/denisidoro/navi/master/scripts/install)
