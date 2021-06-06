@@ -23,6 +23,11 @@
 `  ^j {{or}} ^m    {{Accept line}} (equal to Enter}}`
 `{{ }}       ^o    {{Accept line and show next command in history}}`
 
+- FZF
+`{{ }}       ^m    {{Select line}}`
+`  ^p {{or}} ^k    {{Up line in history}}`
+`  ^n {{or}} ^j    {{Down line in history}}`
+
 - MISC
 `{{ }}       ^z    {{Switch between shell and vim}}`
 `{{ }}     ^x^e    {{Open editor}}`

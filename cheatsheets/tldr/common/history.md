@@ -6,11 +6,6 @@
 `{{https://devhints.io/bash#histor}}`
 `{{https://wangdoc.com/bash/readline.html}}`
 
-- FZF
-`{{ }}       ^m    {{Select line}}`
-`  ^p {{or}} ^k    {{Up line in history}}`
-`  ^n {{or}} ^j    {{Down line in history}}`
-
 - History
 `{{ }}       ^p    {{Show previous command}}`
 `{{ }}       ^n    {{Show next command}}`
