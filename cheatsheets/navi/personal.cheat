@@ -1,5 +1,5 @@
 % cheatsheet, personal
-$ cheatsheet: find ${TLDR_PERSONAL_SOURCE_PATH} -type f -name '*.md' -exec basename {} .md ';'
+$ cheatsheet: find ${TLDR_PERSONAL_SOURCE_PATH} -type f -name '*.md' -exec basename {} .md \; | sort
 
 # TLDR cheatsheet
 tldr -s file://${TLDR_PERSONAL_SOURCE_PATH} -p common <cheatsheet>
