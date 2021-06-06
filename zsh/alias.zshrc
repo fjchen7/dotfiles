@@ -44,12 +44,14 @@ alias 'ls?'='_f() {
 alias 'ps?'='_quick_grep "ps aux" $@'
 alias 'alias?'='_quick_grep "alias" $@'
 alias 'env?'='_quick_grep "env" $@'
+alias 'path?'='_quick_grep "echo $PATH | tr "\"":"\"" "\""\n"\"" " $@'
+alias 'mybin?'='_quick_grep "_find_my_bin" $@'
 
 # more efficient
 alias 'vim$'="vim -c \"normal '0\""  # open last file
 alias ':q'='exit'
 alias h="fc -l"
-alias src-zsh='source ~/.zshrc'
+alias srcz='source ~/.zshrc'
 alias tmux-new='_f(){ tmux new-session -t ${1:-default} }; _f'
 
 # customized ls and info
@@ -77,7 +79,8 @@ alias -s md='open -a Typora'    # open *.md with Typora by default
 alias gti='git'    # avoid typo
 
 # navi
-alias nvi="navi --path '${NAVI_PERSONAL_SOURCE_PATH}' --fzf-overrides '--with-nth 2,1'"
+alias 'nvi?'="navi --path ${NAVI_PERSONAL_SOURCE_PATH} --fzf-overrides '--with-nth 2,1'"  # personal commands
+alias 'nvi'="nvi? --query tldr --best-match"  # personal cheatsheet
 
 # helper functions
 function _quick_grep {
@@ -90,3 +93,7 @@ function _quick_grep {
         fi
     }
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
+
+function _find_my_bin() {
+    find "${DOTFILES_ROOT}/bin" -perm +111 -type f -name "*" -not -name "_*" -exec basename {} \; | sort -n
+}
