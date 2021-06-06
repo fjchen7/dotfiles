@@ -84,16 +84,34 @@ alias 'nvi'="nvi? --query tldr --best-match"  # personal cheatsheet
 
 # helper functions
 function _quick_grep {
-        [[ "$#" == 0 ]] && exit 1
-        if [[ "$#" == 1 ]]; then
-            eval "$1"
-        else
-            local _p=$(_join_by "|" ${@:2})
-            eval "$1" | grep -i -E ${_p}  # operation OR
-        fi
-    }
+    [[ "$#" == 0 ]] && exit 1
+    local cmd="$1"
+    shift 1
+
+    local _delimiter=" "
+    for ((i=1; i<=$#; i++)); do
+        case "$@[$i]" in
+            "-o" | "--or" )
+                _delimiter="|"
+                set -- "${@:1:$((i-1))}" "${@:$((i+1))}"  # remove -o from $@
+                break
+                ;;
+            * )
+                ;;
+        esac
+    done
+    if [[ "$#" == 0 ]]; then
+        eval "$cmd"
+    else
+        # joint by |(or), where search
+        local _p=$(_join_by "${_delimiter}" ${@:1})
+        eval "$cmd" | grep -i -E "${_p}"  # operation OR
+    fi
+}
+
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
 
 function _find_my_bin() {
+    # -perm +111 = with any of the executable bits set (+ means "any of these bits", 111 is the octal for the executable bit on owner, group and anybody)
     find "${DOTFILES_ROOT}/bin" -perm +111 -type f -name "*" -not -name "_*" -exec basename {} \; | sort -n
 }

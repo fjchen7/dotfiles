@@ -39,7 +39,7 @@ export TLDR_COLOR_EXAMPLE="green"
 export TLDR_COLOR_COMMAND="red"
 export TLDR_COLOR_PARAMETER="white"
 export TLDR_LANGUAGE="es"
-export TLDR_CACHE_ENABLED=0
+export TLDR_CACHE_ENABLED=1
 
 # navi configuration
 # below two environment is only used by me
