@@ -1,6 +1,4 @@
-> efficient cli input
-`{{ ^ is}} Ctrl`
-`{{^[ is}} Alt {{/}} Option`
+> In shell, Ctrl is ^, and Alt is ^[
 
 - References
 `{{https://devhints.io/bash#histor}}`

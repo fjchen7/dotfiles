@@ -14,5 +14,5 @@
 `{{  See: https://github.com/denisidoro/navi/blob/master/docs/cheatsheet_repositories.md#adding-your-own-cheatsheets}}`
 
 - tldr can't update cache in time so local cheatsheets modifcation won't show
-`{{clean cache}} by rm -rf ~/.cache/tldr {{can solve it}}`
+`rm -rf ~/.cache/tldr {{to clean cache can solve it}}`
 `{{* See: https://github.com/tldr-pages/tldr-python-client#cache-location}}`
