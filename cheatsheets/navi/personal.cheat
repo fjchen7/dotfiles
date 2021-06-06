@@ -2,7 +2,7 @@
 $ cheatsheet: find ${TLDR_PERSONAL_SOURCE_PATH} -type f -name '*.md' -exec basename {} .md \; | sort
 
 # TLDR cheatsheet
-tldr -s file://${TLDR_PERSONAL_SOURCE_PATH} -p common <cheatsheet>
+tldr -p common <cheatsheet>_
 
 # Edit cheatsheet by vscode
 find ${TLDR_PERSONAL_SOURCE_PATH} -name <cheatsheet>.md -exec code {} +
