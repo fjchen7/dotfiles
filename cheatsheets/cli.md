@@ -1,8 +1,16 @@
+# a
+
+## b
+
+*x*
+
+> aaaa
 > CLI basic operations
 > In shell, Ctrl is ^, and Alt is ^[
 
 - Move Cursor
-`{{ }}      ^a     {{Move to beginning of line}}`
+
+`{{ }}      ^a     {{Move to beginning of line}}`  
 `{{ }}      ^e     {{Move to ending of line}}`
 `{{ }}      ^b     {{Move char ←}}`
 `{{ }}      ^f     {{Move char →}}`
@@ -34,3 +42,6 @@
 
 - Reading
 `{{https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md}}`
+
+
+https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
