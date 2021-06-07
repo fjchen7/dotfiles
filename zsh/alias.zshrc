@@ -44,8 +44,8 @@ alias 'ls?'='_f() {
 alias 'ps?'='_quick_grep "ps aux" $@'
 alias 'alias?'='_quick_grep "alias" $@'
 alias 'env?'='_quick_grep "env" $@'
-alias 'path?'='_quick_grep "echo $PATH | tr "\"":"\"" "\""\n"\"" " $@'
-alias 'mybin?'='_quick_grep "_find_my_bin" $@'
+alias 'path?'='_quick_grep "_list_path" $@'
+alias 'mybin?'='_quick_grep "_list_my_bin" $@'
 
 # more efficient
 alias 'vim$'="vim -c \"normal '0\""  # open last file
@@ -102,6 +102,7 @@ function _quick_grep {
         esac
     done
     if [[ "$#" == 0 ]]; then
+    echo "$cmd"
         eval "$cmd"
     else
         # joint by |(or), where search
@@ -112,9 +113,13 @@ function _quick_grep {
 
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
 
-function _find_my_bin() {
+function _list_my_bin() {
     # -perm +111 = with any of the executable bits set (+ means "any of these bits", 111 is the octal for the executable bit on owner, group and anybody)
     find "${DOTFILES_ROOT}/bin" -perm +111 -type f -name "*" -not -name "_*" -exec basename {} \; | sort -n
+}
+
+function _list_path() {
+    echo $PATH | tr ":" "\n"
 }
 
 function _update_tldr_cache() {
