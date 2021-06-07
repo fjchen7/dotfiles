@@ -78,9 +78,9 @@ alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --
 alias -s md='open -a Typora'    # open *.md with Typora by default
 alias gti='git'    # avoid typo
 
-# cheatsheet (navi, tldr)
-alias 'nvi?'="navi --path ${NAVI_PERSONAL_SOURCE_PATH} --fzf-overrides '--with-nth 2,1'"  # personal commands
-alias 'nvi'="nvi? --query tldr --best-match"  # personal cheatsheet
+# navi
+alias 'nvi?'="navi --path ${CHEATSHEETS_NAVI_ROOT} --fzf-overrides '--with-nth 2,1'"  # personal cli operations
+alias 'nvi'='nvi? --query "My cheatsheet" --best-match'  # personal cheatsheet
 alias update-tldr-cache=_update_tldr_cache
 
 # helper functions
@@ -120,17 +120,4 @@ function _list_my_bin() {
 
 function _list_path() {
     echo $PATH | tr ":" "\n"
-}
-
-function _update_tldr_cache() {
-    # find all personal cheatsheets
-    files=( $(find ${TLDR_PERSONAL_SOURCE_PATH} -type f -name "*.md" -exec basename {} .md \;) )
-    echo "softlink personal cheatsheets to tldr cache directory"
-    for file in ${files[@]}; do
-        soft_link="${HOME}/.cache/tldr/pages/common/${file}_.md"
-        real_link="${TLDR_PERSONAL_SOURCE_PATH}/common/${file}.md"
-        rm ${soft_link}
-        ln -s ${real_link} ${soft_link}
-        echo "softlink to ${soft_link}"
-    done
 }
