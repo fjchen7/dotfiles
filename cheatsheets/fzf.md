@@ -1,20 +1,19 @@
-- Paste the selected files and directories onto Shell
-`^t`
-`{{* e.g.}} ls <^t>`
+# fzf
 
-- Paste the selected command from history onto Shell
-`^r`
+Paste the selected files and directories onto Shell
+- `^t` (e.g. `ls <^t>`)
 
-- cd into the selected directory
-`^[c`
+Paste the selected command from history onto Shell
+- `^r`
 
-- Accept line
-`^m`
+cd into the selected directory
+- `^[c`
 
-- Trigger fzf by ;<TAB> in Shell (customized configuration)
-> https://bit.ly/3pp7k9P
-`{{vim}} ;<TAB>             {{Select files under current directory}}`
-`{{vim ~/hi}};<TAB>         {{Select files under ~ that match `hi`}}`
-`{{ssh/telnet}} ;<TAB>`
-`{{kill -9}} <TAB>`
-`{{unset/export/unalias}} **<TAB>`
+Accept line
+- `^m`
+
+Trigger fzf by `;<TAB>` (customized configuration)
+- `vim ;<TAB>`             Select files under current directory
+- `vim ~/hi;<TAB>`         Select files under ~ that match *hi*
+- Other frequently used commands: `kill`, `ssh`/`telnet`, `export`/`unset`/`unalias`
+- [Reference](https://github.com/junegunn/fzf/wiki/Configuring-fuzzy-completion#dedicated-completion-key)

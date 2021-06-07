@@ -1,4 +1,4 @@
-% cheatsheet, personal
+% cheatsheet
 $ cheatsheet: find ${CHEATSHEETS_ROOT} -type f -name '*.md' -exec basename {} .md \; | sort
 
 # My cheatsheet
@@ -7,6 +7,6 @@ glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/<cheatsheet>.m
 # Edit cheatsheet by vscode
 find ${CHEATSHEETS_ROOT} -name <cheatsheet>.md -exec code {} +
 
-% configs, personal
-# Open dotfile by vscode
+% configuration
+# Edit dotfile by vscode
 code ${DOTFILES_ROOT}

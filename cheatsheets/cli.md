@@ -1,47 +1,32 @@
-# a
+# CLI basic guide
 
-## b
+> Ctrl is `^`, Alt is `^[`
 
-*x*
+Move Cursor
 
-> aaaa
-> CLI basic operations
-> In shell, Ctrl is ^, and Alt is ^[
+- `^a` move to start of line, `^e` move to end of line
+- `^b` move to char ←, `^f` move to char →
+- `^[b` move to word ←, `^[f` move to word →
 
-- Move Cursor
+Kill
+- `^h` kill char ←, `^d` kill char →
+- `^w` kill to word ←, `^[d` kill to word →
+- `^u` kill whole line, `^k` kill to line →
 
-`{{ }}      ^a     {{Move to beginning of line}}`  
-`{{ }}      ^e     {{Move to ending of line}}`
-`{{ }}      ^b     {{Move char ←}}`
-`{{ }}      ^f     {{Move char →}}`
-`{{ }}     ^[b     {{Move word ←}}`
-`{{ }}     ^[f     {{Move word →}}`
+Accept Line
+- `^[J` or `^[j` accept suggestion (supported by zsh plugin Autosuggest)
+- `^j` or `^m` accept line (equal to `Enter`)
+- `^o` accept line and show next command in history
 
-- Kill / Delete
-`{{ }}      ^h     {{Kill char in front of cursor}}`
-`{{ }}      ^d     {{Kill char on cursor}}`
-`{{ }}      ^w     {{Kill (Forward) chars from cursor to start of word}}`
-`{{ }}     ^[d     {{Kill (Backward) chars from cursor to end of word}}`
-`{{ }}      ^u     {{Kill (Forward) chars from cursor to start of line}}`
-`{{ }}      ^k     {{Kill (Backward) chars from cursor to end of line}}`
+FZF
+- `^m` accept line
+- `^p` or `^k` select line up
+- `^n` or `^j` select line down
 
-- Accept Line
-`^[J {{or}} ^[j    {{Accept suggestion (supported by zsh plugin Autosuggest)}}`
-`  ^j {{or}} ^m    {{Accept line (equal to}} Enter{{)}}`
-`{{ }}       ^o    {{Accept line and show next command in history}}`
+MISC
+- `^z` switch between shell and vim
+- `^x^e` open editor
+- `^x^u` undo
 
-- FZF
-`{{ }}       ^m    {{Accept line}}`
-`  ^p {{or}} ^k    {{Up line in history}}`
-`  ^n {{or}} ^j    {{Down line in history}}`
-
-- MISC
-`{{ }}       ^z    {{Switch between shell and vim}}`
-`{{ }}     ^x^e    {{Open editor}}`
-`{{ }}     ^x^u    {{Undo}}`
-
-- Reading
-`{{https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md}}`
-
-
+## Reading
 https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md
