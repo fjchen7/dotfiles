@@ -14,14 +14,13 @@ Kill
 - `^u` kill whole line, `^k` kill to line →
 
 Accept Line
-- `^[J` or `^[j` accept suggestion (supported by zsh plugin Autosuggest)
 - `^j` or `^m` accept line (equal to `Enter`)
-- `^o` accept line and show next command in history
+- `^e` accept suggestion (supported by zsh-autosuggests)
+- `^[f` accept one word (supported by zsh-autosuggests)
 
 FZF
 - `^m` accept line
-- `^p` or `^k` select line up
-- `^n` or `^j` select line down
+- `^p`/`^k` select line up, `^n`/`^j` select line down
 
 MISC
 - `^z` switch between shell and vim

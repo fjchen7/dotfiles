@@ -32,10 +32,5 @@ eval $(thefuck --alias)
 fpath=(~/.zsh.d/ $fpath)
 export CHEATCOLORS=true
 
-# zsh-autosuggestions key bind
-# ^[ is Alt
-bindkey '^[J' autosuggest-execute # Accepts and executes the current suggestion.
-bindkey '^[j' autosuggest-execute # Accepts and executes the current suggestion.
-# Ctrl / Alt + m / M: accept line and execute command
-bindkey '^[m' accept-line
-bindkey '^[M' accept-line
+# zsh-autosuggestions
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8a8a8a,bold,underline"

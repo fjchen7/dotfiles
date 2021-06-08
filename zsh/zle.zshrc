@@ -34,3 +34,6 @@ bindkey '^Z' fancy-ctrl-z  # Here ^z can be replace by \32 found by `showkey -a`
 # configure navi shell widget ()
 # https://github.com/denisidoro/navi/blob/master/docs/installation.md#installing-the-shell-widget
 eval "$(navi widget zsh)"
+
+# use `emacs' keymap
+bindkey -e
