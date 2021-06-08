@@ -46,6 +46,7 @@ alias 'alias?'='_quick_grep "alias" $@'
 alias 'env?'='_quick_grep "env" $@'
 alias 'path?'='_quick_grep "_list_path" $@'
 alias 'mybin?'='_quick_grep "_list_my_bin" $@'
+alias 'bindkey?'='_quick_grep "bindkey" $@'
 
 # more efficient
 alias 'vim$'="vim -c \"normal '0\""  # open last file
