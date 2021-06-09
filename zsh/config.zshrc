@@ -5,10 +5,10 @@ export EDITOR='code'
 
 export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
 # -i: ignore case at search
-# -M: more information
+# -M: more information in prompt
 # -s: combine multiple blank lines into one line
 # -F: quit if screen can shows all content
-# -R: not show like ESC[ char
+# -R: not show escape sequences like ESC[, and will convert them into ANSI color
 export LESS='-iMsFR'
 
 # history
@@ -21,7 +21,8 @@ setopt EXTENDED_HISTORY # add timestamps to history
 setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
 setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line being added to the history list.
 
-#setopt CORRECT # turns on spelling correction for commands
+# turn off bell/beep
+unsetopt BEEP
 
 # auto-update
 export UPDATE_ZSH_DAYS=13
