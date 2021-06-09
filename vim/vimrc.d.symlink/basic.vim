@@ -50,7 +50,8 @@ set encoding=utf-8
 set langmenu=en
 set helplang=cn
 
-" 去掉错误提示声音
+" turn off bell
+set belloff=all
 set novisualbell
 set noerrorbells
 set t_vb=
