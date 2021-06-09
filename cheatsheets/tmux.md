@@ -1,35 +1,36 @@
-
 # tmux
 
-Prefix key `<C-a>` operations
+Prefix key `<C-s>`
 
 ## Basic
-- Help                     `?`
-- Command prompt mode      `:`
-- Detach session           `d`
+
+- run command out of tmux        `:`
+- Detach session                 `d`
 
 ## Session
-- Switch sessions          `(`/`)` to previous / next
-- List all sessions        `s`
-- Rename                   `$`
+- New session                    `C-c`
+- Switch sessions                `(` previous, `)` next
+- List all sessions              `s`
+- Rename                         `$`
 
 ## Window
-- New window               `c`
-- Select window
-    - `p`/`C-p` to previous window
-    - `n`/`C-n`/`C-x` to next window
-- List all windows         `w`
-    - `C-n`/`C-p` to select up / down
-    - `<number>` (select windows by number)
-- Switch with window #0    `tmux swap-window -t 0`
-- Rename                   `,`
+
+- New window                     `c`
+- Navigate window
+    - `C-p`/`C-n` previous / next window
+    - `C-s` last active window
+- List all windows               `w`
+    - `C-p`/`C-n` to up / down
+    - `<number>` select windows by number
+- Rename                         `,`
 
 ## Pane
-- Select pane              `C-a`(left), `C-s`(down), `C-d`(right)
-- Swap pane                `{`(previous), `}`(next)
-- Split                    `v`/`%`(vertical), `h`/`"`(horizontal)
-- Kill                     `x`
-- Maximize                 `z`
-    - `*z` will shows in left bottom when maxmizing
-- Convert to Window        `!`
-- Show pane number         `q`
+
+- Navigate pane                  `C-h` `C-j` `C-k` `C-l` (left down up right)
+- Split                          `|` vertical, `_` horizontal
+- Resize pane                    `H` `J` `K` `L`
+- Swap pane                      `{` previous, `}` next
+- Maximize                       `z`
+- Convert to window              `!`
+- Kill                           `x`
+- Show pane number               `q`
