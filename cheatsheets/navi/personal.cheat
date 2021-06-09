@@ -1,5 +1,5 @@
 % cheatsheet
-$ cheatsheet: find ${CHEATSHEETS_ROOT} -type f -name '*.md' -exec basename {} .md \; | sort
+$ cheatsheet: fd ".*.md" ${CHEATSHEETS_ROOT} --type f --follow --exec basename {} .md \; | sort --- --preview-window hidden
 
 # My cheatsheet
 glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/<cheatsheet>.md
