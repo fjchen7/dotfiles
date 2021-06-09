@@ -1,8 +1,17 @@
 case "$OSTYPE" in
     darwin* )
         alias ls='ls -F -G'
-        alias proxy="export http_proxy=http://127.0.0.1:1087; export https_proxy=http://127.0.0.1:1087; info-ip"
-        alias unproxy="unset http_proxy; unset https_proxy; info-ip"
+        alias proxy="_proxy; info-ip"
+        alias unproxy="_unproxy; info-ip"
+        _proxy() {
+            export http_proxy=http://127.0.0.1:1087
+            export https_proxy=http://127.0.0.1:1087
+        }
+        _unproxy() {
+            unset http_proxy
+            unset https_proxy
+        }
+        _proxy
         ;;
     linux* )
         alias ls='ls -F --color=auto'
