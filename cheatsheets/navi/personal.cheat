@@ -4,8 +4,8 @@ $ cheatsheet: fd ".*.md" ${CHEATSHEETS_ROOT} --type f --follow --exec basename {
 # My cheatsheet
 glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/<cheatsheet>.md | less
 
-# Edit cheatsheet by vscode
-find ${CHEATSHEETS_ROOT} -name <cheatsheet>.md -exec code {} +
+;# Edit cheatsheet by vscode
+;find ${CHEATSHEETS_ROOT} -name <cheatsheet>.md -exec code {} +
 
 % configuration
 # Edit dotfile by vscode
