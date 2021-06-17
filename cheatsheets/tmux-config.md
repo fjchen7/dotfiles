@@ -1,13 +1,10 @@
-# tmux configuration
-
 Prefix key `<C-s>`
 
-# Basic
-
-- List bind key                 `?`
+## basic
+- List all bound keys                 `?`
+    - or `tmux list-keys` (`lsk`)
 - reload tmux configuration     `r`
 - edit tmux configuration       `e`
 
-# Reference
-
+## reference
 - https://github.com/gpakosz/.tmux
