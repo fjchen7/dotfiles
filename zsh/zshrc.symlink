@@ -1,5 +1,8 @@
-plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump)
+plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump timer)
 
+# timer format
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/timer
+TIMER_FORMAT='[%d]'
 
 typeset -U zshrc_files
 zshrc_files=( ${DOTFILES_ZSH_ROOT}/appearance.zshrc ${ZSH}/oh-my-zsh.sh )
