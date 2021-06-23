@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
 #
-### Upgrade software
+### update software
 ###    -b, --brew         brew
 ###        --brew-cask    brew cask
 ###    -p, --pip          python3 packages
 ###        --apt          apt packages
+###    -z  --zsh          zsh
 ###    -a, --all          everything
 
 info_begin() {
@@ -14,7 +15,7 @@ info_end() {
     printf "\r${CLEAR_SCRRN}..[ End ] upgrading ${UPURPLE}$1${COLOR_OFF} $2\n\n"
 }
 
-upgrade_brew_cask() {
+update_brew_cask() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
         info_begin "BREW CASK" "packages"
         brew upgrade
@@ -22,7 +23,7 @@ upgrade_brew_cask() {
         info_end "BREW CASK" "packages"
     fi
 }
-upgrade_brew() {
+update_brew() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
         info_begin "BREW" "packages"
         brew upgrade
@@ -30,12 +31,12 @@ upgrade_brew() {
         info_end "BREW" "packages"
     fi
 }
-upgrade_pip() {
+update_pip() {
     info_begin "PYTHON3" "packages"
     pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U
     info_end "PYTHON3" "packages"
 }
-upgrade_apt() {
+update_apt() {
     if [[ "$(uname -s)" == "Linux" ]]; then
         info_begin "APT" "packages"
         sudo apt-get upgrade -y
@@ -44,24 +45,37 @@ upgrade_apt() {
         info_end "APT" "packages"
     fi
 }
+update_zsh() {
+    info_begin "zsh"
+    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull
+    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions pull
+    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-completions pull
+    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting pull
+    printf '⚙️  Please update zsh manually by "omz update".\n'
+    info_end "zsh"
+}
 
 case "$1" in
     "-b" | "--brew" )
-        upgrade_brew
+        update_brew
         ;;
     "--brew-cask" )
-        upgrade_brew_cask
+        update_brew_cask
         ;;
     "-p" | "--pip" )
-        upgrade_pip
+        update_pip
         ;;
     "--apt" )
-        upgrade_apt
+        update_apt
+        ;;
+    "-z" | "--zsh" )
+        update_zsh
         ;;
     "-a" | "--all" )
-        upgrade_brew
-        upgrade_pip
-        upgrade_apt
+        update_brew
+        update_pip
+        update_apt
+        update_zsh
         ;;
     * )
         _print_help "$(realpath $0)"
