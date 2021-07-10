@@ -810,6 +810,11 @@
                                 "right_shift",
                                 "right_option"
                             ]
+                        },
+                        {
+                            "select_input_source": {
+                                "language": "^en$"
+                            }
                         }
                     ],
                     "type": "basic"
