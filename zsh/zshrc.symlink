@@ -1,4 +1,4 @@
-plugins=(git osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump timer)
+plugins=(osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump timer)
 
 # timer format
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/timer
