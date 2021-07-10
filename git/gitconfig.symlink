@@ -12,37 +12,50 @@
     preloadindex = true
     fscache = true
     quotepath = off
-
 [push]
     default = simple
 [alias]
-    co = checkout
-    p = push
-    s = status
-    st = status -sb
-    b = branch
-    ba = branch -a
+    # I do not load zsh plugin "git" (https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git) and only add those I need from it
+    s = "status"
+    # only show brief status
+    ssb = "status -sb"
+    b = "branch"
+    bv = "branch -v"
+    b-all = "branch -a"
+    ba = "b-all"
+    # Delete a branch locally and remotely
+    b-delete-remote = "!_() {git branch -D $1; git push origin :$1; }; _"
+
+    a = "add"
+    a-all = "add -A"
+    c = "commit"
+    cm = "commit -m"
+    cm-all = "commit -a -m"
+    c-amend = "commit --amend -v"
+    ac-all = "!git add -A && git commit -m"
+    ac-all-amend = "!git add -A && git commit --amend"
+
+    rb = "rebase"
+    rbi = "rebase -i"
+    p = "push"
+    pf = "push -f"
+
+    co = "checkout"
     # search and checkout to branch
-    cos = "!_() { git checkout $(git branch | grep $1 | awk '{print $NF}'); }; _"
+    co-search = "!_() { git checkout $(git branch | grep $1 | awk '{print $NF}'); }; _"
 
-    cm = commit
-    ac = !git add -A && git commit
-    m = merge
+    m = "merge"
 
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    # Show verbose output about tags, branches or remotes
-    last = log -1
-    tags = tags -l
-    remotes = remote -v
-    ts = tag -l
-    bs = branch -a
-    rs = remote -v
+    lga = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+    lg = "lga -5"
+    lgv = "lg --decorate --name-status"  # show modified files in commit history
 
-    loga = log --graph --decorate --name-status --all
-    alias = config --get-regexp ^alias\\.
+    remotes = "remote -v"
+    ts = "tag -l"
 
-# Improved colors for the highlighted bits
-[color]
+    # list all git alias and format 'ts tag -l' as 'ts="tag -l"'
+    alias = "!git config --get-regexp ^alias\\. | sort | cut -c7- | sed \"s/ /='/\" | sed \"s/$/'/\""
+[color]  # Improved colors for the highlighted bits
     ui = true
 [gui]
     encoding = utf-8

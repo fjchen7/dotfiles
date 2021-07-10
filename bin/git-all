@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-#
-### Stage all unstaged.
-[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
-
-git add -A

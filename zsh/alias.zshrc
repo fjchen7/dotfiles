@@ -53,6 +53,8 @@ alias 'ls?'='_f() {
     }; _f'
 alias 'ps?'='_quick_grep "ps aux" $@'
 alias 'alias?'='_quick_grep "alias" $@'
+alias 'alias?git'='_quick_grep "git alias" $@'
+alias 'alias?g'='alias?git'
 alias 'env?'='_quick_grep "env" $@'
 alias 'path?'='_quick_grep "_list_path" $@'
 alias 'mybin?'='_quick_grep "_list_my_bin" $@'
@@ -87,7 +89,13 @@ alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --
 
 # others
 alias -s md='open -a Typora'    # open *.md with Typora by default
-alias gti='git'    # avoid typo
+
+# git
+# "git alias" to see more
+alias g='git'
+alias gti='git'
+
+# 'git alias'
 
 # navi
 alias 'nvi?'="navi --path ${CHEATSHEETS_NAVI_ROOT} --fzf-overrides '--with-nth 2,1'"  # personal cli operations
