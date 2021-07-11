@@ -29,16 +29,18 @@ alias cls='clear'
 alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -Al'
+# only list directories
+alias lld='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type d -not -path "." | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs 2>/dev/null) }; _f'
+alias lsd='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type d -not -path "." | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -ad $_fs 2>/dev/null) }; _f'
 # only list hidden files (dotfiles)
 alias l.='_f(){ (cd ${1:-.}; ls -d .*)}; _f'
+alias ls.='l.'
 alias ll.='_f(){ (cd ${1:-.}; ls -ld .??*)}; _f'
 # only list symlinks
-alias lls='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
-# only list directories
-alias lld='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type d -not -path "." | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
+alias ls-symlink='_f(){ (cd ${1:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && ls -adl $_fs) }; _f'
 
 # cd
-alias cdl='_f(){ cd $1; ls }; _f'
+alias cdl='_f(){ cd $1; ls }; _f'  # cd and list
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
@@ -49,12 +51,18 @@ alias ....='cd ../../../'
 alias 'ls?'='_f() {
         local dir=$PWD
         [[ "$#" != 1 ]] && dir=$1 && shift
+        ls -a $dir | grep -i $1
+    }; _f'
+alias 'll?'='_f() {
+        local dir=$PWD
+        [[ "$#" != 1 ]] && dir=$1 && shift
         ls -al $dir | grep -i $1
     }; _f'
 alias 'ps?'='_quick_grep "ps aux" $@'
-alias 'alias?'='_quick_grep "alias" $@'
-alias 'alias?git'='_quick_grep "git alias" $@'
-alias 'alias?g'='alias?git'
+alias 'alias?'='_quick_grep "_alias_format" $@'
+alias 'a?'='alias?'
+alias 'alias?g'='_quick_grep "git alias" $@'
+alias 'a?g'='alias?g'
 alias 'env?'='_quick_grep "env" $@'
 alias 'path?'='_quick_grep "_list_path" $@'
 alias 'mybin?'='_quick_grep "_list_my_bin" $@'
@@ -67,12 +75,12 @@ alias h="fc -l"
 alias srcz='source ~/.zshrc'
 alias tmux-new='_f(){ tmux new-session -t ${1:-default} }; _f'
 
-# customized ls and info
-alias 'ls-user'="stat -c '%n %U:%G-%a' *"
+# show information
+#alias 'info-user'="stat -c '%n %U:%G-%a' *"
 alias 'info-shell-pid'='echo $$'
 alias 'info-shell-name'='echo $0'
 alias 'info-shell'='echo $SHELL'
-alias 'info-distribution'='cat /etc/issue'
+alias 'info-machine'='echo "[system detail]: $(uname -a)" && echo "[uptime]: $(uptime)" && echo "[user]: $(whoami)" '
 alias 'info-ip'='curl -s "cip.cc"'
 #alias ip='curl -s "ipinfo.io" | jq'
 
@@ -121,7 +129,6 @@ function _quick_grep {
         esac
     done
     if [[ "$#" == 0 ]]; then
-    echo "$cmd"
         eval "$cmd"
     else
         # joint by |(or), where search
@@ -139,4 +146,9 @@ function _list_my_bin() {
 
 function _list_path() {
     echo $PATH | tr ":" "\n"
+}
+
+# escape single quotes in content "alias" prints, e.g. 'alia?'=
+function _alias_format() {
+    alias | sed "s/^'//" | sed "s/'=/=/" | sort
 }
