@@ -39,7 +39,7 @@
             "description": "Navigations",
             "manipulators": [
                 {
-                    "description": "Previous tab in VSCode",
+                    "description": "Previous tab in VSCode/iTerm",
                     "from": {
                         "key_code": "j",
                         "modifiers": {
@@ -61,12 +61,12 @@
                     "conditions": [
                         {
                             "type": "frontmost_application_if",
-                            "bundle_identifiers": ["VSCode$"]
+                            "bundle_identifiers": ["VSCode$", "iterm2$"]
                         }
                     ]
                 },
                 {
-                    "description": "Next tab in VSCode",
+                    "description": "Next tab in VSCode/iTerm",
                     "from": {
                         "key_code": "k",
                         "modifiers": {
@@ -88,7 +88,7 @@
                     "conditions": [
                         {
                             "type": "frontmost_application_if",
-                            "bundle_identifiers": ["VSCode$"]
+                            "bundle_identifiers": ["VSCode$", "iterm2$"]
                         }
                     ]
                 },
@@ -196,7 +196,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -213,25 +213,25 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
                     "to": [{ "mouse_key": { "vertical_wheel": 32 } }],
                     "type": "basic"
                 },
+
                 {
-                    "description": "HOME",
+                    "description": "HOME / move to start of line",
                     "from": {
-                        "key_code": "u",
+                        "key_code": "a",
                         "modifiers": {
                             "mandatory": [
                                 "right_control",
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_shift",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -239,17 +239,16 @@
                     "type": "basic"
                 },
                 {
-                    "description": "END",
+                    "description": "END / move to end of line",
                     "from": {
-                        "key_code": "d",
+                        "key_code": "e",
                         "modifiers": {
                             "mandatory": [
                                 "right_control",
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_shift",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -261,6 +260,27 @@
         {
             "description": "System Operations",
             "manipulators": [
+                {
+                    "description": "Press enter",
+                    "from": {
+                        "key_code": "spacebar",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "return_or_enter"
+                        }
+                    ],
+                    "type": "basic"
+                },
+
                 {
                     "description": "Close All",
                     "from": {
@@ -492,6 +512,99 @@
             "description": "Mouse and arrows",
             "manipulators": [
                 {
+                    "description": "mouse left",
+                    "type": "basic",
+                    "from": {
+                      "key_code": "h",
+                      "modifiers": {
+                        "mandatory": [
+                          "left_option",
+                          "right_command",
+                          "right_control",
+                          "right_shift",
+                          "right_option"
+                        ]
+                      }
+                    },
+                    "to": [
+                      {
+                        "mouse_key": {
+                          "x": -1400
+                        }
+                      }
+                    ]
+                },
+                {
+                    "description": "mouse right",
+                    "type": "basic",
+                    "from": {
+                      "key_code": "l",
+                      "modifiers": {
+                        "mandatory": [
+                          "left_option",
+                          "right_command",
+                          "right_control",
+                          "right_shift",
+                          "right_option"
+                        ]
+                      }
+                    },
+                    "to": [
+                      {
+                        "mouse_key": {
+                          "x": 1400
+                        }
+                      }
+                    ]
+                },
+                {
+                    "description": "mouse down",
+                    "type": "basic",
+                    "from": {
+                      "key_code": "k",
+                      "modifiers": {
+                        "mandatory": [
+                          "left_option",
+                          "right_command",
+                          "right_control",
+                          "right_shift",
+                          "right_option"
+                        ]
+                      }
+                    },
+                    "to": [
+                      {
+                        "mouse_key": {
+                          "y": -1100
+                        }
+                      }
+                    ]
+                },
+                {
+                    "description": "mouse up",
+                    "type": "basic",
+                    "from": {
+                      "key_code": "j",
+                      "modifiers": {
+                        "mandatory": [
+                          "left_option",
+                          "right_command",
+                          "right_control",
+                          "right_shift",
+                          "right_option"
+                        ]
+                      }
+                    },
+                    "to": [
+                      {
+                        "mouse_key": {
+                          "y": 1100
+                        }
+                      }
+                    ]
+                },
+
+                {
                     "description": "Arrow up",
                     "from": {
                         "key_code": "k",
@@ -501,7 +614,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -522,7 +635,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -543,7 +656,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -564,7 +677,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -585,6 +698,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
+                                "left_control",
                                 "left_shift"
                             ]
                         }
@@ -607,6 +721,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
+                                "left_control",
                                 "left_shift"
                             ]
                         }
@@ -629,6 +744,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
+                                "left_control",
                                 "left_shift"
                             ]
                         }
@@ -651,6 +767,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
+                                "left_control",
                                 "left_shift"
                             ]
                         }
@@ -664,12 +781,12 @@
                     "type": "basic"
                 },
                 {
-                    "description": "Right Click",
+                    "description": "Right click",
                     "from": {
                         "key_code": "return_or_enter",
                         "modifiers": {
                             "mandatory": [
-                                "left_command",
+                                "left_option",
                                 "right_control",
                                 "right_command",
                                 "right_shift",
@@ -685,7 +802,7 @@
                     "type": "basic"
                 },
                 {
-                    "description": "Left Click",
+                    "description": "Left click",
                     "from": {
                         "key_code": "return_or_enter",
                         "modifiers": {
@@ -703,7 +820,75 @@
                         }
                     ],
                     "type": "basic"
+                },
+                {
+                    "description": "Left click with ⌘ pressed",
+                    "from": {
+                        "key_code": "return_or_enter",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_command",
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "pointing_button": "button1",
+                            "modifiers": ["left_command"]
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "description": "Left click with ⇧ pressed",
+                    "from": {
+                        "key_code": "return_or_enter",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option",
+                                "left_shift"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "pointing_button": "button1",
+                            "modifiers": ["left_shift"]
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "description": "Left click with ⇧ and ⌘ pressed",
+                    "from": {
+                        "key_code": "return_or_enter",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option",
+                                "left_command",
+                                "left_shift"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "pointing_button": "button1",
+                            "modifiers": ["left_shift", "left_command"]
+                        }
+                    ],
+                    "type": "basic"
                 }
+
             ]
         },
 
@@ -1000,9 +1185,36 @@
                 },
 
                 {
-                    "description": "Turn on/off v2ray",
+                    "description": "Toggle v2ray on/off",
                     "from": {
-                        "key_code": "s",
+                        "key_code": "v",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "2",
+                            "modifiers": [
+                                "left_command",
+                                "left_control",
+                                "left_shift",
+                                "left_option"
+                            ]
+                        }
+                    ],
+                    "type": "basic"
+                },
+
+                {
+                    "description": "Switch v2ray proxy mode",
+                    "from": {
+                        "key_code": "v",
                         "modifiers": {
                             "mandatory": [
                                 "right_control",
@@ -1015,7 +1227,7 @@
                     },
                     "to": [
                         {
-                            "key_code": "2",
+                            "key_code": "1",
                             "modifiers": [
                                 "left_command",
                                 "left_control",
@@ -1037,7 +1249,7 @@
                                 "right_command",
                                 "right_shift",
                                 "right_option",
-                                "left_command"
+                                "left_control"
                             ]
                         }
                     },
@@ -1201,6 +1413,55 @@
                     "type": "basic"
                 },
 
+
+                {
+                    "description": "Hide Notes",
+                    "from": {
+                        "key_code": "n",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "h",
+                            "modifiers": ["left_command"]
+                        }
+                    ],
+                    "type": "basic",
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "bundle_identifiers": ["com.apple.Notes"]
+                        }
+                    ]
+                },
+                {
+                    "description": "Show Notes",
+                    "from": {
+                        "key_code": "n",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "shell_command": "open -a 'Notes.app'"
+                        }
+                    ],
+                    "type": "basic"
+                },
+
                 {
                     "description": "Hide YoudaoDict",
                     "from": {
@@ -1210,7 +1471,8 @@
                                 "right_control",
                                 "right_command",
                                 "right_shift",
-                                "right_option"
+                                "right_option",
+                                "left_command"
                             ]
                         }
                     },
@@ -1237,13 +1499,62 @@
                                 "right_control",
                                 "right_command",
                                 "right_shift",
-                                "right_option"
+                                "right_option",
+                                "left_command"
                             ]
                         }
                     },
                     "to": [
                         {
                             "shell_command": "open -a '网易有道词典'"
+                        }
+                    ],
+                    "type": "basic"
+                },
+
+                {
+                    "description": "Hide Eudic dictionary",
+                    "from": {
+                        "key_code": "y",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "h",
+                            "modifiers": ["left_command"]
+                        }
+                    ],
+                    "type": "basic",
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "bundle_identifiers": ["com.eusoft.eudic"]
+                        }
+                    ]
+                },
+                {
+                    "description": "Show Eudic dictionary",
+                    "from": {
+                        "key_code": "y",
+                        "modifiers": {
+                            "mandatory": [
+                                "right_control",
+                                "right_command",
+                                "right_shift",
+                                "right_option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "shell_command": "open -a 'Eudic'"
                         }
                     ],
                     "type": "basic"
