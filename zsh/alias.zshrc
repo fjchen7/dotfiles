@@ -44,6 +44,8 @@ alias cdl='_f(){ cd $1; ls }; _f'  # cd and list
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
+# Create a new directory and enter it
+alias mkd='_f(){ mkdir -p "$@" && cd "$_" }; _f'
 
 # quick grep
 # ls? abc    - search "abc" from $PWD
@@ -83,6 +85,8 @@ alias 'info-shell'='echo $SHELL'
 alias 'info-machine'='echo "[system detail]: $(uname -a)" && echo "[uptime]: $(uptime)" && echo "[user]: $(whoami)" '
 alias 'info-ip'='curl -s "cip.cc"'
 #alias ip='curl -s "ipinfo.io" | jq'
+alias 'info-cli'='_wtf'
+alias wtf='_wtf'
 
 # utility
 alias ipy=ipython
@@ -151,4 +155,14 @@ function _list_path() {
 # escape single quotes in content "alias" prints, e.g. 'alia?'=
 function _alias_format() {
     alias | sed "s/^'//" | sed "s/'=/=/" | sort
+}
+
+function _wtf() {
+    command -V "$@"
+    if [[ -n $(alias $@) ]]; then
+        # grep text like "alias $'ls?=" or "alias 'wtf="
+        PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias \$\?'$1="
+    else
+        which "$@"
+    fi
 }
