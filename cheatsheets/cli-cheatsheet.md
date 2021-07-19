@@ -1,7 +1,7 @@
 # Cheatsheet
 
 ## personal cheatsheet
-- `nvi`
+- `mmm`
 
 ## public cheatsheet
 - `^g` (navi)
