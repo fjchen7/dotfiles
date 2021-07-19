@@ -105,15 +105,12 @@ alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --
 alias -s md='open -a Typora'    # open *.md with Typora by default
 
 # git
-# "git alias" to see more
 alias g='git'
 alias gti='git'
 
-# 'git alias'
-
-# navi
-alias 'nvi?'="navi --path ${CHEATSHEETS_NAVI_ROOT} --fzf-overrides '--with-nth 2,1'"  # personal cli operations
-alias 'nvi'='nvi? --query "My cheatsheet" --best-match'  # personal cheatsheet
+# cheatsheet
+alias 'navi'="navi --path ${CHEATSHEETS_NAVI_ROOT} --fzf-overrides '--with-nth 2,1'"  # personal cli operations
+alias 'mmm'='_mmm'  # personal cheatsheet
 alias update-tldr-cache=_update_tldr_cache
 
 # helper functions
@@ -141,6 +138,17 @@ function _quick_grep {
         local _p=$(_join_by "${_delimiter}" ${@:1})
         eval "$cmd" | grep -i -E "${_p}"  # operation OR
     fi
+}
+
+function _mmm {
+    local cheatsheet_name
+    if [[ -n "$1" ]]; then
+        cheatsheet_name=$(${CHEATSHEETS_ROOT}/navi/_fd_cheat | fzf --no-preview --query "$*" --select-1)
+    else
+        cheatsheet_name=$(${CHEATSHEETS_ROOT}/navi/_fd_cheat | fzf --no-preview)
+    fi
+
+    [[ -n ${cheatsheet_name} ]] && glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/${cheatsheet_name}.md | less
 }
 
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }

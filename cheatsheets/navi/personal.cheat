@@ -1,5 +1,5 @@
 % cheatsheet
-$ cheatsheet: fd ".*.md" ${CHEATSHEETS_ROOT} --type f --follow --exec basename {} .md \; | sort --- --preview-window hidden
+$ cheatsheet: ${CHEATSHEETS_ROOT}/navi/_fd_cheat --- --preview-window hidden
 
 # My cheatsheet
 glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/<cheatsheet>.md | less
