@@ -67,7 +67,7 @@ alias 'alias?g'='_quick_grep "git alias" $@'
 alias 'a?g'='alias?g'
 alias 'env?'='_quick_grep "env" $@'
 alias 'path?'='_quick_grep "_list_path" $@'
-alias 'mybin?'='_quick_grep "_list_my_bin" $@'
+alias 'bin?'='_quick_grep "_list_my_bin" $@'
 alias 'bindkey?'='_quick_grep "bindkey" $@'
 
 # more efficient
@@ -82,11 +82,13 @@ alias tmux-new='_f(){ tmux new-session -t ${1:-default} }; _f'
 alias 'info-shell-pid'='echo $$'
 alias 'info-shell-name'='echo $0'
 alias 'info-shell'='echo $SHELL'
-alias 'info-machine'='echo "[system detail]: $(uname -a)" && echo "[uptime]: $(uptime)" && echo "[user]: $(whoami)" '
+alias 'info-machine'='echo "[system]: $(uname -a)" && echo "[uptime]: $(uptime)" && echo "[user]: $(whoami)" '
 alias 'info-ip'='curl -s "cip.cc"'
 #alias ip='curl -s "ipinfo.io" | jq'
 alias 'info-cli'='_wtf'
 alias wtf='_wtf'
+alias 'info-user'='whoami'
+alias 'info-user-all'='less /etc/passwd'
 
 # utility
 alias ipy=ipython
@@ -144,8 +146,7 @@ function _quick_grep {
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
 
 function _list_my_bin() {
-    # -perm +111 = with any of the executable bits set (+ means "any of these bits", 111 is the octal for the executable bit on owner, group and anybody)
-    find "${DOTFILES_ROOT}/bin" -perm +111 -type f -name "*" -not -name "_*" -exec basename {} \; | sort -n
+    fd --type executable --max-depth ${1:} --exclude '_*' . "${DOTFILES_ROOT}/bin" --exec basename {} \; | sort -n
 }
 
 function _list_path() {
