@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-#
-### Copy the current branch name to the clipboard.
-[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
-
-branch=$(git rev-parse --abbrev-ref HEAD)
-echo $branch | tr -d '\n' | tr -d ' ' | pbcopy
