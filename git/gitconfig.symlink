@@ -61,14 +61,14 @@
     ts = "tag -l"
     diff-stat = "diff --stat"
     # Show the diff of everything you haven't pushed yet.
-    diff-unpushed = "!${DOTFILES_ROOT}/bin/git/git-unpushed"
+    diff-unpushed = "!${DOTFILES_BIN_ROOT}/git/git-unpushed"
     # Show the diffstat of everything you haven't pushed yet.
-    diff-unpushed-stat = "!${DOTFILES_ROOT}/bin/git/git-unpushed-stat"
+    diff-unpushed-stat = "!${DOTFILES_BIN_ROOT}/git/git-unpushed-stat"
 
     # list all git alias and format 'ts tag -l' as 'ts="tag -l"'
     alias = "!git config --get-regexp ^alias\\. | sort | cut -c7- | sed \"s/ /='/\" | sed \"s/$/'/\""
-    wtf = "!${DOTFILES_ROOT}/bin/git/git-wtf"
-    edit-new = "!${DOTFILES_ROOT}/bin/git/git-edit-new"
+    wtf = "!${DOTFILES_BIN_ROOT}/git/git-wtf"
+    edit-new = "!${DOTFILES_BIN_ROOT}/git/git-edit-new"
     # ### Undo your last commit, but don't throw away your changes
     undo = "reset --soft HEAD^"
 [color]  # Improved colors for the highlighted bits

@@ -21,7 +21,7 @@ edit_bin() {
         read file
     fi
 
-    file=${DOTFILES_ROOT}/bin/${file}
+    file=${DOTFILES_BIN_ROOT}/${file}
     if [[ ! -e ${file} ]]; then
         touch ${file}
         chmod 755 ${file}
@@ -54,7 +54,7 @@ case "$1" in
         exec "$EDITOR" --reuse-window ${DOTFILES_ROOT}/tmux/tmux.conf.symlink
         ;;
     "docs" | "doc" | "d" )
-        exec "$EDITOR" ${DOTFILES_ROOT}/bin/_docs
+        exec "$EDITOR" ${DOTFILES_BIN_ROOT}/_docs
         ;;
     "b" | "bin" )
         edit_bin $2

@@ -9,9 +9,9 @@ export ZSH_CUSTOM=${ZSH}/custom
 export ZSH_THEME=${ZSH}/themes
 
 export DOTFILES_ROOT=${HOME}/.dotfiles
+export DOTFILES_BIN_ROOT=${DOTFILES_ROOT}/bin
 export DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
-export CHEATSHEETS_ROOT=${DOTFILES_ROOT}/cheatsheets
-export CHEATSHEETS_NAVI_ROOT=${DOTFILES_ROOT}/cheatsheets/navi
+export DOTFILES_CHEATSHEETS_ROOT=${DOTFILES_ROOT}/cheatsheets
 export VIMRC=$HOME/.vim_runtime/vimrcs
 
 case "$OSTYPE" in
@@ -44,4 +44,4 @@ export TLDR_LANGUAGE="es"
 export TLDR_CACHE_ENABLED=1
 
 source ${DOTFILES_ZSH_ROOT}/path.zshrc
-source ${DOTFILES_ROOT}/bin/_msg
+source ${DOTFILES_BIN_ROOT}/_msg

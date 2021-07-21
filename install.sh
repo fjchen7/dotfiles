@@ -5,8 +5,9 @@
 
 setup() {
     export DOTFILES_ROOT="${HOME}/.dotfiles"
+    export DOTFILES_BIN_ROOT="${DOTFILES_ROOT}/bin"
     [ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
-    source ${DOTFILES_ROOT}/bin/_msg    # print helper functions
+    source ${DOTFILES_BIN_ROOT}/_msg    # print helper functions
     [ ! -e "${HOME}/.local" ] && mkdir -p "${HOME}/.local"
 }
 

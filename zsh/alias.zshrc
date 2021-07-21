@@ -109,7 +109,7 @@ alias g='git'
 alias gti='git'
 
 # cheatsheet
-alias 'navi'="navi --path ${CHEATSHEETS_NAVI_ROOT} --fzf-overrides '--with-nth 2,1'"  # personal cli operations
+alias 'navi'="navi --path ${DOTFILES_CHEATSHEETS_ROOT}/navi --fzf-overrides '--with-nth 2,1'"  # personal cli operations
 alias 'mmm'='_mmm'  # personal cheatsheet
 alias update-tldr-cache=_update_tldr_cache
 
@@ -143,18 +143,18 @@ function _quick_grep {
 function _mmm {
     local cheatsheet_name
     if [[ -n "$1" ]]; then
-        cheatsheet_name=$(${CHEATSHEETS_ROOT}/navi/_fd_cheat | fzf --no-preview --query "$*" --select-1)
+        cheatsheet_name=$(${DOTFILES_BIN_ROOT}/_fd_cheat | fzf --no-preview --query "$*")
     else
-        cheatsheet_name=$(${CHEATSHEETS_ROOT}/navi/_fd_cheat | fzf --no-preview)
+        cheatsheet_name=$(${DOTFILES_BIN_ROOT}/_fd_cheat | fzf --no-preview)
     fi
 
-    [[ -n ${cheatsheet_name} ]] && glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/${cheatsheet_name}.md | less
+    [[ -n ${cheatsheet_name} ]] && glow -s ${DOTFILES_CHEATSHEETS_ROOT}/glow/mystyle.json ${DOTFILES_CHEATSHEETS_ROOT}/${cheatsheet_name}.md | less
 }
 
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
 
 function _list_my_bin() {
-    fd --type executable --max-depth ${1:} --exclude '_*' . "${DOTFILES_ROOT}/bin" --exec basename {} \; | sort -n
+    fd --type executable --max-depth ${1:} --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | sort -n
 }
 
 function _list_path() {

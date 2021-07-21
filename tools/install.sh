@@ -13,7 +13,7 @@ case "$OSTYPE" in
         ;;
 esac
 # exit with error when platform is not macOS or Ubuntu
-[ -z ${FLAG} ] && source ${DOTFILES_ROOT}/bin/_msg && _print_fail "Platform should be macOS or Ubuntu"
+[ -z ${FLAG} ] && source ${DOTFILES_BIN_ROOT}/_msg && _print_fail "Platform should be macOS or Ubuntu"
 
 for file in "${INSTALLERS[@]}"; do
     cmd=$(grep -A1 "#cmd" ${file} | tail -n -1)
