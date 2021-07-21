@@ -1,7 +1,0 @@
-
-#!/usr/bin/env zsh
-#
-### Only pull branch of HEAD
-[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
-
-git pull origin $(git rev-parse --abbrev-ref HEAD)

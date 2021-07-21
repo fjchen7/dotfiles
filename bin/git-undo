@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-#
-### Undo your last commit, but don't throw away your changes
-[[ $1 =~ ("-h"|"--help") ]] && _print_help "$(realpath $0)"
-
-git reset --soft HEAD^
