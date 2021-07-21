@@ -1,11 +1,11 @@
 % cheatsheet
-$ cheatsheet: ${CHEATSHEETS_ROOT}/navi/_fd_cheat --- --preview-window hidden
+$ cheatsheet: ${DOTFILES_BIN_ROOT}/_fd_cheat --- --preview-window hidden
 
 # My cheatsheet
-glow -s ${CHEATSHEETS_ROOT}/glow/mystyle.json ${CHEATSHEETS_ROOT}/<cheatsheet>.md | less
+glow -s ${DOTFILES_CHEATSHEETS_ROOT}/glow/mystyle.json ${DOTFILES_CHEATSHEETS_ROOT}/<cheatsheet>.md | less
 
 ;# Edit cheatsheet by vscode
-;find ${CHEATSHEETS_ROOT} -name <cheatsheet>.md -exec code {} +
+;find ${DOTFILES_CHEATSHEETS_ROOT} -name <cheatsheet>.md -exec code {} +
 
 % configuration
 # Edit dotfile by vscode
