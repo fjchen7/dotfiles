@@ -93,15 +93,12 @@ alias 'info-user-all'='less /etc/passwd'
 # utility
 alias ipy=ipython
 alias timestamp='date "+%Y%m%dT%H%M%S"'
-
-# command replacement
-#alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
+alias 'brew-dependency'='brew leaves | xargs brew deps --installed --for-each | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/"'  # ref: https://stackoverflow.com/a/55445034
+alias cleanup='brew cleanup && pip cache purge'
 [ -n "$(command -v bat)" ] && alias cat=bat
-[ -n "$(command -v git)" ] && alias diff='_f(){ git diff --no-index --color-words "$@" }; _f'    # Git’s colored diff
-
-# others
+alias diff='colordiff'    # diff with color
 alias -s md='open -a Typora'    # open *.md with Typora by default
 
 # git
@@ -111,7 +108,6 @@ alias gti='git'
 # cheatsheet
 alias 'navi'="navi --path ${DOTFILES_CHEATSHEETS_ROOT}/navi --fzf-overrides '--with-nth 2,1'"  # personal cli operations
 alias 'mmm'='_mmm'  # personal cheatsheet
-alias update-tldr-cache=_update_tldr_cache
 
 # helper functions
 function _quick_grep {

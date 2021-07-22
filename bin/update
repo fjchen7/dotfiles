@@ -47,11 +47,19 @@ update_apt() {
 }
 update_zsh() {
     info_begin "zsh"
-    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull
-    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions pull
-    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-completions pull
-    git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting pull
-    printf '⚙️  Please update zsh manually by "omz update".\n'
+    local zsh_root=${ZSH:-$HOME/.oh-my-zsh}
+    local zsh_custom_root=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+
+    echo "⚙️  updating zsh theme <powerlevel10k>..."
+    git -C ${zsh_custom_root}/themes/powerlevel10k pull
+    local plugin_dirs=('zsh-autosuggestions' 'zsh-completions' 'zsh-syntax-highlighting')
+    for plugin_dir in "${plugin_dirs[@]}"; do
+        echo "⚙️  updating zsh plugin <${plugin_dir}>..."
+        git -C ${zsh_custom_root}/plugins/${plugin_dir} pull
+    done
+    printf '⚙️  updating zsh by "omz update".\n'
+    (source ${zsh_root}/lib/cli.zsh && omz update)
+
     info_end "zsh"
 }
 
