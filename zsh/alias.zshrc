@@ -143,13 +143,13 @@ function _mmm {
         cheatsheet_name=$(${DOTFILES_BIN_ROOT}/_fd_cheat | fzf --no-preview)
     fi
 
-    [[ -n ${cheatsheet_name} ]] && glow -s ${DOTFILES_CHEATSHEETS_ROOT}/glow/mystyle.json ${DOTFILES_CHEATSHEETS_ROOT}/${cheatsheet_name}.md | less
+    [[ -n ${cheatsheet_name} ]] && glow -s ${DOTFILES_ROOT}/misc/glow_style.json ${DOTFILES_CHEATSHEETS_ROOT}/${cheatsheet_name}.md | less
 }
 
 function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
 
 function _list_my_bin() {
-    fd --type executable --max-depth ${1:} --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | sort -n
+    fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | sort -n
 }
 
 function _list_path() {
