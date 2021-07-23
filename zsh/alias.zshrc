@@ -106,7 +106,6 @@ alias g='git'
 alias gti='git'
 
 # cheatsheet
-alias 'navi'="navi --path ${DOTFILES_CHEATSHEETS_ROOT}/navi --fzf-overrides '--with-nth 2,1'"  # personal cli operations
 alias 'mmm'='_mmm'  # personal cheatsheet
 
 # helper functions
