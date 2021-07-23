@@ -37,6 +37,20 @@ setup_local_gitconfig() {
     fi
 }
 
+setup_cheatsheets() {
+    local dotfiles_cheatsheet_root="${DOTFILES_ROOT}/cheatsheets"
+    _print_ask "Do you want to create a new cheatsheets under ${DOTFILES_ROOT}? [y/n]"
+    read yn
+    if [[ ${yn} =~ "y|Y" ]]; then
+        mkdir ${dotfiles_cheatsheet_root}
+        _print_ok "create cheatsheet folder ${dotfiles_cheatsheet_root}"
+    else
+        _print_ask 'Input your current cheatsheets path:'
+        read real_cheatsheets_root
+        ln -s ${real_cheatsheets_root} ${dotfiles_cheatsheet_root}
+    fi
+}
+
 link_file() {
     local src=$1 dst=$2
 
@@ -120,5 +134,6 @@ install_tools() {
 setup
 setup_local_zshrc
 setup_local_gitconfig
+setup_cheatsheets
 install_dotfiles
 install_tools

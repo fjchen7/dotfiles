@@ -1,27 +1,19 @@
 #!/usr/bin/env zsh
 #
 ### Available files to edit:
-###     dotfiles(dot)
-###     zsh(z)
-###     vim(v)
-###     tmux(t)
-###     docs(d)
 ###     hosts(h)
-###     git(g)
-###     bin(b) <binary>    create and open new one if <binary> is inexistent
-###     karabiner(k)
+###     dotfiles(d)
+###     cht(c)
+###     bin(b) <binary>    create new one if <binary> is nonexistent
 
 edit_bin() {
     local file=$1
     if [[ -z $1 ]]; then
-        _print_info "Existent binaries: "
-        ls-command | while read i; do echo -e "\t$i"; done
-        echo ''
-        _print_ask "Please input binary name you want to edit:"
-        read file
+        _print_info "Select the bin you want to edit: "
+        file=$(fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | fzf --preview 'cat {}')
     fi
-
     file=${DOTFILES_BIN_ROOT}/${file}
+
     if [[ ! -e ${file} ]]; then
         touch ${file}
         chmod 755 ${file}
@@ -35,32 +27,17 @@ edit_bin() {
 }
 
 case "$1" in
-    "hosts" | "host" | "h" )
+    host* | h )
         exec sudo "$EDITOR" --reuse-window "/etc/hosts"
         ;;
-    "dotfiles" | "dot" )
+    dot* | d )
         exec "$EDITOR" ${DOTFILES_ROOT}
         ;;
-    "vim" | "v" )
-        exec "$EDITOR" ${DOTFILES_ROOT}/vim/vimrc.d.symlink
+    cheatsheet* | cht* | c )
+        exec "$EDITOR" $(realpath ${DOTFILES_ROOT}/cheatsheets)
         ;;
-    "zsh" | "z" )
-        exec "$EDITOR" ${DOTFILES_ROOT}/zsh
-        ;;
-    "git" | "g" )
-        exec "$EDITOR" ${DOTFILES_ROOT}/git
-        ;;
-    "tmux" | "tmux.conf" | "t" )
-        exec "$EDITOR" --reuse-window ${DOTFILES_ROOT}/tmux/tmux.conf.symlink
-        ;;
-    "docs" | "doc" | "d" )
-        exec "$EDITOR" ${DOTFILES_BIN_ROOT}/_docs
-        ;;
-    "b" | "bin" )
+    b | bin* )
         edit_bin $2
-        ;;
-    "karabiner" | "kar" | "k" )
-        exec "$EDITOR" $HOME/.config/karabiner/assets/complex_modifications/modifier.json
         ;;
     * )
         _print_help "$(realpath $0)"
