@@ -1,7 +1,8 @@
 You can be more efficient if you know these commands.
 # Brace expansion
-- `mv foo{,.pdf} some-dir`: move foo and foo.pdf to some-dir
-- `mkdir -p x-{1,2}/y-{3,4}`: create 4 folders
+- `mv foo{,.pdf} some-dir`    move foo and foo.pdf to some-dir
+- `mkdir -p x-{1,2}/y-{3,4}`    create 4 folders
+- `ls ./**/*.sh`    ls all *.sh under current directory
 
 # completion with `;<TAB>`
 - `vim ;<TAB>`             Select files under current directory
