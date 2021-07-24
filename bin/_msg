@@ -80,7 +80,7 @@ _print_info() {
     printf "\r  [ ${BLUE}..${COLOR_OFF} ] $1\n"
 }
 _print_ask() {
-    printf "\r  [ ${BROWN}??${COLOR_OFF} ] $1\n"
+    printf "\r  [ ${YELLOW}??${COLOR_OFF} ] $1\n"
 }
 _print_ok() {
     printf "\r${CLEAR_SCREEN}  [ ${GREEN}OK${COLOR_OFF} ] $1\n"

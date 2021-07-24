@@ -1,1 +1,0 @@
-fd ".*.md" ${DOTFILES_CHEATSHEETS_ROOT} --type f --follow --exec basename {} .md \; | sort

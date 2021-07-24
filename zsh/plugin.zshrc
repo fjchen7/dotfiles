@@ -8,7 +8,7 @@ fpath=(${ZSH_CUSTOM}/themes/spaceship-prompt $fpath)
 # fzf
 # https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --extended --cycle -e --preview 'tree -C {} | head -200'"
+export FZF_DEFAULT_OPTS="--no-sort --height=40% --ansi --layout=reverse --extended --cycle -e --info=inline --tabstop=4 --color=16 --preview 'tree -C {} | head -200'"
 # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --extended --cycle --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"

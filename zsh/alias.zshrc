@@ -69,6 +69,7 @@ alias 'env?'='_quick_grep "env" $@'
 alias 'path?'='_quick_grep "_list_path" $@'
 alias 'bin?'='_quick_grep "_list_my_bin" $@'
 alias 'bindkey?'='_quick_grep "bindkey" $@'
+alias 'brew-list?'='_quick_grep "_brew_list" $@'
 
 # more efficient
 alias 'vim$'="vim -c \"normal '0\""  # open last file
@@ -95,7 +96,6 @@ alias ipy=ipython
 alias timestamp='date "+%Y%m%dT%H%M%S"'
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
-alias 'brew-dependency'='brew leaves | xargs brew deps --installed --for-each | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/"'  # ref: https://stackoverflow.com/a/55445034
 alias cleanup='brew cleanup && pip cache purge'
 [ -n "$(command -v bat)" ] && alias cat=bat
 alias diff='colordiff'    # diff with color
@@ -104,9 +104,6 @@ alias -s md='open -a Typora'    # open *.md with Typora by default
 # git
 alias g='git'
 alias gti='git'
-
-# cheatsheet
-alias 'mmm'='_mmm'  # personal cheatsheet
 
 # helper functions
 function _quick_grep {
@@ -129,24 +126,16 @@ function _quick_grep {
     if [[ "$#" == 0 ]]; then
         eval "$cmd"
     else
-        # joint by |(or), where search
+        # join parameters with delimiter
         local _p=$(_join_by "${_delimiter}" ${@:1})
         eval "$cmd" | grep -i -E "${_p}"  # operation OR
     fi
 }
 
-function _mmm {
-    local cheatsheet_name
-    if [[ -n "$1" ]]; then
-        cheatsheet_name=$(${DOTFILES_BIN_ROOT}/_fd_cheat | fzf --no-preview --query "$*")
-    else
-        cheatsheet_name=$(${DOTFILES_BIN_ROOT}/_fd_cheat | fzf --no-preview)
-    fi
-
-    [[ -n ${cheatsheet_name} ]] && glow -s ${DOTFILES_ROOT}/misc/glow_style.json ${DOTFILES_CHEATSHEETS_ROOT}/${cheatsheet_name}.md | less
+function _join_by {
+    # https://stackoverflow.com/a/17841619
+    local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi;
 }
-
-function _join_by { local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi; }
 
 function _list_my_bin() {
     fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | sort -n
@@ -169,4 +158,9 @@ function _wtf() {
     else
         which "$@"
     fi
+}
+
+function _brew_list() {
+    # ref: https://stackoverflow.com/a/55445034
+    brew leaves | xargs brew deps --installed --for-each | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/"
 }
