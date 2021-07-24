@@ -9,7 +9,8 @@ export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
 # -s: combine multiple blank lines into one line
 # -F: quit if screen can shows all content
 # -R: not show escape sequences like ESC[, and will convert them into ANSI color
-export LESS='-iMsFR'
+# -j2: lines between top and matched text (https://superuser.com/a/257626)
+export LESS='-iMsFR -j2'
 
 # history
 HISTFILE=~/.zsh_history
@@ -20,6 +21,9 @@ setopt SHARE_HISTORY  # adds history incrementally and share it across sessions
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
 setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line being added to the history list.
+
+# enable IFS word split: https://stackoverflow.com/a/49628419
+# setopt sh_word_split
 
 # turn off bell/beep
 unsetopt BEEP

@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 #
-### Available files to edit:
+### edit configurations:
 ###     hosts(h)
 ###     dotfiles(d)
 ###     cht(c)
@@ -9,8 +9,7 @@
 edit_bin() {
     local file=$1
     if [[ -z $1 ]]; then
-        _print_info "Select the bin you want to edit: "
-        file=$(fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | fzf --preview 'cat {}')
+        file=$(fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | fzf --preview 'bat --color=always --tabs=4 --style=grid ${DOTFILES_BIN_ROOT}/{}' --preview-window right,80%)
     fi
     file=${DOTFILES_BIN_ROOT}/${file}
 
