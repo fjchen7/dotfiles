@@ -10,7 +10,8 @@ search_cheatsheets_filename() {
     done < <(
         cd ${DOTFILES_CHEATSHEETS_ROOT} &&
         fd "" --type f --follow --exec basename {} .md \; | sort |
-        fzf --query "$@"
+        fzf --query "$@" \
+        --prompt 'filename> '
     )
     _execute_cheatsheet "${query[@]}"
 }
@@ -24,8 +25,7 @@ search_cheatsheets_content() {
         rg -w --color=always --line-number --no-heading --smart-case "${*:-}" |
         sed 's/.md//' |  # cut suffix ".md" from filename
         fzf --delimiter : \
-        --preview 'bat --theme=Dracula --style=plain --color=always --tabs=4 --wrap=auto {1}.md --highlight-line {2}' \
-        --preview-window down,75%:wrap,border,follow,+{2}+3/3,~3
+        --prompt 'content> '
     )
     # remove useless part
     query[2]=$(echo ${query[2]} | sed 's/:.*//')
@@ -55,7 +55,6 @@ _execute_cheatsheet() {
             else
                 [[ -n ${query_text} ]] && ${EDITOR:-vim} ${DOTFILES_CHEATSHEETS_ROOT}/${query_text}.md
             fi
-
             ;;
     esac
 }
@@ -64,14 +63,14 @@ fzf_header=$(cat <<EOF
 [foo.] search filename, [foo?] search content; [CTRL-E] edit/create, [CTRL-J/K] scroll preview
 EOF
 )
-FZF_DEFAULT_OPTS="--height=72% --info=hidden --ansi --color=16 --layout=reverse --extended --cycle --exact --no-sort --tabstop=4 \
+fzf_preview='expr="bat --theme=Dracula --style=plain --color=always --tabs=4 --wrap=auto {1}.md"; [[ -z {2} ]] && eval "$expr" || eval "$expr --highlight-line {2}"'
+FZF_DEFAULT_OPTS="--height=72% --info=hidden --ansi --layout=reverse --extended --cycle --exact --no-sort --tabstop=4 \
 --header '${fzf_header}' \
---preview-window down,75%:wrap,border,follow \
---preview 'bat --theme=Dracula --style=plain --color=always --tabs=4 --wrap=auto ${DOTFILES_CHEATSHEETS_ROOT}/{}.md 2>/dev/null' \
+--preview '${fzf_preview}' \
+--preview-window down,75%:wrap,border \
 --print-query \
 --bind='ctrl-j:preview-down' \
 --bind='ctrl-k:preview-up' \
---bind='ctrl-e:execute:var={1} && ${EDITOR:-vim} ${DOTFILES_CHEATSHEETS_ROOT}/${var}.md'
 --bind='ctrl-e:execute(cd ${DOTFILES_CHEATSHEETS_ROOT}; ${EDITOR:-vim} .; [[ -n {1} ]] && ${EDITOR:-vim} {1}.md || ${EDITOR:-vim} {q}.md)+abort'
 "
 LESS='-iMsR -j3'
