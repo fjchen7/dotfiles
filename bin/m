@@ -50,13 +50,18 @@ _execute_cheatsheet() {
             ;;
         * )
             matched_line=${matched_line%.md}  # remove suffix ".md"
-            [[ -n ${matched_line} ]] && glow -s ${DOTFILES_ROOT}/misc/glow_style.json ${DOTFILES_CHEATSHEETS_ROOT}/${matched_line}.md
+            if [[ -n ${matched_line} ]]; then
+                glow -s ${DOTFILES_ROOT}/misc/glow_style.json ${DOTFILES_CHEATSHEETS_ROOT}/${matched_line}.md
+            else
+                [[ -n ${query_text} ]] && ${EDITOR:-vim} ${DOTFILES_CHEATSHEETS_ROOT}/${query_text}.md
+            fi
+
             ;;
     esac
 }
 
 fzf_header=$(cat <<EOF
-[foo.] search filename, [foo?] search content; [CTRL-E] edit, [CTRL-J/K] scroll preview
+[foo.] search filename, [foo?] search content; [CTRL-E] edit/create, [CTRL-J/K] scroll preview
 EOF
 )
 FZF_DEFAULT_OPTS="--height=72% --info=hidden --ansi --color=16 --layout=reverse --extended --cycle --exact --no-sort --tabstop=4 \
@@ -66,7 +71,8 @@ FZF_DEFAULT_OPTS="--height=72% --info=hidden --ansi --color=16 --layout=reverse 
 --print-query \
 --bind='ctrl-j:preview-down' \
 --bind='ctrl-k:preview-up' \
---bind='ctrl-e:execute:${EDITOR:-vim} ${DOTFILES_CHEATSHEETS_ROOT}/{1}.md'
+--bind='ctrl-e:execute:var={1} && ${EDITOR:-vim} ${DOTFILES_CHEATSHEETS_ROOT}/${var}.md'
+--bind='ctrl-e:execute(cd ${DOTFILES_CHEATSHEETS_ROOT}; ${EDITOR:-vim} .; [[ -n {1} ]] && ${EDITOR:-vim} {1}.md || ${EDITOR:-vim} {q}.md)+abort'
 "
 LESS='-iMsR -j3'
 
