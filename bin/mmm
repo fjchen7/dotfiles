@@ -2,96 +2,81 @@
 #
 ### Search and render cheatsheets in command line
 ###   mmm                list all cheatsheets
-###
-###   Under fzf interface,
-###       - "foo." search filename
-###       - "foo?" search filename and content
-###       - "ref.*"
-###   mmm foo            list cheatsheets with filename including "foo"
-###   mmm foo?           list cheatsheets with filename or content including "foo"
-###   mmm 'ref.*?'       regex search "ref.*"
-
-list_all_cheatsheets() {
-    local pattern=${1:-'.*.md'}
-    fd "${pattern}" ${DOTFILES_CHEATSHEETS_ROOT} --type f --follow --exec basename {} .md \; | sort | tr '\n' ' '
-}
-
-_print_array_by_lines() {
-    printf '%s\n' "$@"
-}
 
 search_cheatsheets_filename() {
-    # local search_content_option="▶️  Search Content"
-    # local cheatsheets=(${search_content_option} $(list_all_cheatsheets))
-    local cheatsheets=($(list_all_cheatsheets))
-    local cli=${cli_select_cheatsheet}
-    [[ -n "$1" ]] && cli="${cli} --query \"$*\""  # pass parameters if any
-    local query=($(eval "${cli}"))
-
-    # Return query text if nothing is matched, otherwise return the matched line.
-    # If line is matched, the "query" will be an array (query_text, matched_line)
-    if [[ ${#query} == 2 ]]; then
-        query="${query[2]}"  # get matched_line
-    else
-        query="${query[1]}"  # get query_text
-    fi
-
-    _render_cheatsheet ${query}
+    local query=()
+    while read -r line; do
+        query+=( "$line" )
+    done < <(
+        cd ${DOTFILES_CHEATSHEETS_ROOT} &&
+        fd "" --type f --follow --exec basename {} .md \; | sort |
+        fzf --query "$@"
+    )
+    _execute_cheatsheet "${query[@]}"
 }
 
-search_cheatsheets_filename_and_content() {
-    local search_text="$1"
-    if [[ -z ${search_text} ]]; then
-        printf "  [ \033[0;33m??\033[0m ] text to search: "
-        read search_text  # about zsh read: https://superuser.com/a/556006
-    fi
-    search_text_count=$(echo ${search_text} | xargs -n 1 | grep "" -c)
-    [[ "${search_text_count}" > 1 ]] && _print_fail "only ONE keyword is allowed!" && exit 1
+search_cheatsheets_content() {
+    local query=()
+    while read -r line; do
+        query+=( "$line" )
+    done < <(
+        cd ${DOTFILES_CHEATSHEETS_ROOT} &&
+        rg -w --color=always --line-number --no-heading --smart-case "${*:-}" |
+        sed 's/.md//' |  # cut suffix ".md" from filename
+        fzf --delimiter : \
+        --preview 'bat --theme=Dracula --style=plain --color=always --tabs=4 --wrap=auto {1}.md --highlight-line {2}' \
+        --preview-window down,75%:wrap,border,follow,+{2}+3/3,~3
+    )
+    # remove useless part
+    query[2]=$(echo ${query[2]} | sed 's/:.*//')
 
-    # find files
-    local cheatsheets=($(rg -i -w -l -- "${search_text}" ${DOTFILES_CHEATSHEETS_ROOT} | xargs -L 1 -I{} sh -c 'basename {} .md'))  # search by file content
-    cheatsheets+=($(list_all_cheatsheets ${search_text}))  # search by file name
-    cheatsheets=($(printf "%s\n" "${cheatsheets[@]}" | sort -u))  # remove duplicates
-
-    # local query=$(_print_array_by_lines ${cheatsheets} | fzf --preview "rg --color=always -i -C 7 -- \"${search_text}\" ${DOTFILES_CHEATSHEETS_ROOT}/{}.md")
-    local query=$(eval "${cli_select_cheatsheet}")
-    _render_cheatsheet ${query}
+    _execute_cheatsheet "${query[@]}"
 }
 
-_render_cheatsheet() {
-    local query="$(echo $1 | xargs)"  # trim string: https://stackoverflow.com/a/12973694
+# input:
+#   {query_text}
+#   {query_text}, {matched_line}
+_execute_cheatsheet() {
+    [[ "$#" > 2 ]] && echo "[ERROR] only receive two parameters: {query_text}, {matched_line}" && exit 1
 
-    if [[ ${query} == *\. ]]; then
-        search_cheatsheets_filename ${query:0:-1}
-    elif [[ ${query} == *\? ]]; then
-        search_cheatsheets_filename_and_content ${query:0:-1}  # cut last char ?
-    else
-        local cheatsheet=${DOTFILES_CHEATSHEETS_ROOT}/${query}.md
-        [[ -e $cheatsheet ]] && echo "$query" && bat --style=header,grid --color=always --tabs=4 --paging=always ${cheatsheet} && exit 0
-    fi
-}
-
-FZF_DEFAULT_OPTS="--height=80% --info=inline --ansi --layout=reverse --extended --cycle -e --no-sort --tabstop=4 --color=16 --preview-window down,75%:wrap,noborder,follow"
-LESS='-iMsR -j2'
-readonly cli_select_cheatsheet='_print_array_by_lines ${cheatsheets} | fzf --print-query --preview "bat --style=header,grid --color=always ${DOTFILES_CHEATSHEETS_ROOT}/{}.md 2>/dev/null"'
-
-local search=1
-for ((i=1; i<=$#; i++)); do
-    case "$@[$i]" in
-        "-s" | "--search" )
-            search=0
-            set -- "${@:1:$((i-1))}" "${@:$((i+1))}"  # remove -o from $@
+    local query_text="$(echo -e $1 | xargs echo -n)"
+    local matched_line="$(echo -e $2 | xargs echo -n)"
+    case "${query_text}" in
+        *\. )
+            search_cheatsheets_filename ${query_text:0:-1}
             ;;
-        -help | -h )
-            _print_help "$(realpath $0)"
-            exit 0
+        *\? )
+            search_cheatsheets_content ${query_text:0:-1}  # cut last char ?
             ;;
         * )
+            matched_line=${matched_line%.md}  # remove suffix ".md"
+            [[ -n ${matched_line} ]] && glow -s ${DOTFILES_ROOT}/misc/glow_style.json ${DOTFILES_CHEATSHEETS_ROOT}/${matched_line}.md
             ;;
     esac
-done
-if [[ $search == "0" ]]; then
-    search_cheatsheets_filename_and_content "$*"
-else
-    search_cheatsheets_filename "$*"
-fi
+}
+
+fzf_header=$(cat <<EOF
+[foo.] search filename, [foo?] search content; [CTRL-E] edit, [CTRL-J/K] scroll preview
+EOF
+)
+FZF_DEFAULT_OPTS="--height=72% --info=hidden --ansi --color=16 --layout=reverse --extended --cycle --exact --no-sort --tabstop=4 \
+--header '${fzf_header}' \
+--preview-window down,75%:wrap,border,follow \
+--preview 'bat --theme=Dracula --style=plain --color=always --tabs=4 --wrap=auto ${DOTFILES_CHEATSHEETS_ROOT}/{}.md 2>/dev/null' \
+--print-query \
+--bind='ctrl-j:preview-down' \
+--bind='ctrl-k:preview-up' \
+--bind='ctrl-e:execute:${EDITOR:-vim} ${DOTFILES_CHEATSHEETS_ROOT}/{1}.md'
+"
+LESS='-iMsR -j3'
+
+[[ "$#" > 1 ]] && echo "ERROR: only accpet ONE parameter!" && exit 1
+case "$1" in
+    -help | -h )
+        _print_help "$(realpath $0)"
+        exit 0
+        ;;
+    * )
+        ;;
+esac
+search_cheatsheets_filename "$*"
