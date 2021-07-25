@@ -1,17 +1,3 @@
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
-export PYTHONIOENCODING='UTF-8';
-export EDITOR='code'
-
-export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
-# -i: ignore case at search
-# -M: more information in prompt
-# -s: combine multiple blank lines into one line
-# -F: quit if screen can shows all content
-# -R: not show escape sequences like ESC[, and will convert them into ANSI color
-# -j2: lines between top and matched text (https://superuser.com/a/257626)
-export LESS='-iMsFR -j2'
-
 # history
 HISTFILE=~/.zsh_history
 export HISTSIZE=10000
@@ -44,3 +30,16 @@ export PROMPT_EOL_MARK=''
 # prevent > overwriting existent file
 # using >| for write forcedly
 # set -o noclobber
+
+# tldr python client
+# https://github.com/tldr-pages/tldr-python-client
+export TLDR_COLOR_NAME="cyan"
+export TLDR_COLOR_DESCRIPTION="white"
+export TLDR_COLOR_EXAMPLE="green"
+export TLDR_COLOR_COMMAND="red"
+export TLDR_COLOR_PARAMETER="white"
+export TLDR_LANGUAGE="es"
+export TLDR_CACHE_ENABLED=1
+
+export PATH=~/.local/bin:$PATH
+export PATH=${DOTFILES_BIN_ROOT}:$PATH

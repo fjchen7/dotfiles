@@ -16,6 +16,7 @@ case "$OSTYPE" in
         ;;
     linux* )
         alias ls='ls -F --color=auto'
+        alias open="_f(){ open_command ${@:-.} }; _f" # `open_command` is zsh builtin functions
         ;;
     * )
         ;;
@@ -92,7 +93,9 @@ alias 'info-user'='whoami'
 alias 'info-user-all'='less /etc/passwd'
 
 # utility
+alias o=open
 alias ipy=ipython
+alias pip=pip3
 alias timestamp='date "+%Y%m%dT%H%M%S"'
 # -N show Chinese characters, -C print with color, -a show hidden files, -I exclude files, --dirsfirst show directory first
 alias tree='_f(){ tree -aNC -I ".git|node_modules|bower_components|.DS_Store" --dirsfirst "$@" | less -FRX }; _f'
@@ -104,6 +107,9 @@ alias -s md='open -a Typora'    # open *.md with Typora by default
 # git
 alias g='git'
 alias gti='git'
+
+# resolve name conflit with cheatsheet finder 'm'
+alias m-cli='/usr/local/bin/m'
 
 # helper functions
 function _quick_grep {
