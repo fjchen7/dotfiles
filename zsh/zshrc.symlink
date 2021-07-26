@@ -1,12 +1,13 @@
 plugins=(osx zsh-syntax-highlighting zsh-completions zsh-autosuggestions autojump timer)
 
-# timer format
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/timer
-TIMER_FORMAT='[%d]'
+# autoload loads script as function by searching $fpath
+# ref: https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
+# initialize autocomplete
+autoload -U compinit && compinit -u
 
 typeset -U zshrc_files
 zshrc_files=( ${DOTFILES_ZSH_ROOT}/appearance.zshrc ${ZSH}/oh-my-zsh.sh )
-zshrc_files+=( ${DOTFILES_ZSH_ROOT}/{plugin,config,zle,alias}.zshrc )
+zshrc_files+=( ${DOTFILES_ZSH_ROOT}/{config,zle,alias}.zshrc )
 zshrc_files+=( ${HOME}/.zshrc.local )
 for file in ${zshrc_files}; do
     source $file
@@ -21,9 +22,26 @@ for file in ${zshrc_files}; do
 done
 unset zshrc_files
 
-# autoload loads script as function by searching $fpath
-# ref: https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
-# initialize autocomplete
-autoload -U compinit && compinit -u
+# history
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTCONTROL='ignoreboth' # don't show duplicates and commands that begin with a space in history.
+setopt SHARE_HISTORY  # adds history incrementally and share it across sessions
+setopt EXTENDED_HISTORY # add timestamps to history
+setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
+setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line being added to the history list.
+
+# auto-update
+export UPDATE_ZSH_DAYS=13
+export HOMEBREW_NO_AUTO_UPDATE=1    # https://github.com/Homebrew/brew/issues/1670
+DISABLE_AUTO_UPDATE="true"
+
+# skip the verification of insecure directories
+# if it doesn't work, try compaudit | xargs chmod g-w,o-w
+ZSH_DISABLE_COMPFIX="true"
+
+export PATH=~/.local/bin:$PATH
+export PATH=${DOTFILES_BIN_ROOT}:$PATH
 
 echo "Oh My Zsh!"  # Welcome

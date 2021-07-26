@@ -20,3 +20,14 @@ fi
 # To customize prompt, run `p10k configure` or edit p10k.zsh.
 source ${DOTFILES_ROOT}/zsh/p10k.zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# avoid line end with % when using `printf`
+# https://unix.stackexchange.com/a/167600
+export PROMPT_EOL_MARK=''
+
+# timer format
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/timer
+TIMER_FORMAT='[%d]'
+
+# turn off bell/beep
+unsetopt BEEP
