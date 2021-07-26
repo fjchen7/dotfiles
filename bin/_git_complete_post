@@ -1,0 +1,24 @@
+# script to process output from fzf completion for filling parameters in command line
+# related functions: _fzf_complete_git, _fzf_complete_git_post
+#
+# note of script for fzf_completion_*_post
+# 1) keyword 'local' can't be used for variable, otherwise it can't output
+# 2) if 'awk' doesn't work, try 'cut' to extract column
+command=$(echo "$@" | cut -d' ' -f1)
+line=$(echo "$@" | cut -d' ' -f2- | xargs)
+
+case "$command" in
+    'checkout' )
+        echo $line | sed "s/^\t*\*//" | tr -s " " | awk '{print $1}'
+        ;;
+    'rebase' )
+        # commit=$(echo $line | cut -d' ' -f1)
+        # echo "${commit}~"
+        echo $line | awk '{print $1"~"}'
+        ;;
+    'add' )
+        echo $line | awk '{print $2}'
+        ;;
+    * )
+        echo $line
+esac
