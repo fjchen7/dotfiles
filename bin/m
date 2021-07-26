@@ -64,14 +64,12 @@ fzf_header=$(cat <<EOF
 EOF
 )
 fzf_preview='expr="bat --theme=Dracula --style=plain --color=always --tabs=4 --wrap=auto {1}.md"; [[ -z {2} ]] && eval "$expr" || eval "$expr --highlight-line {2}"'
-FZF_DEFAULT_OPTS="--height=72% --info=hidden --ansi --layout=reverse --extended --cycle --exact --no-sort --tabstop=4 \
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --height=72% --info=hidden \
 --header '${fzf_header}' \
 --preview '${fzf_preview}' \
 --preview-window down,75%:wrap,border \
 --print-query \
---bind='ctrl-j:preview-down' \
---bind='ctrl-k:preview-up' \
---bind='ctrl-e:execute(cd ${DOTFILES_CHEATSHEETS_ROOT}; ${EDITOR:-vim} .; [[ -n {1} ]] && ${EDITOR:-vim} {1}.md || ${EDITOR:-vim} {q}.md)+abort'
+--bind='ctrl-e:execute(cd ${DOTFILES_CHEATSHEETS_ROOT}; [[ -n {1} ]] && ${EDITOR:-vim} {1}.md || ${EDITOR:-vim} {q}.md)+abort'
 "
 LESS='-iMsR -j3'
 
