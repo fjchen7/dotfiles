@@ -18,13 +18,15 @@ fpath=(${ZSH_CUSTOM}/themes/spaceship-prompt $fpath)
 
 # fzf
 # https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings
+# shell edit keys shouldn't be bound, e.g. C-u, C-e/a, C-w...
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 FZF_OPT_BASE="--exact --extended --color=16 --ansi --tabstop=4 --no-sort --info=inline --layout=reverse --cycle \
---bind='ctrl-j:preview-down' \
---bind='ctrl-k:preview-up' \
---bind='ctrl-d:preview-half-page-down' \
---bind='ctrl-u:preview-half-page-up' \
+--bind='ctrl-alt-d:preview-half-page-down' \
+--bind='ctrl-alt-u:preview-half-page-up' \
+--bind='ctrl-alt-j:preview-down' \
+--bind='ctrl-alt-k:preview-up' \
 --bind 'ctrl-/:toggle-preview'"
+
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="${FZF_OPT_BASE} --height=40%"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap"
@@ -71,9 +73,9 @@ _fzf_complete_git() {
             ;;
         'add '* | 'diff'* )
             _git_sub_command="add"
-            local files=$(git -c color.status=always status --short)
+            local files=$(git -c color.status=always status --short | xargs -L1)
             # "git ls-files --error-unmatch FILE" will exit 1 if file is inexistent
-            _fzf_complete --height=70% --delimiter ' ' --multi --nth 2.. --preview-window right,65% --preview 'git ls-files --error-unmatch {-1} >/dev/null 2>&1 && (git diff --color=always -- {-1} | sed 1,4d) || bat --style=plain --color=always --tabs=4 --wrap=auto {-1}' -- "$@" < <(
+            _fzf_complete --height=70% --multi --nth 2.. --preview-window right,70%,wrap --preview 'git ls-files --error-unmatch {-1} >/dev/null 2>&1 && (git diff --color=always -- {-1} | sed 1,4d) || bat --style=plain {-1}' -- "$@" < <(
                 echo $files
             )
             ;;

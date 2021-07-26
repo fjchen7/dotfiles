@@ -27,7 +27,7 @@ export PROMPT_EOL_MARK=''
 
 # timer format
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/timer
-TIMER_FORMAT='[%d]'
+export TIMER_FORMAT='[%d]'
 
 # turn off bell/beep
 unsetopt BEEP
