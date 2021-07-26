@@ -28,3 +28,5 @@ for file in "${INSTALLERS[@]}"; do
         awk "NR > ${start_line_number}" ${file} | while read -r line; do if [[ ! -z ${line} ]]; then sh -c "${line}"; else break; fi; done
     fi
 done
+
+ln -s "$DOTFILES_ROOT/tools/config/bat.config.symlink" "$HOME/.config/bat/config"

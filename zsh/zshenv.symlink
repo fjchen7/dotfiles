@@ -31,8 +31,9 @@ export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
 # -s: combine multiple blank lines into one line
 # -F: quit if screen can shows all content
 # -R: not show escape sequences like ESC[, and will convert them into ANSI color
+# --mouse: enable mouse input
 # -j2: lines between top and matched text (https://superuser.com/a/257626)
-export LESS='-iMsFR -j2'
+export LESS='-iMsFR --mouse -j2'
 export PAGER='less'
 if [[ -n $(which code) ]]; then
     export EDITOR='code'

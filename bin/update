@@ -14,9 +14,17 @@ info_begin() {
 info_end() {
     printf "\r${CLEAR_SCRRN}..[ End ] upgrading ${UPURPLE}$1${COLOR_OFF} $2\n\n"
 }
+is_linux() {
+    [[ "$OSTYPE" =~ "^linux" ]] && return true
+    return false
+}
+is_macOS() {
+    [[ "$OSTYPE" =~ "^Darwin" ]] && return true
+    return false
+}
 
 update_brew_cask() {
-    if [[ "$(uname -s)" == "Darwin" ]]; then
+    if is_macOS; then
         info_begin "BREW CASK" "packages"
         brew upgrade
         brew cask reinstall `brew cask outdated`
@@ -24,7 +32,7 @@ update_brew_cask() {
     fi
 }
 update_brew() {
-    if [[ "$(uname -s)" == "Darwin" ]]; then
+    if is_macOS; then
         info_begin "BREW" "packages"
         brew upgrade
         brew upgrade `brew outdated`
@@ -37,7 +45,7 @@ update_pip() {
     info_end "PYTHON3" "packages"
 }
 update_apt() {
-    if [[ "$(uname -s)" == "Linux" ]]; then
+    if is_linux; then
         info_begin "APT" "packages"
         sudo apt-get upgrade -y
         sudo apt-get upgrade -y
@@ -63,6 +71,15 @@ update_zsh() {
     info_end "zsh"
 }
 
+update_fzf() {
+    info_begin "fzf"
+    # update fzf
+    is_linux && (cd ${HOME}/.fzf && git pull)
+    # update fzf plugin
+    fd . $HOME/.fzf.plugins --type=d --max-depth=1 | xargs -L1 -I{} bash -c "cd {}; git pull"
+    info_end "fzf"
+}
+
 case "$1" in
     "-b" | "--brew" )
         update_brew
@@ -78,6 +95,7 @@ case "$1" in
         ;;
     "-z" | "--zsh" )
         update_zsh
+        update_fzf
         ;;
     "-a" | "--all" )
         update_brew
