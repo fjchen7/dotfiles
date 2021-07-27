@@ -19,7 +19,7 @@ is_linux() {
     return false
 }
 is_macOS() {
-    [[ "$OSTYPE" =~ "^Darwin" ]] && return true
+    [[ "$OSTYPE" =~ "^darwin" ]] && return true
     return false
 }
 
@@ -55,29 +55,21 @@ update_apt() {
 }
 update_zsh() {
     info_begin "zsh"
-    local zsh_root=${ZSH:-$HOME/.oh-my-zsh}
-    local zsh_custom_root=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 
-    echo "⚙️  updating zsh theme <powerlevel10k>..."
-    git -C ${zsh_custom_root}/themes/powerlevel10k pull
-    local plugin_dirs=('zsh-autosuggestions' 'zsh-completions' 'zsh-syntax-highlighting')
-    for plugin_dir in "${plugin_dirs[@]}"; do
-        echo "⚙️  updating zsh plugin <${plugin_dir}>..."
-        git -C ${zsh_custom_root}/plugins/${plugin_dir} pull
-    done
+    printf "⚙️  updating zsh theme <powerlevel10k>...\n"
+    git -C $ZSH_CUSTOM/themes/powerlevel10k pull
+
+    while read -r plugin_root; do
+        printf "⚙️  updating zsh plugin <${plugin_root##*/}>...\n"
+        git -C $plugin_root pull
+    done < <(
+        fd . ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins --type=d --max-depth=1
+    )
+
     printf '⚙️  updating zsh by "omz update".\n'
-    (source ${zsh_root}/lib/cli.zsh && omz update)
+    (source $ZSH/lib/cli.zsh && omz update)
 
     info_end "zsh"
-}
-
-update_fzf() {
-    info_begin "fzf"
-    # update fzf
-    is_linux && (cd ${HOME}/.fzf && git pull)
-    # update fzf plugin
-    fd . $HOME/.fzf.plugins --type=d --max-depth=1 | xargs -L1 -I{} bash -c "cd {}; git pull"
-    info_end "fzf"
 }
 
 case "$1" in
@@ -95,7 +87,6 @@ case "$1" in
         ;;
     "-z" | "--zsh" )
         update_zsh
-        update_fzf
         ;;
     "-a" | "--all" )
         update_brew
