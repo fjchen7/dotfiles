@@ -5,13 +5,15 @@
 #   https://scriptingosx.com/2019/06/moving-to-zsh-part-2-configuration-files/
 
 export ZSH=~/.oh-my-zsh
-export ZSH_CUSTOM=${ZSH}/custom
-export ZSH_THEME=${ZSH}/themes
+export ZSH_CUSTOM=$ZSH/custom
+export ZSH_THEME=$ZSH/themes
+export FZF_PLUGINS_ROOT=$HOME/.fzf.plugins
 
-export DOTFILES_ROOT=${HOME}/.dotfiles
-export DOTFILES_BIN_ROOT=${DOTFILES_ROOT}/bin
-export DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
-export DOTFILES_CHEATSHEETS_ROOT=${DOTFILES_ROOT}/cheatsheets
+export DOTFILES_ROOT=$HOME/.dotfiles
+export DOTFILES_BIN_ROOT=$DOTFILES_ROOT/bin
+export DOTFILES_ZSH_ROOT=$DOTFILES_ROOT/zsh
+export DOTFILES_FZF_ROOT=$DOTFILES_ZSH_ROOT/fzf
+export DOTFILES_CHEATSHEETS_ROOT=$DOTFILES_ROOT/cheatsheets
 export VIMRC=$HOME/.vim_runtime/vimrcs
 
 case "$OSTYPE" in
@@ -25,7 +27,11 @@ case "$OSTYPE" in
         ;;
 esac
 
-export LSCOLORS=ExFxCxDxBxegedabagacad # ls color
+# ls color
+export LSCOLORS=ExFxCxDxBxegedabagacad  # for FreeBSD/macOS
+source $HOME/.local/share/lscolors.sh  # for linux
+
+# less color
 # -i: ignore case at search
 # -M: more information in prompt
 # -s: combine multiple blank lines into one line
@@ -47,4 +53,4 @@ export PYTHONIOENCODING='UTF-8'
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
-source ${DOTFILES_BIN_ROOT}/_msg
+source $DOTFILES_BIN_ROOT/_msg
