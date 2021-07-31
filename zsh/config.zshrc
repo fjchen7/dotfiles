@@ -28,7 +28,7 @@ export TIMER_FORMAT='[%d]'
 # brew install without updating (https://github.com/Homebrew/brew/issues/1670)
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-source $DOTFILES_ZSH_ROOT/fzf/fzf.zsh
+source $DOTFILES_ZSH_HOME/fzf/fzf.zsh
 
 # thefuck
 eval $(thefuck --alias)

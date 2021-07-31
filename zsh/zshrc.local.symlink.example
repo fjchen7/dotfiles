@@ -13,7 +13,7 @@ export JAVA_HOME="path/jdk1.8.0_221"
 export PATH=$JAVA_HOME/bin:$PATH
 export CLASS_PATH=$JAVA_HOME/lib
 export M2_HOME=~/apache-maven
-export PATH=${M2_HOME}/bin:$PATH
+export PATH=$M2_HOME/bin:$PATH
 export MAVEN_OPTS="-Xms256m -Xmx512m"
 
 export GOPATH=$HOME/go

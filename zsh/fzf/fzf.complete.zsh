@@ -5,7 +5,7 @@
 
 # fzf completion
 # ref: https://github.com/junegunn/fzf#settings
-export FZF_COMPLETION_OPTS="$FZF_OPT_BASE"
+export FZF_COMPLETION_OPTS="$FZF_BASE_OPTS"
 export FZF_COMPLETION_TRIGGER=';'
 
 # Functions about customized fzf completion:

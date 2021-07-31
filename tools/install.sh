@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-INSTALLERS=($(find ${DOTFILES_ROOT}/tools/installers -type f -name "*"))
+INSTALLERS=($(find ${DOTFILES_HOME}/tools/installers -type f -name "*"))
 FLAG=
 case "$OSTYPE" in
     darwin* )
@@ -13,7 +13,7 @@ case "$OSTYPE" in
         ;;
 esac
 # exit with error when platform is not macOS or Ubuntu
-[ -z ${FLAG} ] && source ${DOTFILES_BIN_ROOT}/_msg && _print_fail "Platform should be macOS or Ubuntu"
+[ -z ${FLAG} ] && source ${DOTFILES_BIN_HOME}/_msg && _print_fail "Platform should be macOS or Ubuntu"
 
 for file in "${INSTALLERS[@]}"; do
     cmd=$(grep -A1 "#cmd" ${file} | tail -n -1)
@@ -29,4 +29,4 @@ for file in "${INSTALLERS[@]}"; do
     fi
 done
 
-ln -s "$DOTFILES_ROOT/tools/config/bat.config.symlink" "$HOME/.config/bat/config"
+ln -s "$DOTFILES_HOME/tools/config/bat.config.symlink" "$HOME/.config/bat/config"

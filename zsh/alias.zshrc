@@ -145,7 +145,7 @@ function _join_by {
 }
 
 function _list_my_bin() {
-    fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | sort -n
+    fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_HOME}" --exec basename {} \; | sort -n
 }
 
 function _list_path() {

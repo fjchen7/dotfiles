@@ -1,6 +1,7 @@
 git/gitconfig.local.symlink
 zsh/zshrc.local.symlink
 cheatsheets
+vim/vim/bundle
 
 # Compiled Python files
 *.pyc

@@ -9,9 +9,9 @@
 edit_bin() {
     local file=$1
     if [[ -z $1 ]]; then
-        file=$(fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_ROOT}" --exec basename {} \; | fzf --preview 'bat --style=grid ${DOTFILES_BIN_ROOT}/{}' --preview-window right,80%)
+        file=$(fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_HOME}" --exec basename {} \; | fzf --preview 'bat --style=grid ${DOTFILES_BIN_HOME}/{}' --preview-window right,80%)
     fi
-    file=${DOTFILES_BIN_ROOT}/${file}
+    file=${DOTFILES_BIN_HOME}/${file}
 
     if [[ ! -e ${file} ]]; then
         touch ${file}
@@ -30,10 +30,10 @@ case "$1" in
         exec sudo "$EDITOR" --reuse-window "/etc/hosts"
         ;;
     dot* | d )
-        exec "$EDITOR" ${DOTFILES_ROOT}
+        exec "$EDITOR" ${DOTFILES_HOME}
         ;;
     cheatsheet* | cht* | c )
-        exec "$EDITOR" $(realpath ${DOTFILES_ROOT}/cheatsheets)
+        exec "$EDITOR" $(realpath ${DOTFILES_HOME}/cheatsheets)
         ;;
     b | bin* )
         edit_bin $2

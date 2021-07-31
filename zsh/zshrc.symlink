@@ -1,14 +1,10 @@
 # history
-export HISTFILE=~/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
-export HISTCONTROL='ignoreboth' # don't show duplicates and commands that begin with a space in history.
 setopt SHARE_HISTORY  # adds history incrementally and share it across sessions
 setopt EXTENDED_HISTORY # add timestamps to history
 setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
 setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line being added to the history list.
 
-source $DOTFILES_ZSH_ROOT/appearance.zshrc
+source $DOTFILES_ZSH_HOME/appearance.zshrc
 plugins=(osx zsh-syntax-highlighting zsh-autosuggestions autojump timer fzf-tab)
 # zsh-completions
 source $ZSH/oh-my-zsh.sh
@@ -20,22 +16,22 @@ autoload -U compinit
 compinit -u  # -u to avoid security check
 
 typeset -U zshrc_files
-zshrc_files=( ${DOTFILES_ZSH_ROOT}/{config,zle,alias}.zshrc )
+zshrc_files=( $DOTFILES_ZSH_HOME/{config,zle,alias}.zshrc )
 zshrc_files+=( ${HOME}/.zshrc.local )
 for file in ${zshrc_files}; do
     source $file
 done
 
-# source all *.zshrc other than ${DOTFILES_ZSH_ROOT}/*.zshrc
+# source all *.zshrc other than $DOTFILES_ZSH_HOME/*.zshrc
 # :# usgae: http://zsh.sourceforge.net/Doc/Release/Expansion.html
-zshrc_files=(${DOTFILES_ROOT}/**/*.zshrc)
-zshrc_files=${zshrc_files:#${DOTFILES_ZSH_ROOT}/*.zshrc}
+zshrc_files=(${DOTFILES_HOME}/**/*.zshrc)
+zshrc_files=${zshrc_files:#$DOTFILES_ZSH_HOME/*.zshrc}
 for file in ${zshrc_files}; do
     source $file
 done
 unset zshrc_files
 
 export PATH=~/.local/bin:$PATH
-export PATH=${DOTFILES_BIN_ROOT}:$PATH
+export PATH=$DOTFILES_BIN_HOME:$PATH
 
 echo "Oh My Zsh!"  # Welcome
