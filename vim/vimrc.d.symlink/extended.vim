@@ -5,8 +5,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Temporary
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>vrc :tabedit ~/.vim_runtime/vimrcs/basic.vim<cr>
-nnoremap <leader>vp :tabedit ~/.vim_runtime/vimrcs/plugins_config.vim<cr>
 nnoremap <leader>so :source ~/.vimrc<cr>:noh<cr>
 
 
@@ -15,7 +13,7 @@ nnoremap <leader>so :source ~/.vimrc<cr>:noh<cr>
 "    means that you can undo even when you close a buffer/VIM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 try
-    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undodir=~/.config/vim/vim_runtime/temp_dirs/undodir
     set undofile
 catch
 endtry

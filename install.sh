@@ -4,25 +4,25 @@
 #set -u    # report error if visiting undeclared variable
 
 setup() {
-    export DOTFILES_ROOT="${HOME}/.dotfiles"
-    export DOTFILES_BIN_ROOT="${DOTFILES_ROOT}/bin"
-    [ ! -e ${DOTFILES_ROOT} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_ROOT}
-    source ${DOTFILES_BIN_ROOT}/_msg    # print helper functions
+    export DOTFILES_HOME="${HOME}/.dotfiles"
+    export DOTFILES_BIN_HOME="${DOTFILES_HOME}/bin"
+    [ ! -e ${DOTFILES_HOME} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_HOME}
+    source ${DOTFILES_BIN_HOME}/_msg    # print helper functions
     [ ! -e "${HOME}/.local" ] && mkdir -p "${HOME}/.local"
 }
 
 setup_local_zshrc() {
-    local DOTFILES_ZSH_ROOT=${DOTFILES_ROOT}/zsh
-    if [[ ! -e ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink ]]; then
+    local DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
+    if [[ ! -e ${DOTFILES_ZSH_HOME}/zshrc.local.symlink ]]; then
         _print_info 'setup zshrc.local'
-        cp ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink.example ${DOTFILES_ZSH_ROOT}/zshrc.local.symlink
+        cp ${DOTFILES_ZSH_HOME}/zshrc.local.symlink.example ${DOTFILES_ZSH_HOME}/zshrc.local.symlink
         _print_ok 'zshrc.local'
     fi
 }
 
 setup_local_gitconfig() {
-    local DOTFILES_GIT_ROOT=${DOTFILES_ROOT}/git
-    if [[ ! -e ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink ]]; then
+    local DOTFILES_GIT_HOME=${DOTFILES_HOME}/git
+    if [[ ! -e ${DOTFILES_GIT_HOME}/gitconfig.local.symlink ]]; then
         _print_info 'setup gitconfig.local'
 
         _print_ask ' - What is your github author name?'
@@ -31,15 +31,15 @@ setup_local_gitconfig() {
         read -e git_authoremail
 
         sed -e "s/AUTHORNAME/${git_authorname}/g" -e "s/AUTHOREMAIL/${git_authoremail}/g" \
-            ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink.example > ${DOTFILES_GIT_ROOT}/gitconfig.local.symlink
+            ${DOTFILES_GIT_HOME}/gitconfig.local.symlink.example > ${DOTFILES_GIT_HOME}/gitconfig.local.symlink
 
         _print_ok 'gitconfig.local'
     fi
 }
 
 setup_cheatsheets() {
-    local dotfiles_cheatsheet_root="${DOTFILES_ROOT}/cheatsheets"
-    _print_ask "Do you want to create a new cheatsheets under ${DOTFILES_ROOT}? [y/n]"
+    local dotfiles_cheatsheet_root="${DOTFILES_HOME}/cheatsheets"
+    _print_ask "Do you want to create a new cheatsheets under ${DOTFILES_HOME}? [y/n]"
     read yn
     if [[ ${yn} =~ "y|Y" ]]; then
         mkdir ${dotfiles_cheatsheet_root}
@@ -104,7 +104,7 @@ link_file() {
     fi
 
     if [[ "$skip" == "true" ]]; then
-        _print_ok "skipped ${src/${DOTFILES_ROOT}\//}"
+        _print_ok "skipped ${src/${DOTFILES_HOME}\//}"
     else  # $skip == "false" or empty
         ln -s "$1" "$2"
         _print_ok "linked $1 to $2"
@@ -115,7 +115,7 @@ install_dotfiles() {
     _print_info 'installing dotfiles'
 
     local overwrite_all=false backup_all=false skip_all=false
-    for src in $(find "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink'); do
+    for src in $(find "$DOTFILES_HOME" -maxdepth 2 -name '*.symlink'); do
         dst="$HOME/.$(basename "${src%.*}")"
         link_file "$src" "$dst"
     done
@@ -128,7 +128,7 @@ install_tools() {
     [ -z "$(command -v python3)" ] && sudo apt-get -y install python3.8
     [ -z "$(command -v pip3)" ] && sudo apt-get -y install python3-pip
     # find and run all dotfiles lines iteratively
-    find ${DOTFILES_ROOT} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read line; do sh -c "${line}"; _print_ok "installed: ${line/${DOTFILES_ROOT}\//}"; done
+    find ${DOTFILES_HOME} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read line; do sh -c "${line}"; _print_ok "installed: ${line/${DOTFILES_HOME}\//}"; done
 }
 
 setup

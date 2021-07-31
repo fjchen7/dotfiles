@@ -66,5 +66,5 @@ zstyle ':completion:*:*:git:*' complete-options false
 compdef _gnu_generic fzf
 compdef _gnu_generic curl
 
-fpath=($DOTFILES_ROOT/fzf/complete/ $fpath)
+fpath=($DOTFILES_HOME/fzf/complete/ $fpath)
 compinit -u  # -u to avoid security check

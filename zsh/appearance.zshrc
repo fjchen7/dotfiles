@@ -18,7 +18,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 # To customize prompt, run `p10k configure` or edit p10k.zsh.
-source ${DOTFILES_ROOT}/zsh/p10k.zsh
+source $DOTFILES_HOME/zsh/p10k.zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # avoid line end with % when using `printf`

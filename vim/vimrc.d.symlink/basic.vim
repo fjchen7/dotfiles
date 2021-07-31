@@ -413,9 +413,9 @@ if v:version >= 700
     au BufEnter * if exists('b:winview') && !&diff | call winrestview(b:winview) | unlet! b:winview | endif
 endif
 
-" 修改*.vim和.vimrc配置文件后自动加载
+" 修改*$VIM/*和.vimrc配置文件后自动加载
 autocmd! bufwritepost *.vim,.vimrc source ~/.vimrc | redraw | execute "echom '.vimrc is sourced!'"
-call SetupCommandAlias("vrc", "e ~/.vim_runtime/vimrcs/basic.vim")
+call SetupCommandAlias("vrc", "e $VIM/vim_runtime/vimrcs/basic.vim")
 
 " 外部程序打开文件
 nnoremap <silent> \ :!open <C-R>%<cr>
