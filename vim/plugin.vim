@@ -1,4 +1,4 @@
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=$XDG_CONFIG_HOME/vim/bundle/Vundle.vim
 
 call vundle#begin() " 插件管理
 Plugin 'VundleVim/Vundle.vim'
@@ -137,7 +137,7 @@ nmap <space>nf :NERDTreeFind<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-go
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" source $VIM_HOME/plugin.d/vimgo.vim
+" source $XDG_CONFIG_HOME/vim/plugin.d/vimgo.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

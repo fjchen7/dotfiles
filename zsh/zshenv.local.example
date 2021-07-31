@@ -1,0 +1,13 @@
+# Local zsh environment setting
+# This file will be loaded by $HOME/.zshenv, thus the exported environment variable can be used by script
+# You also can put credential here to prevent from committing them.
+
+export JAVA_HOME="//path/to/jdk1.8.0_221.jdk"
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASS_PATH=$JAVA_HOME/lib
+export M2_HOME="//path/to/maven/3.6.3_1"
+export PATH=$M2_HOME/bin:$PATH
+export MAVEN_OPTS="-Xms256m -Xmx512m"
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin:/usr/local/opt/go/libexec/bin:~/bin
