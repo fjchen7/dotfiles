@@ -5,8 +5,7 @@ setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
 setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line being added to the history list.
 
 source $DOTFILES_ZSH_HOME/appearance.zshrc
-plugins=(osx zsh-syntax-highlighting zsh-autosuggestions autojump timer fzf-tab)
-# zsh-completions
+plugins=(osx zsh-syntax-highlighting zsh-autosuggestions autojump timer zsh-completions fzf-tab)
 source $ZSH/oh-my-zsh.sh
 
 # autoload loads script as function by searching $fpath.
@@ -15,23 +14,9 @@ source $ZSH/oh-my-zsh.sh
 autoload -U compinit
 compinit -u  # -u to avoid security check
 
-typeset -U zshrc_files
-zshrc_files=( $DOTFILES_ZSH_HOME/{config,zle,alias}.zshrc )
-zshrc_files+=( ${HOME}/.zshrc.local )
-for file in ${zshrc_files}; do
-    source $file
-done
-
-# source all *.zshrc other than $DOTFILES_ZSH_HOME/*.zshrc
-# :# usgae: http://zsh.sourceforge.net/Doc/Release/Expansion.html
-zshrc_files=(${DOTFILES_HOME}/**/*.zshrc)
-zshrc_files=${zshrc_files:#$DOTFILES_ZSH_HOME/*.zshrc}
-for file in ${zshrc_files}; do
-    source $file
-done
-unset zshrc_files
-
-export PATH=~/.local/bin:$PATH
-export PATH=$DOTFILES_BIN_HOME:$PATH
+source $DOTFILES_ZSH_HOME/config.zshrc
+source $DOTFILES_ZSH_HOME/zle.zshrc
+source $DOTFILES_ZSH_HOME/alias.zshrc
+[[ -e $DOTFILES_ZSH_HOME/zshrc.local ]] && source $DOTFILES_ZSH_HOME/zshrc.local
 
 echo "Oh My Zsh!"  # Welcome

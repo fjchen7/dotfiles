@@ -3,137 +3,136 @@
 #set -e    # exit script when error happens
 #set -u    # report error if visiting undeclared variable
 
-setup() {
-    export DOTFILES_HOME="${HOME}/.dotfiles"
-    export DOTFILES_BIN_HOME="${DOTFILES_HOME}/bin"
-    [ ! -e ${DOTFILES_HOME} ] && git clone https://github.com/fjchen7/dotfiles ${DOTFILES_HOME}
-    source ${DOTFILES_BIN_HOME}/_msg    # print helper functions
-    [ ! -e "${HOME}/.local" ] && mkdir -p "${HOME}/.local"
+prepare() {
+    export DOTFILES_HOME=$HOME/.dotfiles
+    [[ ! -e $DOTFILES_HOME ]] && git clone https://github.com/fjchen7/dotfiles $DOTFILES_HOME
+    source $DOTFILES_HOME/zsh/zshenv  # load environment varibales
+    source $DOTFILES_HOME/bin/_msg    # helper functions for print
 }
 
-setup_local_zshrc() {
-    local DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
-    if [[ ! -e ${DOTFILES_ZSH_HOME}/zshrc.local.symlink ]]; then
-        _print_info 'setup zshrc.local'
-        cp ${DOTFILES_ZSH_HOME}/zshrc.local.symlink.example ${DOTFILES_ZSH_HOME}/zshrc.local.symlink
-        _print_ok 'zshrc.local'
-    fi
-}
-
-setup_local_gitconfig() {
-    local DOTFILES_GIT_HOME=${DOTFILES_HOME}/git
-    if [[ ! -e ${DOTFILES_GIT_HOME}/gitconfig.local.symlink ]]; then
-        _print_info 'setup gitconfig.local'
-
-        _print_ask ' - What is your github author name?'
-        read -e git_authorname
-        _print_ask ' - What is your github author email?'
-        read -e git_authoremail
-
-        sed -e "s/AUTHORNAME/${git_authorname}/g" -e "s/AUTHOREMAIL/${git_authoremail}/g" \
-            ${DOTFILES_GIT_HOME}/gitconfig.local.symlink.example > ${DOTFILES_GIT_HOME}/gitconfig.local.symlink
-
-        _print_ok 'gitconfig.local'
-    fi
-}
-
-setup_cheatsheets() {
-    local dotfiles_cheatsheet_root="${DOTFILES_HOME}/cheatsheets"
-    _print_ask "Do you want to create a new cheatsheets under ${DOTFILES_HOME}? [y/n]"
-    read yn
-    if [[ ${yn} =~ "y|Y" ]]; then
-        mkdir ${dotfiles_cheatsheet_root}
-        _print_ok "create cheatsheet folder ${dotfiles_cheatsheet_root}"
-    else
-        _print_ask 'Input your current cheatsheets path:'
-        read real_cheatsheets_root
-        ln -s ${real_cheatsheets_root} ${dotfiles_cheatsheet_root}
-    fi
-}
-
-link_file() {
-    local src=$1 dst=$2
-
-    local overwrite= backup= skip=
-    local action=
-
-    # -f file, -d directory, -L symlink
-    if [[ -f "$dst" ]] || [[ -d "$dst" ]] || [[ -L "$dst" ]]; then
-        if [[ "$overwrite_all" == "false" ]] && [[ "$backup_all" == "false" ]] && [[ "$skip_all" == "false" ]]; then
-            local currentSrc="$(readlink $dst)"
-
-            if [[ "$currentSrc" == "$src" ]]; then
-                skip=true;
-            else
-                _print_ask "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-                [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-
-                read -n 1 action
-                case "$action" in
-                    o )
-                        overwrite=true;;
-                    O )
-                        overwrite_all=true;;
-                    b )
-                        backup=true;;
-                    B )
-                        backup_all=true;;
-                    s )
-                        skip=true;;
-                    S )
-                        skip_all=true;;
-                    * )
-                        ;;
-                esac
-            fi
+setup_zsh() {
+    local configs=(zshrc zshenv)
+    for i in "${configs[@]}"; do
+        local softlink=$HOME/.$i
+        local target=$DOTFILES_ZSH_HOME/$i
+        local yn="y"
+        if [[ -e $softlink ]]; then
+            _print_ask "Do you want to overwrite $softlink? [y/n]"
+            read -n 1 yn
         fi
+        [[ $yn != 'y' ]] && _print_info "Won't overwrite $softlink" && continue
+        ln -sf $target $softlink && _print_info "create soft link $softlink"
+    done
 
-        overwrite=${overwrite:-$overwrite_all}
-        backup=${backup:-$backup_all}
-        skip=${skip:-$skip_all}
-
-        if [[ "$overwrite" == "true" ]]; then
-            rm -rf "$dst"
-            _print_ok "removed $dst"
-        fi
-
-        if [[ "$backup" == "true" ]]; then
-            mv "$dst" "${dst}.backup"
-            _print_ok "moved $dst to ${dst}.backup"
-        fi
-    fi
-
-    if [[ "$skip" == "true" ]]; then
-        _print_ok "skipped ${src/${DOTFILES_HOME}\//}"
-    else  # $skip == "false" or empty
-        ln -s "$1" "$2"
-        _print_ok "linked $1 to $2"
-    fi
-}
-
-install_dotfiles() {
-    _print_info 'installing dotfiles'
-
-    local overwrite_all=false backup_all=false skip_all=false
-    for src in $(find "$DOTFILES_HOME" -maxdepth 2 -name '*.symlink'); do
-        dst="$HOME/.$(basename "${src%.*}")"
-        link_file "$src" "$dst"
+    local local_configs=(zshenv zshrc)
+    for i in "${local_configs[@]}"; do
+        local file=$DOTFILES_ZSH_HOME/$i.local
+        [[ ! -e $file ]] && cp $file.example $file
     done
 }
 
-install_tools() {
-    _print_info "installing tools and dependencies"
+setup_cheatsheets() {
+    _print_info "Start setting up cheatsheet"
+    local yn="n"
+    if [[ -e $CHEATSHEETS_HOME ]]; then
+        _print_info "$CHEATSHEETS_HOME exits. Won't do anything."
+    else
+        _print_ask "Do you want to create $CHEATSHEETS_HOME? [y/n]"
+        read -n 1 yn
+    fi
+    [[ yn != "y" ]] && return
 
-    # pre install
-    [ -z "$(command -v python3)" ] && sudo apt-get -y install python3.8
-    [ -z "$(command -v pip3)" ] && sudo apt-get -y install python3-pip
-    # find and run all dotfiles lines iteratively
-    find ${DOTFILES_HOME} -mindepth 2 -maxdepth 2 -type f -name install.sh | while read line; do sh -c "${line}"; _print_ok "installed: ${line/${DOTFILES_HOME}\//}"; done
+    local target=
+    _print_ask "Prepare to crate soft link $CHEATSHEETS_HOME, please input the target directory: "
+    read target
+    [[ ! -e $target ]] && _print_fail "target cheatsheet directory $target does not exsit!" && return
+    ln -s $target $CHEATSHEETS_HOME
+
+    _print_info "End setting up cheatsheets"
 }
 
-setup
-setup_local_zshrc
-setup_local_gitconfig
+setup_git() {
+    _print_info "Start setting up git"
+    local DOTFILES_GIT_HOME=$DOTFILES_HOME/git
+    local configs=(gitconfig gitignore)
+    for i in "${configs[@]}"; do
+        local softlink=$HOME/.$i
+        local target=$DOTFILES_GIT_HOME/$i
+        local yn="y"
+        if [[ -e $softlink ]]; then
+            _print_ask "Do you want to overwrite $softlink? [y/n]"
+            read -n 1 yn
+        fi
+        [[ $yn != 'y' ]] && _print_info "Won't overwrite $softlink" && continue
+        ln -sf $target $softlink && _print_info "create soft link $softlink"
+    done
+
+    local file=$DOTFILES_GIT_HOME/gitconfig.local
+    [[ ! -e $file ]] && cp $file.example $file
+    # -q quiet
+    if grep -Fq "USERNAME" $file; then
+        _print_info 'setup gitconfig.local'
+        _print_ask ' - What is your github user name?'
+        read -e user_name
+        _print_ask ' - What is your github user email?'
+        read -e user_email
+
+        sed -i '' -e "s/USERNAME/$user_name/g" -e "s/USEREMAIL/$user_email/g" $file
+        _print_info 'Git user name and email configured.'
+    fi
+    if [[ -z "$(command -v diff-so-fancy)" ]]; then
+        git clone https://github.com/so-fancy/diff-so-fancy $HOME/.local/diff-so-fancy
+        ln -s $HOME/.local/diff-so-fancy/bin/diff-so-fancy /usr/local/bin/diff-so-fancy
+    fi
+    _print_info "End setting up git"
+}
+
+setup_vim() {
+    _print_info "Start setting up vim"
+    [[ ! -e $XDG_CACHE_HOME/vim ]] && mkdir -p $XDG_CACHE_HOME/vim
+    [[ ! -e $XDG_CONFIG_HOME/vim ]] && ln -s $DOTFILES_HOME/vim $XDG_CONFIG_HOME/vim
+    [[ ! -e $HOME/.vim ]] && ln -s $DOTFILES_HOME/vim $HOME/.vim
+    [[ ! -e $HOME/.vimrc ]] && ln -s $DOTFILES_HOME/vim/vimrc $HOME/.vimrc
+
+    # install vim plugin manager
+    local vim_bundle=$XDG_CONFIG_HOME/vim/bundle
+    [[ ! -e $vim_bundle ]] && mkdir -p $vim_bundle
+    [[ ! -e $vim_bundle/Vundle.vim ]] && git clone https://github.com/VundleVim/Vundle.vim.git $vim_bundle/Vundle.vim
+    vim +PluginInstall +qall  # install vim plugins from CLI
+    _print_info "End setting up vim"
+}
+
+setup_tools() {
+    _print_info "Start setting up tools"
+
+    [ -z "$(command -v python3)" ] && sudo apt-get -y install python3.8
+    [ -z "$(command -v pip3)" ] && sudo apt-get -y install python3-pip
+    [[ -z "$(command -v tmux)" ]] && sudo apt-get -y install tmux
+
+    while read -r line; do
+        sh -c "$line"
+    done < <(cat $DOTFILES_HOME/tools/install.sh)
+
+    setup_tools_config
+
+    _print_info "End setting up tools"
+}
+
+setup_tools_config() {
+    _print_info "Start setting up tools configuration"
+    local DOEFILES_CONFIG_HOME=$DOTFILES_HOME/config
+
+    [[ ! -e $XDG_CONFIG_HOME/bat ]] && mkdir $XDG_CONFIG_HOME/bat
+    ln -s $DOEFILES_CONFIG_HOME/bat.config $XDG_CONFIG_HOME/bat/config
+    ln -s $DOEFILES_CONFIG_HOME/tmux.conf $HOME/.tmux.conf
+    ln -s $DOEFILES_CONFIG_HOME/tldrrc $HOME/.tldrrc
+
+    _print_info "End setting up tools configuration"
+}
+
+prepare
+setup_zsh
+setup_git
+setup_vim
 setup_cheatsheets
-install_dotfiles
-install_tools
+setup_tools

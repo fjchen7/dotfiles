@@ -50,7 +50,7 @@ _execute_cheatsheet() {
         * )
             matched_line=${matched_line%.md}  # remove suffix ".md"
             if [[ -n ${matched_line} ]]; then
-                glow -s ${DOTFILES_HOME}/tools/config/glow.style.json ${CHEATSHEETS_HOME}/${matched_line}.md
+                glow -s ${DOTFILES_HOME}/config/glow.style.json ${CHEATSHEETS_HOME}/${matched_line}.md
             else
                 [[ -n ${query_text} ]] && ${EDITOR:-vim} ${CHEATSHEETS_HOME}/${query_text}.md
             fi

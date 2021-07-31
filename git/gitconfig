@@ -94,7 +94,7 @@
 
 # Inclucde local config
 [include]
-    path = ~/.gitconfig.local
+    path = ~/.dotfiles/git/gitconfig.local
 [credential]
     # Permanently authenticating with Git repositories
     # https://stackoverflow.com/a/28562712/10134408

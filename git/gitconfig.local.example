@@ -4,5 +4,5 @@
 # https://stackoverflow.com/questions/4310974/more-than-one-value-for-the-key-user-name-git
 
 [user]
-    name = AUTHORNAME
-    email = AUTHOREMAIL
+    name = USERNAME
+    email = USEREMAIL
