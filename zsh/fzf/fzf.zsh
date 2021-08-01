@@ -9,7 +9,7 @@ export FZF_ALT_C_COMMAND="fd --hidden --follow --exclude .git --maxdepth=1 ."
 export FZF_ALT_C_OPTS="--preview 'tree -CNFl -L 2 {} | head -200'"
 
 # source fzf configurations
-fzf_zshes=('complete.zsh' 'fzf.complete.zsh')
+fzf_zshes=('complete.fzf.zsh' 'complete.zsh')
 for zsh in "${fzf_zshes[@]}"; do
     source $DOTFILES_HOME/zsh/fzf/$zsh
 done
