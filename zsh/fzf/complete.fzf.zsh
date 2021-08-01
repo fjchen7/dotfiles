@@ -87,7 +87,7 @@ _fzf_complete_git() {
     # $@ is not an array but a string
     ARGS=$(echo $@ | cut -d' ' -f2-)
     # todo: environment set for default opt
-    local DEFAULT_OPTS_HEIGHT="--height=95%"
+    local DEFAULT_OPTS_HEIGHT="--height=90%"
     local DEFAULT_OPTS_PREVIEW_WINDOW="--preview-window=down,75%,wrap"
     case "$ARGS" in
         'co '* | 'checkout '* )

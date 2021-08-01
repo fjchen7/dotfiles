@@ -1,6 +1,3 @@
-
-[[ -z $(which disable-fzf-tab) ]] && disable-fzf-tab
-
 # +---------+
 # | Options |
 # +---------+
@@ -9,10 +6,14 @@ setopt MENU_COMPLETE        # Automatically highlight first element of completio
 setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
 setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 setopt ALWAYS_TO_END        # Move cursor to end if word had one match
+setopt LIST_PACKED          # completion menu takes less spaces
 
 # +---------+
 # | zstyles |
 # +---------+
+# Some example:
+#     https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
+#     https://github.com/Phantas0s/.dotfiles/blob/master/zsh/completion.zsh
 
 # Set applied completers and the applied order
 zstyle ':completion:*' completer _extensions _complete _approximate
@@ -25,12 +26,17 @@ zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 # Descriptions -- color is not compatible with fzf-tab
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
 zstyle ':completion:*:descriptions' format '[%d]'  # show group name
 # zstyle ':completion:*:descriptions' format '%F{green}-- %d --%f'
-# zstyle ':completion:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-# zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*' verbose yes
+
+# Case-insensitive (all), partial-word, and then substring completion.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # Group matches
 zstyle ':completion:*:matches' group 'yes'
@@ -52,8 +58,7 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
     operator pcap postfix postgres privoxy pulse pvm quagga radvd \
     rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
 
-# prevent duplicate (a bug of _git completion) when completing git alias
-# workaround
+# prevent duplicates (look like a bug of _git completion) when completing git alias
 zstyle ':completion:*:*:git:*' tag-order 'common-commands' 'alias-commands' 'all-commands'
 # zstyle ':completion:*:*:git:*' tag-order 'common-commands' 'all-commands' 'alias-commands'
 zstyle ':completion:*:*:git:*' complete-options false
@@ -68,3 +73,33 @@ compdef _gnu_generic curl
 
 fpath=($DOTFILES_HOME/fzf/complete/ $fpath)
 compinit -u  # -u to avoid security check
+
+
+# +---------+
+# | fzf-tab |
+# +---------+
+# https://github.com/Aloxaf/fzf-tab
+
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:*' fzf-flags --color=16,hl:green,header:bold --height=40% --preview-window right,75%,wrap,hidden
+zstyle ':fzf-tab:complete:*' fzf-preview 'less $realpath'
+# `less <file>` shows information according to file type
+export LESSOPEN='|$DOTFILES_HOME/bin/_lessfilter %s'
+
+# environment variables
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview 'eval echo \$$word'
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-flags --color=16,hl:green --height=10% --preview-window up,30%,wrap
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' query-string ''  # empty query string
+
+# preview for cd/ls
+zstyle ':fzf-tab:complete:(cd|ls):*' fzf-flags --color=16,hl:green,header:bold --height=40% --preview-window right,75%,wrap --header='^E Edit, ^O Open'
+zstyle ':fzf-tab:complete:(cd|ls):*' fzf-bindings \
+    'ctrl-e:execute-silent({_FTB_INIT_}code "$realpath")+abort' \
+    'ctrl-o:execute-silent({_FTB_INIT_}open "$realpath")+abort'
+
+# preview for kill/ps
+# zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':completion:*:*:*:*:processes' command "ps -ef"
+zstyle ':completion:*:*:(kill|ps):*' complete-options false
+zstyle ':fzf-tab:complete:(kill|ps):*' fzf-preview $'[[ $group == "[process ID]" ]] && ps -f -p $word'  # only show items in group 'process ID'
+zstyle ':fzf-tab:complete:(kill|ps):*' fzf-flags --height=70% --color=16,hl:green --preview-window=down:20%:wrap --header='  UID   PID  PPID   C STIME   TTY           TIME CMD'

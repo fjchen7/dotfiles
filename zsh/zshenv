@@ -34,7 +34,7 @@ export HISTCONTROL='ignoreboth' # don't show duplicates and commands that begin 
 export WORKSPACE=$HOME/workspace
 
 # fzf
-export FZF_BASE_OPTS="--extended --multi --color=16,header:bold:underline --ansi --tabstop=4 --no-sort --info=inline --layout=reverse --cycle \
+export FZF_BASE_OPTS="--exact --extended --multi --color=16,hl:green,header:bold --ansi --tabstop=4 --no-sort --info=inline --layout=reverse --cycle \
 --bind 'tab:down' \
 --bind 'btab:up' \
 --bind='ctrl-n:down' \
@@ -46,7 +46,8 @@ export FZF_BASE_OPTS="--extended --multi --color=16,header:bold:underline --ansi
 --bind='alt-k:preview-up' \
 --bind='alt-d:preview-half-page-down' \
 --bind='alt-u:preview-half-page-up' \
---bind 'ctrl-/:toggle-preview'"
+--bind 'ctrl-/:toggle-preview' \
+--bind 'alt-enter:print-query'"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="$FZF_BASE_OPTS --height=40%"
 export CLICOLOR_FORCE=1  # Interpret ANSI color codes from the input (https://github.com/junegunn/fzf/issues/150)
