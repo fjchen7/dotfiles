@@ -41,33 +41,32 @@ _navi_call() {
 }
 _navi_widget() {
     # trim space (https://stackoverflow.com/a/68288735)
-    local -r input="${(MS)LBUFFER##[[:graph:]]*[[:graph:]]}"
+    local input="${(MS)LBUFFER##[[:graph:]]*[[:graph:]]}"
 
-    local -r last_command="$(echo $input | rev | cut -d'|' -f1 | rev | xargs)"
-    local prev_command="$(echo $input | rev | cut -d'|' -f2- | rev | xargs)"
-    [[ "$prev_command" == "$last_command" ]] && prev_command=
+    [[ $input[-1] == "|" ]] && input="$input "  # if last char is |, then last string will be null, which won't be split into array
+    local commands=(${(s:|:)input})  # split input by |
+    local last_command=$commands[-1]
+    local prev_command=${input%%$last_command}
 
-    local replacement
+    last_command="${(MS)last_command##[[:graph:]]*[[:graph:]]}"
+    prev_command="${(MS)prev_command##[[:graph:]]*[[:graph:]]}"
+
+    # local replacement
     if [ -z "$last_command" ]; then
         replacement="$(_navi_call --fzf-overrides '--no-select-1')"
     else
         replacement="$(_navi_call --query "$last_command")"
     fi
 
-    if [[ -z "$last_command" ]]; then  # if input is "<command> | "
-        if [[ -z "$input" ]]; then
-            previous_output="$replacement"
-        else
-            previous_output="$input $replacement"
-        fi
-    elif [[ -n "$replacement" ]]; then  # if accept
-        previous_output="${input/%$last_command/$replacement}"  # only replace last occurrence
-    else  # if abort
-        previous_output="$input"
+    if [[ -n "$replacement" ]]; then
+        output="$prev_command $replacement"
+    else
+        output="$input"
     fi
+    output="${(MS)output##[[:graph:]]*[[:graph:]]}"
 
     zle kill-whole-line
-    LBUFFER="$previous_output"
+    LBUFFER="$output"
     region_highlight=("P0 100 bold")
     zle redisplay
 }
