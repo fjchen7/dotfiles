@@ -3,10 +3,11 @@ return {
   dependencies = {
     "tpope/vim-rhubarb", -- Support :Browse of fugitive
   },
-  cmd = { "Git" },
+  event = "VeryLazy",
+  cmd = { "Git", "GDelete" },
   keys = {
     {
-      "<leader>ggf",
+      "<leader>gg",
       -- "<cmd>Git<cr><cmd>wincmd L<cr><cmd>vertical resize 60<cr><cmd>6<cr>",
       "<cmd>Git<cr>",
       desc = "Git (fugitive)",
@@ -19,7 +20,7 @@ return {
     },
     {
       mode = "n",
-      "<leader>go",
+      "<leader>gu",
       function()
         local clipboard = vim.fn.getreg("+")
         vim.cmd([[silent! GBrowse!]])
@@ -31,21 +32,23 @@ return {
       end,
       desc = "Open File's GitHub URL",
     },
+    { mode = "n", "<leader>gU", LazyVim.lazygit.browse, desc = "Open Repo's GitHub URL" },
     {
       mode = "n",
-      "<leader>gO",
+      "<leader>gy",
       function()
         vim.cmd([[silent! GBrowse!]])
         local url = vim.fn.getreg("+")
         local line, _ = unpack(vim.api.nvim_win_get_cursor(0))
         url = url .. [[#L]] .. tonumber(line)
         vim.fn.setreg("+", url)
+        vim.notify("Copied to clipboard: " .. url, "info", { title = "vim-fugitive" })
       end,
       desc = "Copy File's GitHub URL",
     },
-
-    { mode = "x", "<leader>go", [["vy<cmd>'<,'>GBrowse<cr>]], desc = "Open File's Ranged GitHub URL" },
-    { mode = "x", "<leader>gO", [["vy<cmd>'<,'>GBrowse!<cr>]], desc = "Copy File's Ranged GitHub URL" },
+    { mode = "x", "<leader>gu", [["vy<cmd>'<,'>GBrowse<cr>]], desc = "Open File's Ranged GitHub URL" },
+    { mode = "x", "<leader>gy", [["vy<cmd>'<,'>GBrowse!<cr>]], desc = "Copy File's Ranged GitHub URL" },
+    { mode = "n", "<leader>ga", [[<cmd>Git absorb<cr>]], desc = "Git absorb" },
   },
   init = function()
     local help_tags = {
