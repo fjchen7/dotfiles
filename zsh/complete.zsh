@@ -79,7 +79,7 @@ zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
 zstyle ':fzf-tab:*' single-group color
 zstyle ':fzf-tab:*' show-group full
 zstyle ':fzf-tab:*' prefix ''
-zstyle ':fzf-tab:*' continuous-trigger 'ctrl-l'
+zstyle ':fzf-tab:*' continuous-trigger '/'
 
 # environment variables
 # https://github.com/Aloxaf/fzf-tab/wiki/Preview#environment-variable
