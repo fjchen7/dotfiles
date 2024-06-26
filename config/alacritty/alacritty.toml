@@ -58,8 +58,8 @@ bindings = [
 
   { key = "n", mods = "Command", action = "CreateNewWindow" },
   { key = "t", mods = "Command", action = "CreateNewTab" },
-  { key = "]", mods = "Command|Shift", action = "SelectNextTab" },
-  { key = "[", mods = "Command|Shift", action = "SelectPreviousTab" },
+  { key = "]", mods = "Command | Shift", action = "SelectNextTab" },
+  { key = "[", mods = "Command | Shift", action = "SelectPreviousTab" },
   { key = "0", mods = "Command", action = "SelectLastTab" },
 
   { key = "0", mods = "Command", action = "ResetFontSize" },

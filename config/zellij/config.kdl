@@ -4,6 +4,11 @@
 // Default configuration: zellij setup --dump-config
 
 // Avaliable keys: https://zellij.dev/documentation/keybindings-keys
+
+// Problem of neovim in zellij
+// - Ctrl-LeftMouse doesn't work
+// - <C-S-*> doesn't work
+// - <C-i> is interpreted as <Tab> (https://github.com/zellij-org/zellij/issues/2825)
 keybinds {
 // keybinds clear-defaults=true {
     normal clear-defaults=true {
@@ -13,43 +18,43 @@ keybinds {
         // // Navigate with neovim
         // // - https://github.com/hiasr/vim-zellij-navigator
         // // - https://github.com/zellij-org/zellij/discussions/3077
-        // bind "Ctrl h" {
-        //     MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
-        //         name "move_focus";
-        //         payload "left";
-        //
-        //         // Plugin Configuration
-        //         move_mod "ctrl"; // Optional, should be added on every command if you want to use it
-        //         resize_mod "alt"; // Optional, should be added on every command if you want to use it
-        //     };
-        // }
-        // bind "Ctrl j" {
-        //     MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
-        //         name "move_focus";
-        //         payload "down";
-        //
-        //         move_mod "ctrl";
-        //         resize_mod "alt";
-        //     };
-        // }
-        // bind "Ctrl k" {
-        //     MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
-        //         name "move_focus";
-        //         payload "up";
-        //
-        //         move_mod "ctrl";
-        //         resize_mod "alt";
-        //     };
-        // }
-        // bind "Ctrl l" {
-        //     MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
-        //         name "move_focus";
-        //         payload "right";
-        //
-        //         move_mod "ctrl";
-        //         resize_mod "alt";
-        //     };
-        // }
+        bind "Ctrl h" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "left";
+
+                // Plugin Configuration
+                move_mod "ctrl"; // Optional, should be added on every command if you want to use it
+                resize_mod "alt"; // Optional, should be added on every command if you want to use it
+            };
+        }
+        bind "Ctrl j" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "down";
+
+                move_mod "ctrl";
+                resize_mod "alt";
+            };
+        }
+        bind "Ctrl k" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "up";
+
+                move_mod "ctrl";
+                resize_mod "alt";
+            };
+        }
+        bind "Ctrl l" {
+            MessagePlugin "file:~/.config/zellij/plugins/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "right";
+
+                move_mod "ctrl";
+                resize_mod "alt";
+            };
+        }
     }
     tmux clear-defaults=true {
         // bind "Alt m" { Write 2; SwitchToMode "Normal"; }
