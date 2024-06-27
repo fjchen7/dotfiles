@@ -156,7 +156,8 @@
         [:!Tgrave_accent_and_tilde [:openApp "Google Chrome"]]
         [:!Tv [:openApp "Visual Studio Code"]]
         [:!Te [:openApp "Finder"]]
-        [:!Tk [:openApp "Alacritty"]]
+        ; [:!Tk [:openApp "Alacritty"]]
+        [:!Tk [:openApp "Kitty"]]
         [:!Tbackslash [:openApp "Bitwarden"]]
 
         ; [:!Tp :!COSf12] ;; Quick flomo
