@@ -54,19 +54,21 @@ M.config = function(_, opts)
   local marks = require("marks")
   marks.setup(opts)
   vim.cmd([[hi! link MarkSignNumHL LineNr]])
-  require("which-key").register({
-    dm = {
-      name = "+delete marks",
-      a = { desc = "Delete Mark a" },
-      A = { desc = "Delete Mark A" },
+  require("which-key").add({
+    {
+      "dm",
+      group = "+delete marks",
+      { "a", desc = "Delete Mark a" },
+      { "A", desc = "Delete Mark A" },
       ["<space>"] = { desc = "Delete Lowercase Marks in Buffer" },
     },
-    m = {
-      name = "+marks/jumps/changes",
+    {
+      "m",
+      group = "+marks/jumps/changes",
       -- m = { desc = "Add/Delete Marks in Current Line" },
-      ["<tab>"] = { desc = "Preview Mark" },
-      ["<CR>"] = { name = "list marks" },
-      ["<space>"] = { desc = "Toggle Mark" },
+      { "<tab>", desc = "Preview Mark" },
+      { "<CR>", group = "list marks" },
+      { "<space>", desc = "Toggle Mark" },
     },
   })
 

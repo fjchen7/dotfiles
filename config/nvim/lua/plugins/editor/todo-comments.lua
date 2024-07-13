@@ -14,7 +14,7 @@ return {
       --   end,
       --   desc = "Buffer TODOs",
       -- },
-      { "<leader>dt", "<cmd>Trouble todo filter = {tag = {TODO}}<cr>", desc = "Workspace TODOs" },
+      { "<leader>dt", "<cmd>Trouble todo toggle filter = {tag = {TODO}}<cr>", desc = "Workspace TODOs" },
       { "<leader>dT", "<cmd>TodoTelescope keywords=TODO<cr>", desc = "Workspace TODOs (Telescope)" },
       -- {
       --   "<leader>qfb",
@@ -24,7 +24,7 @@ return {
       --   end,
       --   desc = "Buffer TODO/FIX",
       -- },
-      { "<leader>df", "<cmd>Trouble todo filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Workspace TODO/FIX" },
+      { "<leader>df", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Workspace TODO/FIX" },
       {
         "<leader>dF",
         "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
@@ -48,11 +48,5 @@ return {
     local map = Util.map
     map({ "n", "x", "o" }, "]t", next_todo_repeat, "Next TODO")
     map({ "n", "x", "o" }, "[t", prev_todo_repeat, "Prev TODO")
-    require("which-key").register({
-      ["<leader>q"] = {
-        t = { name = "TODO" },
-        f = { name = "TODO/FIX" },
-      },
-    })
   end,
 }

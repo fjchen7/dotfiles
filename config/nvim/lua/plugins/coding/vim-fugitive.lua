@@ -20,7 +20,7 @@ return {
     },
     {
       mode = "n",
-      "<leader>gu",
+      "<leader>go",
       function()
         local clipboard = vim.fn.getreg("+")
         vim.cmd([[silent! GBrowse!]])
@@ -32,7 +32,7 @@ return {
       end,
       desc = "Open File's GitHub URL",
     },
-    { mode = "n", "<leader>gU", LazyVim.lazygit.browse, desc = "Open Repo's GitHub URL" },
+    { mode = "n", "<leader>gO", LazyVim.lazygit.browse, desc = "Open Repo's GitHub URL" },
     {
       mode = "n",
       "<leader>gy",
@@ -46,7 +46,7 @@ return {
       end,
       desc = "Copy File's GitHub URL",
     },
-    { mode = "x", "<leader>gu", [["vy<cmd>'<,'>GBrowse<cr>]], desc = "Open File's Ranged GitHub URL" },
+    { mode = "x", "<leader>go", [["vy<cmd>'<,'>GBrowse<cr>]], desc = "Open File's Ranged GitHub URL" },
     { mode = "x", "<leader>gy", [["vy<cmd>'<,'>GBrowse!<cr>]], desc = "Copy File's Ranged GitHub URL" },
     { mode = "n", "<leader>ga", [[<cmd>Git absorb<cr>]], desc = "Git absorb" },
   },

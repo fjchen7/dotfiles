@@ -200,8 +200,8 @@ M.opts.window = {
     l = "open_node_or_go_child",
     H = "go_parent",
     L = "go_parent_sibling",
-    K = "prev_sibling",
-    J = "next_sibling",
+    -- K = "prev_sibling",
+    -- J = "next_sibling",
     ["c"] = "toggle_node_smart",
     C = "toggle_node",
     A = "noop",
@@ -282,7 +282,7 @@ M.opts.git_status = {
 M.config = function(_, opts)
   require("neo-tree").setup(opts)
   -- Highlight
-  -- vim.cmd("hi! link NeoTreeCursorLine QuickFixLine")
+  vim.cmd("hi! link NeoTreeCursorLine QuickFixLine")
   vim.api.nvim_create_autocmd("FileType", {
     pattern = { "neo-tree" },
     callback = function(opts)

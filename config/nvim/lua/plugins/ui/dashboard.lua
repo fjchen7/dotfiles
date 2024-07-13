@@ -50,7 +50,7 @@ return {
       -- { action = "Telescope live_grep",       desc = " Find text",       icon = " ", key = "g" },
       { action = "Telescope live_grep_args",  desc = " Search Text",     icon = " ", key = "s" },
       { action = "Telescope project",         desc = " Git Project",     icon = " ", key = "g" },
-      { action = open_config,     desc = " Config",          icon = " ", key = "c" },
+      { action = open_config,                 desc = " Config",          icon = " ", key = "c" },
       { action = "Lazy",                      desc = " Lazy",            icon = "󰒲 ", key = "z" },
       { action = "qa",                        desc = " Quit",            icon = " ", key = "q" },
     }

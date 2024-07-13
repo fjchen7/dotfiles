@@ -47,10 +47,10 @@ M.config = function(_, opts)
   map(ox, "iv", function() t.value("inner") end, "Value (KV)")
   map(ox, "av", function() t.value("outer") end, "Value (KV)")
   -- Entire content
-  map(ox, "iE", function() t.entireBuffer() end, "Entire Content")
-  map(ox, "aE", function() t.entireBuffer() end, "Entire Content")
-  map(ox, "ae", function() t.visibleInWindow() end, "Visible Content")
-  map(ox, "ie", function() t.visibleInWindow() end, "Visible Content")
+  map(ox, "ie", function() t.entireBuffer() end, "Entire Content")
+  map(ox, "ae", function() t.entireBuffer() end, "Entire Content")
+  -- map(ox, "ae", function() t.visibleInWindow() end, "Visible Content")
+  -- map(ox, "ie", function() t.visibleInWindow() end, "Visible Content")
 
   -- Number
   map(ox, "id", function() t.number("inner") end, "Digits")

@@ -101,7 +101,7 @@ return {
           end
           require("CopilotChat.integrations.telescope").pick(help)
         end,
-        desc = "Diagnostic Action (CopilotChat)",
+        desc = "Diagnostic Action",
         mode = { "n", "v" },
       },
     }
@@ -185,8 +185,8 @@ You must reply in Chinese language unless the answer is documentations, comments
         map("i", "<S-CR>", "<CR>", nil, { buffer = bufnr })
       end,
     })
-    require("which-key").register({
-      ["<leader>k"] = { name = "+Copilot Chat" },
+    require("which-key").add({
+      { "<leader>k", group = "+Copilot Chat" },
     })
     chat.setup(opts)
   end,

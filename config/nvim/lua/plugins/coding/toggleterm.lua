@@ -18,27 +18,30 @@ return {
   },
   config = function(_, opts)
     require("toggleterm").setup(opts)
-    local new_zellij = function()
-      local session_name = require("possession.session").get_session_name()
-      local cmd = session_name and "zellij attach -c " .. session_name or "zellij"
-      local zellij = require("toggleterm.terminal").Terminal:new({
-        cmd = cmd,
+    local new_termimal = function()
+      -- local session_name = require("possession.session").get_session_name()
+      -- local cmd = session_name and "zellij attach -c " .. session_name or "zellij"
+      local termimal = require("toggleterm.terminal").Terminal:new({
+        -- cmd = cmd,
         dir = "git_dir",
         direction = "float",
         float_opts = {
-          border = "none",
+          border = "single",
         },
       })
-      return zellij
+      return termimal
     end
     local map = Util.map
-    map({ "n", "t" }, "<C-\\>", function()
-      _G.zellij = zellij or new_zellij()
-      _G.zellij:toggle(nil, "float")
-    end, "Terminal")
-    map({ "n", "t" }, "<C-M-\\>", function()
-      _G.zellij = zellij or new_zellij()
-      _G.zellij:toggle(nil, "horizontal")
-    end, "Terminal")
+    local toggle_cmd = function(...)
+      local args = { ... } -- Capture varargs
+      return function()
+        if not _G.TOGGLETERM then
+          _G.TOGGLETERM = new_termimal()
+        end
+        _G.TOGGLETERM:toggle(table.unpack(args))
+      end
+    end
+    map({ "n", "t" }, "<C-\\>", toggle_cmd(nil, "float"), "Terminal")
+    map({ "n", "t" }, "<C-M-\\>", toggle_cmd(nil, "horizontal"), "Terminal")
   end,
 }

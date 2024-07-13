@@ -25,17 +25,17 @@ local accept_or_jump_next = function(fallback)
   local luasnip = require("luasnip")
   local orig_cursor = vim.api.nvim_win_get_cursor(0)
 
+  if copilot.is_visible() then
+    copilot.accept()
+    return
+  end
+
   if luasnip.expand_or_locally_jumpable() then
     luasnip.expand_or_jump()
     local cursor = vim.api.nvim_win_get_cursor(0)
     if cursor[1] ~= orig_cursor[1] or cursor[2] ~= orig_cursor[2] then
       return
     end
-  end
-
-  if copilot.is_visible() then
-    copilot.accept()
-    return
   end
 
   local confirm = cmp.confirm({
@@ -103,7 +103,8 @@ end
 
 local abort = function()
   cmp.abort()
-  -- copilot.dismiss()
+  local copilot = require("copilot.suggestion")
+  copilot.dismiss()
 end
 
 -- default mappings: https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/mapping.lua#L368

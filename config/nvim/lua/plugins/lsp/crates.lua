@@ -27,7 +27,7 @@ M.config = function(_, opts)
     pattern = "Cargo.toml",
     callback = function(options)
       local bufnr = options.buf
-      require("which-key").register({ name = "+Cargo.toml" }, { prefix = "<leader>cc", buffer = bufnr })
+      require("which-key").add({ "<leader>cc", group = "+Cargo.toml", buffer = bufnr })
       local crates = require("crates")
       local opts = { buffer = options.buf }
       local map = Util.map

@@ -37,6 +37,7 @@ return {
         "neotest-summary",
         "neotest-output",
         "neotest-output-panel",
+        "yazi",
       },
       callback = function(opts)
         vim.b[opts.buf].miniindentscope_disable = true

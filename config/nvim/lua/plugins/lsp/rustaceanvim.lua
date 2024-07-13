@@ -1,7 +1,7 @@
 local M = {
   -- A heavily modified fork of rust-tools
   "mrcjkb/rustaceanvim",
-  version = "^4",
+  version = "^5",
   ft = { "rust" },
   dependencies = {
     "neovim/nvim-lspconfig",
@@ -65,7 +65,7 @@ local rust_analyzer_server = {
 
     map("n", "<leader>cs", function()
       local rust_lsp = vim.lsp.get_clients({ name = "rust-analyzer" })[1]
-      local settings = rust_lsp.config.settings
+      local settings = rust_lsp.config.settings or {}
       Util.toggle(settings["rust-analyzer"].checkOnSave, function()
         settings["rust-analyzer"].checkOnSave = not settings["rust-analyzer"].checkOnSave
         rust_lsp.notify("workspace/didChangeConfiguration", { settings = settings })

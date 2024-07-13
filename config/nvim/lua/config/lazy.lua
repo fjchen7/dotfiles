@@ -14,6 +14,8 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.ui.edgy" },
     { import = "lazyvim.plugins.extras.editor.aerial" },
     { import = "lazyvim.plugins.extras.editor.dial" },
+    { import = "lazyvim.plugins.extras.editor.refactoring" },
+    { import = "lazyvim.plugins.extras.editor.inc-rename" },
     -- { import = "lazyvim.plugins.extras.editor.refactoring" },
     { import = "lazyvim.plugins.extras.ui.mini-indentscope" },
     -- { import = "lazyvim.plugins.extras.coding.copilot" },

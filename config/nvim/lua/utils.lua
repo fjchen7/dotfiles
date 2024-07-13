@@ -53,23 +53,32 @@ M.is_buffer_visible = function(bufnr)
 end
 
 M.map = function(mode, lhs, rhs, desc, opts)
-  opts = opts or {}
-  if rhs == nil then
-    opts.mode = mode
-    vim.defer_fn(function()
-      require("which-key").register({ [lhs] = { desc or "which_key_ignore" } }, opts)
-    end, 1000)
+  if vim.g.vscode then
+    opts = opts or {}
+    opts.desc = desc
+    opts.silent = true
+    vim.keymap.set(mode, lhs, rhs, opts)
     return
   end
-  if desc == nil then
-    desc = "which_key_ignore"
-  elseif desc == "" then
-    desc = nil
+  local specs = opts or {}
+  specs = vim.tbl_extend("error", specs, {
+    lhs,
+    rhs,
+    mode = mode,
+    desc = desc,
+    hidden = desc == nil,
+    silent = true,
+  })
+  LazyVim.on_load("which-key.nvim", function()
+    require("which-key").add({ specs })
+  end)
+end
+
+M.whichkey = function(...)
+  if vim.g.vscode then
+    return
   end
-  opts.desc = desc
-  opts.silent = true
-  opts.mode = nil
-  vim.keymap.set(mode, lhs, rhs, opts)
+  require("which-key").add(...)
 end
 
 M.feedkeys = function(key_codes, mode)
@@ -169,14 +178,5 @@ _G.info = function(msg)
 end
 
 _G.Util = M
-
-_G.WhichKey = {}
-
-_G.WhichKey.register = function(mappings, opts)
-  local ok, which_key = pcall(require, "which-key")
-  if ok then
-    which_key.register(mappings, opts)
-  end
-end
 
 return M

@@ -4,7 +4,7 @@ local del = vim.keymap.del
 -- Add undo break-points
 map("i", "<M-u>", "<C-o>u", "Undo")
 -- '"', "'" are taken charged by the autopair plugin
-for _, char in ipairs({ ",", ".", ";", "/" }) do
+for _, char in ipairs({ ",", ".", ";", "/", "=" }) do
   map("i", char, char .. "<C-g>u")
 end
 -- for _, char in ipairs({ "o", "O", "i", "I", "a", "A", "gi" }) do
@@ -29,7 +29,7 @@ end
 normal_cut()
 -- Blackhole register switch
 vim.g.cut_clipboard_enabled = true
-map({ "n", "x" }, "<leader><leader>", function()
+map({ "n", "x" }, "<BS><BS>", function()
   Util.toggle(function()
     return vim.g.cut_clipboard_enabled
   end, function()
@@ -47,9 +47,9 @@ map({ "n", "x" }, "<leader><leader>", function()
     vim.g.cut_clipboard_enabled = not vim.g.cut_clipboard_enabled
   end, "Clipboard for Cut")
 end, "Toggle Clipboard")
-map({ "n", "x" }, "<leader>o_", "<leader><leader>", "Toggle Clipboard", { remap = true })
-map({ "n", "x" }, "x", '"_x', "Blackhole Delete")
-map({ "n", "x" }, "X", '"_X', "Blackhole Delete")
+-- map({ "n", "x" }, "x", '"_x', "Blackhole Delete")
+-- map({ "n", "x" }, "X", '"_X', "Blackhole Delete")
+map({ "n", "x" }, "<BS>", '"_d', "Blackhole Delete")
 
 -- https://www.reddit.com/r/neovim/comments/10kah18/comment/j5pwppw
 map({ "n", "i" }, "<M-S-o>", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", "Add New Line Above")

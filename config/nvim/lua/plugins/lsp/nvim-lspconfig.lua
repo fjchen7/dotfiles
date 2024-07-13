@@ -25,7 +25,8 @@ M.init = function()
       desc = "Print and Copy LSP Configuration",
     },
 
-    { "gd", vim.lsp.buf.definition, desc = "Go Definition", has = "definition" },
+    -- { "gd", vim.lsp.buf.definition, desc = "Go Definition", has = "definition" },
+
     -- {
     --   "g<leader>D",
     --   "<cmd>tab split | lua vim.lsp.buf.definition()<CR>",
@@ -33,7 +34,7 @@ M.init = function()
     --   has = "definition",
     -- },
     { "gD", vim.lsp.buf.declaration, desc = "Go Declaration" },
-    { "gb", vim.lsp.buf.type_definition, desc = "Go Type Definition" },
+    -- { "gb", vim.lsp.buf.type_definition, desc = "Go Type Definition" },
 
     -- {
     --   "gr",
@@ -43,16 +44,17 @@ M.init = function()
     --   end,
     --   desc = "Go References",
     -- },
-    { "gr", "<cmd>Trouble lsp_references refresh=false<cr>", desc = "Go References" },
+    -- { "gr", "<cmd>Trouble lsp_references refresh=false<cr>", desc = "Go References" },
 
-    { "gI", vim.lsp.buf.implementation, desc = "Go Implementation" },
+    -- { "gI", vim.lsp.buf.implementation, desc = "Go Implementation" },
+
     { "g<M-d>", goto_preview("goto_preview_definition"), desc = "Go Definition (Preview)", has = "definition" },
     { "g<M-S-d>", goto_preview("goto_preview_declaration"), desc = "Go Declaration (Preview)" },
-    { "g<M-b>", goto_preview("goto_preview_type_definition"), desc = "Go Type Definition (Preview)" },
+
+    { "g<M-y>", goto_preview("goto_preview_type_definition"), desc = "Go Type Definition (Preview)" },
     -- goto-preview show references and implementations by telescope. I don't like.
     -- { "gr", goto_preview("goto_preview_references"), desc = "Go References" },
     -- { "gI", goto_preview("goto_preview_implementation"), desc = "Go Implementation" },
-    { "gy", false },
 
     -- { "K", false },
     {

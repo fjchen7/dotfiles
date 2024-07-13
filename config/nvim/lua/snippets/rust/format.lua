@@ -46,19 +46,19 @@ ls.add_snippets("rust", {
   format_call({
     trig = "(prl|println)",
     trigEngine = "ecma",
-    name = 'println!(…)',
+    name = "println!(…)",
     desc = 'println!("…")',
   }, "println!"),
   format_call({
     trig = "(pr|print)",
     trigEngine = "ecma",
-    name = 'print!(…)',
+    name = "print!(…)",
     desc = 'print!("…")',
   }, "print!"),
   format_call({
     trig = "(fmt|format)",
     trigEngine = "ecma",
-    name = 'format!(…)',
+    name = "format!(…)",
     desc = 'format!("…")',
   }, "format!"),
   s({

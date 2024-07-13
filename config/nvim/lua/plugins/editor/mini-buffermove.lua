@@ -44,9 +44,8 @@ return {
         end,
         desc = "Delete Buffer",
       },
-      { "<BS>", "q", remap = true, desc = "Delete Buffer" },
       {
-        "<C-BS>",
+        "<M-q>",
         function()
           local bufnr = vim.api.nvim_get_current_buf()
           vim.cmd("BufferPrevious")

@@ -8,15 +8,15 @@ return {
   enabled = true,
   keys = {
     { key, "<CMD>LazyGit<CR>", desc = "LazyGit" },
-    {
-      "<leader>gf",
-      function()
-        local git_path = vim.api.nvim_buf_get_name(0)
-        require("lazygit").lazygitfilter(git_path)
-      end,
-      desc = "File Commits (Lazygit)",
-    },
-    { "<leader>gl", "<CMD>LazyGitFilter<CR>", desc = "Git Log (Lazygit)" },
+    -- {
+    --   "<leader>gf",
+    --   function()
+    --     local git_path = vim.api.nvim_buf_get_name(0)
+    --     require("lazygit").lazygitfilter(git_path)
+    --   end,
+    --   desc = "File Commits (Lazygit)",
+    -- },
+    -- { "<leader>gl", "<CMD>LazyGitFilter<CR>", desc = "Git Log (Lazygit)" },
     -- { "<leader>gB", LazyVim.lazygit.blame_line, desc = "Git Blame Line (LazyGit)" },
 
     -- { "<leader>g<C-l>", "<CMD>LazyGitConfig<CR>", desc = "LazyGit Configuration" },

@@ -33,11 +33,11 @@ M.opts = {
     },
     pinned = { button = "", filename = true },
     alternate = { filetype = { enabled = true } },
-    current = {},
+    -- current = { button = false },
     -- inactive = { button = false },
     visible = { modified = { buffer_number = false } },
   },
-  minimum_padding = 0,
+  minimum_padding = 1,
   maximum_padding = 0,
   maximum_length = 20,
   no_name_title = "[New File]",
@@ -96,13 +96,13 @@ M.config = function(_, opts)
     map("n", "<M-=>", "<CMD>BufferMoveNext<CR>", "Move Buffer to Next")
 
     -- Remove buffers
-    map("n", "<C-b>d", "<BS>", "Delete Buffer (<BS>)", { remap = true })
-    map("n", "<S-BS>", close_all_but_visible_or_pinned, "Delete Other Buffers")
-    map("n", "<C-b>o", "<S-BS>", "Delete Other Buffers (<S-BS>)", { remap = true })
+    map("n", "<C-b>d", "q", "Delete Buffer (q)", { remap = true })
+    map("n", "<C-b>o", close_all_but_visible_or_pinned, "Delete Other Buffers")
+    -- map("n", "<C-b>o", "<S-BS>", "Delete Other Buffers (<S-BS>)", { remap = true })
     map("n", "<C-b>D", "<CMD>BufferPickDelete<CR>", "Delete Buffer by Pick")
     -- stylua: ignore start
-    map("n", "<C-b>l", function() close_all_but_visible_or_pinned("right") end, "Delete Buffers Left")
-    map("n", "<C-b>h", function() close_all_but_visible_or_pinned("left") end, "Delete Buffers Right")
+    map("n", "<C-b>l", function() close_all_but_visible_or_pinned("right") end, "Delete Buffers Right")
+    map("n", "<C-b>h", function() close_all_but_visible_or_pinned("left") end, "Delete Buffers Left")
 
     -- Order
     -- map("n", "<C-b>sn", "<CMD>BufferOrderByBufferNumber<CR>", "Order by Buffer Number")
@@ -114,7 +114,7 @@ M.config = function(_, opts)
     map("n", "<C-b>t", "<CMD>BufferRestore<CR>", "Restore Buffer")
     -- map("n", "`", "<CMD>BufferPick<CR>", "Pick Buffer")
     -- Pin buffer
-    map("n", "<C-b>p", "<CMD>BufferPin<CR><CMD>Hbac toggle_pin<CR>", "Pin Buffer")
+    map("n", "<C-w>p", "<CMD>BufferPin<CR><CMD>Hbac toggle_pin<CR>", "Pin Buffer")
 
     -- Go to buffer
     for i = 0, 9 do
@@ -123,10 +123,8 @@ M.config = function(_, opts)
       map("n", key, cmd)
     end
 
-    require("which-key").register({
-      ["<C-b>"] = {
-        name = "tabline",
-      },
+    require("which-key").add({
+      { "<C-b>", group = "tabline", },
     })
 
     vim.cmd([[

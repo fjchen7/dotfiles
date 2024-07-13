@@ -141,13 +141,4 @@ set_color("pick", "#ed8797")
 --   -- map("n", "<C-b>sd", "<CMD>BufferLineSortByDirectory<CR>", "Order by Directory")
 --   -- map("n", "<C-b>sD", "<CMD>BufferLineSortByRelativeDirectory<CR>", "Order by Relative Directory")
 --   -- map("n", "<C-b>se", "<CMD>BufferLineSortByExtension<CR>", "Order by Extension")
---
---   require("which-key").register({
---     ["<C-b>"] = {
---       name = "tabline",
---       -- s = { name = "order tabline" },
---     },
---   })
--- end, 1000)
-
 return M
