@@ -2,17 +2,17 @@ local wk = require("which-key")
 local ignored = "which_key_ignore"
 
 -- https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
-local objects = vim.tbl_extend("force", require("which-key.plugins.presets").objects, {
-  ["iB"] = "}",
-  ["aB"] = "}",
-  ["ip"] = "Paragraph",
-  ["ap"] = "Paragraph with Whitespace",
-  ["iw"] = ignored,
-  ["aw"] = ignored,
-  ["iW"] = ignored,
-  ["aW"] = ignored,
-})
-wk.register(objects, { mode = "o", prefix = "", preset = true })
+-- local objects = vim.tbl_extend("force", require("which-key.plugins.presets").objects, {
+--   ["iB"] = "}",
+--   ["aB"] = "}",
+--   ["ip"] = "Paragraph",
+--   ["ap"] = "Paragraph with Whitespace",
+--   ["iw"] = ignored,
+--   ["aw"] = ignored,
+--   ["iW"] = ignored,
+--   ["aW"] = ignored,
+-- })
+-- wk.add(objects, { mode = "o", prefix = "", preset = true })
 
 -- https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/misc.lua
 local misc = {
@@ -97,5 +97,5 @@ local misc = {
 }
 
 for _, mappings in pairs(misc) do
-  wk.register(mappings, { mode = "n", prefix = "", preset = true })
+  wk.add(mappings, { mode = "n", prefix = "", preset = true })
 end

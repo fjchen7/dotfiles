@@ -1,7 +1,7 @@
 return {
   "rainbowhxch/accelerated-jk.nvim",
   opts = {
-    acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
+    acceleration_table = { 5, 10, 15, 20, 24, 26, 28, 30 },
   },
   config = function(_, opts)
     require("accelerated-jk").setup(opts)

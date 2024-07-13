@@ -4,7 +4,7 @@ return {
     "tpope/vim-rhubarb", -- Support :Browse of fugitive
   },
   event = "VeryLazy",
-  cmd = { "Git", "GDelete" },
+  cmd = { "Git", "GRemove" },
   keys = {
     {
       "<leader>gg",
@@ -20,7 +20,7 @@ return {
     },
     {
       mode = "n",
-      "<leader>gu",
+      "<leader>go",
       function()
         local clipboard = vim.fn.getreg("+")
         vim.cmd([[silent! GBrowse!]])
@@ -32,7 +32,7 @@ return {
       end,
       desc = "Open File's GitHub URL",
     },
-    { mode = "n", "<leader>gU", LazyVim.lazygit.browse, desc = "Open Repo's GitHub URL" },
+    { mode = "n", "<leader>gO", LazyVim.lazygit.browse, desc = "Open Repo's GitHub URL" },
     {
       mode = "n",
       "<leader>gy",
@@ -46,9 +46,64 @@ return {
       end,
       desc = "Copy File's GitHub URL",
     },
-    { mode = "x", "<leader>gu", [["vy<cmd>'<,'>GBrowse<cr>]], desc = "Open File's Ranged GitHub URL" },
+    { mode = "x", "<leader>go", [["vy<cmd>'<,'>GBrowse<cr>]], desc = "Open File's Ranged GitHub URL" },
     { mode = "x", "<leader>gy", [["vy<cmd>'<,'>GBrowse!<cr>]], desc = "Copy File's Ranged GitHub URL" },
     { mode = "n", "<leader>ga", [[<cmd>Git absorb<cr>]], desc = "Git absorb" },
+    {
+      mode = "n",
+      "<leader>ld",
+      function()
+        local filename = vim.api.nvim_buf_get_name(0)
+        vim.cmd("GRemove")
+        require("mini.bufremove").delete()
+        vim.notify("Delete " .. filename .. " from Git")
+      end,
+      desc = "[G] Delete File",
+    },
+    {
+      mode = "n",
+      "<leader>lD",
+      function()
+        local filename = vim.api.nvim_buf_get_name(0)
+        vim.cmd("GRemove!")
+        require("mini.bufremove").delete()
+        vim.notify("Delete " .. filename .. " from Git forcely")
+      end,
+      desc = "[G] Delete File Forcely",
+    },
+    -- stylua: ignore end
+    {
+      mode = "n",
+      "<leader>lm",
+      function()
+        vim.ui.input({
+          prompt = "[G] Move File to: ",
+          default = "./" .. vim.fn.expand("%:."),
+        }, function(input)
+          if not input then
+            return
+          end
+          vim.cmd("GMove " .. input)
+        end)
+      end,
+      desc = "[G] Move File",
+    },
+    {
+      mode = "n",
+      "<leader>lr",
+      function()
+        vim.ui.input({
+          prompt = "[G] Enter New File Name: ",
+          default = vim.fn.expand("%:t"),
+        }, function(input)
+          if not input then
+            return
+          end
+          vim.cmd("GRename " .. input)
+        end)
+      end,
+      desc = "[G] Rename File",
+    },
   },
   init = function()
     local help_tags = {

@@ -20,8 +20,8 @@ return {
     -- :h vm-mappings-all
     --
     vim.g.VM_maps = {
-      ["Add Cursor Down"] = "<M-Down>",
-      ["Add Cursor Up"] = "<M-Up>",
+      ["Add Cursor Down"] = "<C-n>",
+      ["Add Cursor Up"] = "<C-p>",
       ["Find Under"] = "<C-g>",
       ["Find Subword Under"] = "<C-g>",
       ["Select All"] = "<C-S-g>",

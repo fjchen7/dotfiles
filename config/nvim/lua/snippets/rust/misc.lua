@@ -22,16 +22,44 @@ local pf = require("snippets.util").postfix
 
 local util = require("snippets.util")
 
+local new_lint = function(lint)
+  return s({
+    trig = "#[" .. lint .. "(…)]",
+    desc = "lint levels " .. lint,
+  }, {
+    t("#[" .. lint .. "("),
+    i(1, "dead_code"),
+    n(1, ", "),
+    i(2, "unused-variables"),
+    n(2, ", "),
+    i(0),
+    t(")]"),
+  }, { condition = conds_expand.line_begin })
+end
+
 return {
-  s(
-    "derive",
-    fmt("#[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Ord, PartialOrd{})]", { i(1) }),
-    { condition = conds_expand.line_begin }
-  ),
+  s({
+    trig = "#[derive(…)]",
+    desc = "",
+    docstring = "#[derive(Debug, Copy, Clone, Default, Eq, PartialEq, Ord, PartialOrd)]",
+  }, {
+    t("#[derive(Debug, "),
+    i(1, "Copy, Clone"),
+    n(1, ", "),
+    i(2, "Default"),
+    n(2, ", "),
+    i(3, "Eq, PartialEq, Ord, PartialOrd"),
+    n(3, ", "),
+    i(0),
+    t(")]"),
+  }, { condition = conds_expand.line_begin }),
+  new_lint("allow"),
+  new_lint("warn"),
+  new_lint("deny"),
   s(
     {
-      trig = "r#",
-      desc = 'r#" ... "#',
+      trig = 'r#" … "#',
+      desc = "",
       docstring = "literal string",
     },
     fmt(
@@ -45,4 +73,16 @@ return {
       }
     )
   ),
+  s({
+    trig = "Arc::new(…)",
+    desc = "Constructs a new `Arc<T>`.",
+  }, fmt("Arc::new({}){}", { i(1), i(0) })),
+  s({
+    trig = "Box::new(…)",
+    desc = "Move variable to heap.",
+  }, fmt("Box::new({}){}", { i(1), i(0) })),
+  s({
+    trig = "String::from(…)",
+    desc = "Create a `String` from a literal string.",
+  }, fmt("String::from({}){}", { i(1), i(0) })),
 }

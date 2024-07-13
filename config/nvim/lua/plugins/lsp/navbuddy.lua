@@ -2,7 +2,7 @@
 return {
   -- Symbol popup for operation
   "SmiteshP/nvim-navbuddy",
-  event = "VeryLazy",
+  event = "BufReadPost",
   dependencies = {
     "neovim/nvim-lspconfig",
     "SmiteshP/nvim-navic",
@@ -12,23 +12,22 @@ return {
   },
   keys = {
     {
-      "<leader>iN",
+      "<leader>ii",
       "<CMD>Navbuddy<CR>",
       desc = "Select Symbols (Navbuddy)",
-      remap = true,
     },
   },
   opts = function()
     local actions = require("nvim-navbuddy.actions")
     return {
       window = {
-        size = "90%",
         sections = {
-          left = {
-            size = "20%",
-          },
           mid = {
             size = "30%",
+          },
+          right = {
+            preview = "always", -- Right section can show previews too.
+            -- Options: "leaf", "always" or "never"
           },
         },
       },
@@ -38,6 +37,7 @@ return {
         auto_attach = true,
       },
       mappings = {
+        ["<F1>"] = actions.help(),
         ["?"] = actions.help(),
         ["<M-i>"] = actions.close(),
       },

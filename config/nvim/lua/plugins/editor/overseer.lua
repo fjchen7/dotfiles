@@ -1,10 +1,27 @@
 return {
   -- Run frequently-used tasks in background
   "stevearc/overseer.nvim",
-  event = "VeryLazy",
+  -- keys = e
+  --   { "<leader>co", "<cmd>OverseerRun<cr><cmd>OverseerOpen<cr>", desc = "Build / Run (Overseer)" },
+  --   { "<leader>cO", "<cmd>OverseerToggle<cr>", desc = "Toggle build / Run Result (Overseer)" },
+  -- },
   keys = {
-    { "<leader>co", "<cmd>OverseerRun<cr><cmd>OverseerOpen<cr>", desc = "Build / Run (Overseer)" },
-    { "<leader>cO", "<cmd>OverseerToggle<cr>", desc = "Toggle build / Run Result (Overseer)" },
+    { "<leader>oq", false },
+    { "<leader>or", "<cmd>OverseerQuickAction<cr>", desc = "Quick Action" },
+    { "<leader>ow", "<cmd>OverseerToggle<cr>", desc = "Toggle Task Window" },
+    {
+      "<leader>ol",
+      function()
+        local overseer = require("overseer")
+        local tasks = overseer.list_tasks({ recent_first = true })
+        if vim.tbl_isempty(tasks) then
+          vim.notify("No tasks found", vim.log.levels.WARN)
+        else
+          overseer.run_action(tasks[1], "restart")
+        end
+      end,
+      desc = "Run Last Task",
+    },
   },
   opts = {
     task_list = {

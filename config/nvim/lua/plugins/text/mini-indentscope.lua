@@ -3,9 +3,9 @@
 return {
   "echasnovski/mini.indentscope",
   opts = {
-    symbol = "┃",
+    -- symbol = "┃",
     draw = {
-      delay = 50,
+      delay = 0,
       animation = require("mini.indentscope").gen_animation.none(),
     },
     mappings = {
@@ -18,25 +18,37 @@ return {
   init = function()
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
-        "help",
+        "man",
         "alpha",
-        "aerial",
         "dashboard",
-        "neo-tree",
-        "trouble",
+        "fzf",
+        "help",
         "lazy",
-        "oil",
-        "oil_preview",
+        "lazyterm",
         "mason",
+        "neo-tree",
         "notify",
         "toggleterm",
-        "lazyterm",
+        "Trouble",
+        "trouble",
+
+        "qf",
+        "aerial",
+        "oil",
+        "oil_preview",
         "dropbar_menu",
+        "grug-far-help",
         "rnvimr",
         "neo-tree-popup",
         "neotest-summary",
         "neotest-output",
         "neotest-output-panel",
+        "yazi",
+        "OverseerForm",
+        "kitty-scrollback",
+        "copilot-chat",
+        "copilot-chat-selection",
+        "",
       },
       callback = function(opts)
         vim.b[opts.buf].miniindentscope_disable = true
@@ -68,6 +80,6 @@ return {
     map({ "n", "x", "o" }, "[I", prev_indent_outer, "Indent Start (Outer)")
 
     -- Darker highlight of IndentBlanklineChar
-    vim.cmd([[hi! MiniIndentscopeSymbol guifg=#b5bddd]])
+    vim.cmd([[hi! MiniIndentscopeSymbol guifg=#757a90]])
   end,
 }

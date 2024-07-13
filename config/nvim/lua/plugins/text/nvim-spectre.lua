@@ -2,6 +2,7 @@
 -- TODO: https://www.reddit.com/r/neovim/comments/1b5ri9g/developing_search_replace_similar_to_vs_code_with
 local M = {
   "nvim-pack/nvim-spectre",
+  enabled = false,
 }
 M.keys = function()
   return {

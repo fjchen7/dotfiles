@@ -114,6 +114,7 @@ M.opts = {
           "NeogitCommitView",
           "trouble",
           "copilot-chat",
+          "grug-far",
           -- "markdown",
         },
       },

@@ -12,6 +12,7 @@ return {
     return {
       -- NOTE: % keymaps work only when disabling matchit
       { "%", "<Plug>(matchup-%)", mode = { "n", "o", "x" } },
+      { "t", "<Plug>(matchup-%)", mode = { "n", "o", "x" } },
       -- { "'", "<Plug>(matchup-%)", mode = { "n", "o", "x" }, desc = "%" },
       -- { "i`", "<Plug>(matchup-z%)", mode = { "o", "x" }, desc = "Select to Function Call End" },
       { "ib", "<Plug>(matchup-i%)", mode = { "o", "x" }, desc = "(...), [...], {...}" },

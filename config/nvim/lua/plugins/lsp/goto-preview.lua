@@ -4,6 +4,7 @@ local M = {
   dependencies = {
     "neovim/nvim-lspconfig",
   },
+  enabled = false,
   -- keys = {
   -- {
   --   "<M-LeftMouse>",

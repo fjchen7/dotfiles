@@ -1,4 +1,4 @@
-lua require("util")
+lua require("utils")
 if exists('g:vscode')
   lua require("config.lazy-vscode")
 else

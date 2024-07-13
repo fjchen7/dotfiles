@@ -26,20 +26,20 @@ end
 local ignored = "which_key_ignore"
 
 M.keys = {
-  { mode = { "n" }, "<C-Left>", fn("resize_left"), desc = "Window Resize Left (HJKL)" },
-  { mode = { "n" }, "<C-Down>", fn("resize_down"), desc = ignored },
-  { mode = { "n" }, "<C-Up>", fn("resize_up"), desc = ignored },
-  { mode = { "n" }, "<C-Right>", fn("resize_right"), desc = ignored },
+  { mode = { "n", "t" }, "<C-Left>", fn("resize_left"), desc = "Window Resize Left (HJKL)" },
+  { mode = { "n", "t" }, "<C-Down>", fn("resize_down"), desc = ignored },
+  { mode = { "n", "t" }, "<C-Up>", fn("resize_up"), desc = ignored },
+  { mode = { "n", "t" }, "<C-Right>", fn("resize_right"), desc = ignored },
 
   { mode = { "n", "x" }, "<C-h>", fn("move_cursor_left"), desc = "Navigate to Window Left (HJKL)" },
   { mode = { "n", "x" }, "<C-j>", fn("move_cursor_down"), desc = ignored },
   { mode = { "n", "x" }, "<C-k>", fn("move_cursor_up"), desc = ignored },
   { mode = { "n", "x" }, "<C-l>", fn("move_cursor_right"), desc = ignored },
 
-  -- { mode = { "n" }, "<C-M-h>", "<CMD>wincmd H<CR>", desc = "Move Window to Left (HJKL)" },
-  -- { mode = { "n" }, "<C-M-j>", "<CMD>wincmd J<CR>", desc = ignored },
-  -- { mode = { "n" }, "<C-M-k>", "<CMD>wincmd K<CR>", desc = ignored },
-  -- { mode = { "n" }, "<C-M-l>", "<CMD>wincmd L<CR>", desc = ignored },
+  { mode = { "n" }, "<C-M-h>", "<CMD>wincmd H<CR>", desc = "Move Window to Left (HJKL)" },
+  { mode = { "n" }, "<C-M-j>", "<CMD>wincmd J<CR>", desc = ignored },
+  { mode = { "n" }, "<C-M-k>", "<CMD>wincmd K<CR>", desc = ignored },
+  { mode = { "n" }, "<C-M-l>", "<CMD>wincmd L<CR>", desc = ignored },
 }
 
 M.opts = {

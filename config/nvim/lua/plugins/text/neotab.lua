@@ -1,5 +1,5 @@
 return {
-  -- neotab doesn't use treesitter
+  -- neotab doesn't use treesitter, which is more accurate
   "kawre/neotab.nvim",
   event = "InsertEnter",
   enabled = true,

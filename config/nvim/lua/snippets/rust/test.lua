@@ -34,8 +34,7 @@ return {
     mod tests {{
         #[test]
         fn {}(){}{} {{
-            {}
-            Ok(())
+            {}{}
         }}
     }}
     ]],
@@ -44,6 +43,7 @@ return {
         n(2, " -> "),
         i(2, "anyhow::Result<()>"), -- return type
         i(0),
+        m(2, "Result", "\n\t\tOk(())"), -- if 1 contains "Result"
       }
     ),
     { condition = conds_expand.line_begin }
@@ -51,14 +51,13 @@ return {
   s(
     {
       trig = "fn test",
-      desc = "fn test()",
+      desc = "fn test() { … } ",
     },
     fmt(
       [[
   #[test]
   fn {}(){}{} {{
-      {}
-      Ok(())
+      {}{}
   }}
   ]],
       {
@@ -66,6 +65,7 @@ return {
         n(2, " -> "),
         i(2, "anyhow::Result<()>"), -- return type
         i(0),
+        m(2, "Result", "\n\t\tOk(())"), -- if 1 contains "Result"
       }
     ),
     { condition = conds_expand.line_begin }

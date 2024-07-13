@@ -16,12 +16,15 @@ local rust_keyword_filters = {
   "let",
   "fn",
   "struct",
+  "type",
+  "enum",
   "impl",
   "trait",
   "unsafe",
   "pub",
   "pub(crate)",
   "pub(super)",
+  "mod",
 }
 
 local rust_enum_filters = {
@@ -30,16 +33,18 @@ local rust_enum_filters = {
   -- "Err(…)",
 }
 
-local rust_snippet_filters = {
+-- Postfix
+local rust_postfix_snippet_filters = {
   -- https://rust-analyzer.github.io/manual.html#format-string-completion
   -- "println",
   -- "format",
   -- "panic",
-  "logd",
-  "logt",
-  "logi",
-  "logw",
-  "loge",
+  -- "logd",
+  -- "logt",
+  -- "logi",
+  -- "logw",
+  -- "loge",
+
   -- https://rust-analyzer.github.io/manual.html#magic-completions
   -- https://github.com/Veykril/rust-analyzer/blob/master/crates/ide-completion/src/tests/expression.rs
   -- https://github.com/Veykril/rust-analyzer/blob/master/crates/ide-completion/src/completions/keyword.rs
@@ -57,7 +62,7 @@ local rust_snippet_filters = {
   "dbgr",
   "call",
   "return",
-  -- rust-analyzer.completion.snippets.custom
+  -- rust-analyzer.completion.snippets.custom (postfix)
   "arc",
   "rc",
   "box",
@@ -104,7 +109,7 @@ local M = {
         elseif kind == CompletionItemKind.EnumMember then
           return not vim.tbl_contains(rust_enum_filters, label)
         elseif kind == CompletionItemKind.Snippet then
-          return not vim.tbl_contains(rust_snippet_filters, label)
+          -- return not vim.tbl_contains(rust_postfix_snippet_filters, label)
         end
       end
       return true

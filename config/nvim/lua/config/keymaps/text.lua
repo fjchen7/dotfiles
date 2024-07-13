@@ -4,54 +4,61 @@ local del = vim.keymap.del
 -- Add undo break-points
 map("i", "<M-u>", "<C-o>u", "Undo")
 -- '"', "'" are taken charged by the autopair plugin
-for _, char in ipairs({ ",", ".", ";", "/" }) do
+for _, char in ipairs({ ",", ".", ";", "/", "=" }) do
   map("i", char, char .. "<C-g>u")
 end
 -- for _, char in ipairs({ "o", "O", "i", "I", "a", "A", "gi" }) do
 --   map("n", char, char .. "<C-g>u")
 -- end
 
-local normal_cut = function()
-  for _, lhs in ipairs({ "d", "D", "c", "C" }) do
-    pcall(vim.keymap.del, { "n", "x" }, lhs)
-    -- map(mode, lhs, lhs, opts)
-  end
-  -- Smart cut: no yank empty line
-  -- https://www.reddit.com/r/neovim/comments/1abd2cq/comment/kjn1kww
-  for _, lhs in ipairs({ "dd", "D", "cc", "C" }) do
-    map("n", lhs, function()
-      return vim.fn.getline("."):match("^%s*$") and '"_' .. lhs or lhs
-    end, nil, { expr = true })
-  end
-  map("x", "C", "c", nil, { remap = true })
-  map("x", "D", "d", nil, { remap = true })
-end
-normal_cut()
--- Blackhole register switch
-vim.g.cut_clipboard_enabled = true
-map({ "n", "x" }, "<leader><leader>", function()
-  Util.toggle(function()
-    return vim.g.cut_clipboard_enabled
-  end, function()
-    if vim.g.cut_clipboard_enabled == true then
-      for _, lhs in ipairs({ "d", "D", "c", "C" }) do
-        map({ "n", "x" }, lhs, '"_' .. lhs)
-      end
-      del({ "n" }, "dd")
-      del({ "n" }, "cc")
-      map("x", "C", "c", nil, { remap = true })
-      map("x", "D", "d", nil, { remap = true })
-    else
-      normal_cut()
-    end
-    vim.g.cut_clipboard_enabled = not vim.g.cut_clipboard_enabled
-  end, "Clipboard for Cut")
-end, "Toggle Clipboard")
-map({ "n", "x" }, "<leader>o_", "<leader><leader>", "Toggle Clipboard", { remap = true })
-map({ "n", "x" }, "x", '"_x', "Blackhole Delete")
-map({ "n", "x" }, "X", '"_X', "Blackhole Delete")
+-- local normal_cut = function()
+--   for _, lhs in ipairs({ "d", "D", "c", "C" }) do
+--     pcall(vim.keymap.del, { "n", "x" }, lhs)
+--     -- map(mode, lhs, lhs, opts)
+--   end
+--   -- Smart cut: no yank empty line
+--   -- https://www.reddit.com/r/neovim/comments/1abd2cq/comment/kjn1kww
+--   for _, lhs in ipairs({ "dd", "D", "cc", "C" }) do
+--     map("n", lhs, function()
+--       return vim.fn.getline("."):match("^%s*$") and '"_' .. lhs or lhs
+--     end, nil, { expr = true })
+--   end
+--   map("x", "C", "c", nil, { remap = true })
+--   map("x", "D", "d", nil, { remap = true })
+-- end
+-- -- normal_cut()
+-- -- -- Blackhole register switch
+-- -- vim.g.cut_clipboard_enabled = true
+-- map({ "n", "x" }, "<leader>u<BS>", function()
+--   Util.toggle(function()
+--     return vim.g.cut_clipboard_enabled
+--   end, function()
+--     if vim.g.cut_clipboard_enabled == true then
+--       for _, lhs in ipairs({ "d", "D", "c", "C" }) do
+--         map({ "n", "x" }, lhs, '"_' .. lhs)
+--       end
+--       del({ "n" }, "dd")
+--       del({ "n" }, "cc")
+--       map("x", "C", "c", nil, { remap = true })
+--       map("x", "D", "d", nil, { remap = true })
+--     else
+--       normal_cut()
+--     end
+--     vim.g.cut_clipboard_enabled = not vim.g.cut_clipboard_enabled
+--   end, "Clipboard for Cut")
+-- end, "Toggle Clipboard")
 
--- https://www.reddit.com/r/neovim/comments/10kah18/comment/j5pwppw
+-- map({ "n", "x" }, "<leader>x", function()
+--   local content = vim.fn.getreg("+")
+--   vim.fn.setreg("x", content)
+--   vim.notify(
+--     'Temporarily store clipboard. Use "xp to paste.\nContent:\n' .. content,
+--     vim.log.levels.INFO,
+--     { title = "Notification" }
+--   )
+-- end, "Store Clipboard in Register x")
+map({ "n", "x" }, "<leader>x", '"_d', "Blackhole Delete")
+
 map({ "n", "i" }, "<M-S-o>", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", "Add New Line Above")
 map({ "n", "i" }, "<M-o>", "<Cmd>call append(line('.'), repeat([''], v:count1))<CR>", "Add New Line Aelow")
 -- map({ "i" }, "<C-cr>", Util.feedkeys("<m-o>", "t"), "Add New Line Down and Move Cursor")
@@ -84,10 +91,11 @@ local function home()
 end
 map({ "n", "x", "o" }, "<Home>", home)
 map({ "n", "x", "o" }, "0", home)
+map({ "n", "x", "o" }, "H", home)
 map("x", "$", "$h")
 map({ "n", "o" }, "L", "$")
 map("x", "L", "$h")
-map({ "n", "x", "o" }, "H", home)
+-- map({ "n", "x", "o" }, "H", home)
 -- del("n", "L")
 -- del("n", "H")
 
@@ -97,6 +105,8 @@ map({ "n", "x", "o" }, "H", home)
 -- Go to beginning of line
 map("i", "<C-a>", home)
 vim.cmd([[cnoremap <C-A> <Home>]])
+-- map("i", "<C-h>", home)
+-- map("i", "<C-l>", "<End>")
 -- Go to end of line
 map({ "i", "c" }, "<C-e>", "<End>")
 vim.cmd([[

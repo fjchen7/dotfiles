@@ -22,50 +22,37 @@ local pf = require("snippets.util").postfix
 
 local util = require("snippets.util")
 
--- local M1 = {
---   s("rq", fmt('require("{}")', { i(1) })),
---   s("r", fmt("return {}", { i(1) })),
---   s("l", fmt("local {} = {}", { i(1), i(2) })),
---   s(
---     "f",
---     fmt(
---       [[
---   function({})
---     {}
---   end{}
---   ]],
---       { i(2), i(0), i(1) }
---     )
---   ),
---   s(
---     "elf",
---     fmt(
---       [[
--- elseif {} then
---   {}]],
---       { i(1, "true"), i(2) }
---     )
---   ),
--- }
--- for _, value in pairs(M1) do
---   value.show_condition = function()
---     return false
---   end
--- end
-
 local M = {
   s(
-    { trig = "(fun|function)", trigEngine = "ecma", name = "function", desc = "function()\n\t…\nend" },
+    {
+      trig = "function",
+      name = "function() … end",
+      desc = "function()\n\t…\nend",
+    },
     fmt(
       [[
   function({})
     {}
-  end{}
+  end
   ]],
-      { i(2), i(0), i(1) }
+      { i(1), i(0) }
     )
   ),
-  s("for", {
+  s(
+    { trig = "local … = function", name = "local … = function", desc = "local … = function()\n\t…\nend" },
+    fmt(
+      [[
+  local {} = function({})
+    {}
+  end
+  ]],
+      { i(1), i(2), i(0) }
+    )
+  ),
+  s({
+    trig = "for",
+    name = "for … do … end",
+  }, {
     t("for "),
     c(1, {
       sn(
@@ -104,25 +91,18 @@ local M = {
     t({ "", "end" }),
   }),
   s({
-    trig = "(req|require)",
-    trigEngine = "ecma",
-    name = "require",
-    desc = 'require("…")',
-  }, fmt('require("{}")', { i(1) })),
+    trig = "require",
+    name = "require(…)",
+    desc = "require(…)",
+  }, fmt("require({})", { i(1) })),
   s({
-    trig = "(ret|return)",
-    trigEngine = "ecma",
+    trig = "return",
     name = "return",
     desc = "return …",
   }, fmt("return {}", { i(1) }), {}),
-  s({
-    trig = "(l|local)",
-    trigEngine = "ecma",
-    name = "local",
-    desc = "local … = …",
-  }, fmt("local {} = {}", { i(1), i(2) })),
+  s("local … = …", fmt("local {} = {}", { i(1), i(2) })),
   s(
-    { trig = "if", desc = "if then" },
+    { trig = "if … then … end", desc = "if then" },
     fmt(
       [[
     if {} then
@@ -142,7 +122,7 @@ else
     )
   ),
   s(
-    "elseif",
+    { trig = "elseif", name = "elseif … then …" },
     fmt(
       [[
 elseif {} then
@@ -151,7 +131,7 @@ elseif {} then
     )
   ),
   s(
-    "pcall",
+    { trig = "pcall", name = "pcall(f, arg1, …)" },
     fmt("{}{}pcall({}, {})", {
       c(1, {
         util.empty_sn(),

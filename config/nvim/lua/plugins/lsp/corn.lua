@@ -1,7 +1,7 @@
 local M = {
   -- Show Diagnostic in right hand side
   "RaafatTurki/corn.nvim",
-  event = "VeryLazy",
+  event = "BufReadPost",
   enabled = true,
 }
 

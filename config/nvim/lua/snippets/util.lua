@@ -15,10 +15,10 @@ end
 
 local RUST = {}
 
-RUST.body = function(pos, without_todo)
+RUST.body = function(pos)
   return t({ "{", "\t" }),
-    i(pos), -- Body
-    without_todo and t({ "", "}" }) or t({ "", "\ttodo!();", "}" })
+    i(pos, "todo!()"), -- Body
+    t({ "", "}" })
 end
 
 RUST.modifier = function(jump_index)

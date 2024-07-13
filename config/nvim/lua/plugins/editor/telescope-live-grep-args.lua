@@ -16,6 +16,7 @@ M.keys = function()
 
   local search = function(opts)
     local default_opts = {
+      path_display = { "truncate", "tail" },
       default_text = get_prompt(),
     }
     opts = vim.tbl_deep_extend("force", default_opts, opts or {})
@@ -33,7 +34,7 @@ M.keys = function()
   return {
     { mode = { "v", "n" }, "<C-f>", search, desc = "Search" },
     { "<C-M-f>", search, desc = "Search Cursor Word" },
-    { mode = { "v", "n" }, "<leader>s<Tab>", search_in_buf, desc = "Search in Buffer (Telescope)" },
+    { mode = { "v", "n" }, "<leader><C-f>", search_in_buf, desc = "Search in Buffer (Telescope)" },
   }
 end
 
@@ -93,7 +94,7 @@ M.config = function()
   local _live_grep_args = telescope.extensions.live_grep_args.live_grep_args
   telescope.extensions.live_grep_args.live_grep_args = function(opts)
     local default_opts = {
-      prompt_title = "Live Grep in Folder (" .. vim.loop.cwd():gsub("^" .. vim.env.HOME, "~") .. ")",
+      prompt_title = "Live Grep in " .. vim.loop.cwd():gsub("^" .. vim.env.HOME, "~"),
     }
     opts = vim.tbl_deep_extend("force", default_opts, opts or {})
     _live_grep_args(opts)

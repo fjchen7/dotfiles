@@ -1,3 +1,4 @@
+finish
 " https://github.com/kevinhwang91/nvim-bqf#highlight-groups
 if exists('b:current_syntax')
     finish

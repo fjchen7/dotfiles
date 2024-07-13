@@ -35,7 +35,7 @@ M.copilot = function(opts)
   }
   local component = {
     function()
-      local icon = require("lazyvim.config").icons.kinds.Copilot
+      local icon = LazyVim.config.icons.kinds.Copilot
       local status = require("copilot.api").status.data
       return icon .. (status.message or "")
     end,

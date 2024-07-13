@@ -4,7 +4,7 @@
 local opt = vim.opt
 
 -- Always center cursor
-opt.scrolloff = 7
+opt.scrolloff = 4
 opt.sidescrolloff = 0
 -- preview %s command in split window
 -- https://www.reddit.com/r/neovim/comments/1cytkbq/comment/l5bxr3v

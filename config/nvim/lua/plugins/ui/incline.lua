@@ -7,7 +7,7 @@ local M = {
 
 M.keys = {
   {
-    "<leader>oe",
+    "<leader>ue",
     function()
       local incline = require("incline")
       Util.toggle(incline.is_enabled, incline.toggle, "Incline")

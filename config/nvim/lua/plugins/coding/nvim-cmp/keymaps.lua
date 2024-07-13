@@ -6,12 +6,11 @@ local select_item = function(direction, behavior)
   local select = (direction == "next") and cmp.select_next_item or cmp.select_prev_item
   behavior = behavior or cmp.SelectBehavior.Select -- Insert or Select
   return function(_)
-    -- local copilot = require("copilot.suggestion")
     if cmp.visible() then
       select({ behavior = behavior })
-      -- copilot.dismiss()
       return
     end
+    -- local copilot = require("copilot.suggestion")
     -- if copilot.is_visible() then
     --   copilot[direction]()
     --   return
@@ -21,29 +20,39 @@ local select_item = function(direction, behavior)
 end
 
 local accept_or_jump_next = function(fallback)
-  local copilot = require("copilot.suggestion")
   local luasnip = require("luasnip")
-  local orig_cursor = vim.api.nvim_win_get_cursor(0)
 
-  if luasnip.expand_or_locally_jumpable() then
-    luasnip.expand_or_jump()
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    if cursor[1] ~= orig_cursor[1] or cursor[2] ~= orig_cursor[2] then
-      return
-    end
-  end
+  -- local copilot = require("copilot.suggestion")
+  -- if copilot.is_visible() then
+  --   copilot.accept()
+  --   return
+  -- end
 
-  if copilot.is_visible() then
-    copilot.accept()
-    return
-  end
+  -- local orig_cursor = vim.api.nvim_win_get_cursor(0)
+  -- if luasnip.expand_or_locally_jumpable() then
+  --   luasnip.expand_or_jump()
+  --   local cursor = vim.api.nvim_win_get_cursor(0)
+  --   if cursor[1] ~= orig_cursor[1] or cursor[2] ~= orig_cursor[2] then
+  --     return
+  --   end
+  -- end
 
   local confirm = cmp.confirm({
     select = true,
     cmp.ConfirmBehavior.Replace, -- Replace or Insert (default)
   })
+
   if confirm then
     return
+  end
+
+  if luasnip.jumpable(1) then
+    luasnip.jump(1)
+    return
+    -- local cursor = vim.api.nvim_win_get_cursor(0)
+    -- if cursor[1] ~= orig_cursor[1] or cursor[2] ~= orig_cursor[2] then
+    --   return
+    -- end
   end
 
   -- https://github.com/danymat/neogen#default-cycling-support
@@ -74,36 +83,8 @@ local jump_prev = function(fallback)
   fallback()
 end
 
--- local toggle = function(_)
---   if copilot.is_visible() then
---     copilot.dismiss()
---     cmp.complete()
---   elseif cmp.visible() then
---     cmp.abort()
---     -- cmp.close()
---     -- else
---     --   cmp.complete()
---   end
--- end
-
-local switch = function()
-  local copilot = require("copilot.suggestion")
-  if copilot.is_visible() then
-    copilot.dismiss()
-    cmp.complete()
-    return
-  end
-  if cmp.visible() then
-    cmp.abort()
-    copilot.next()
-    return
-  end
-  vim.notify("No completion menu to dismiss", vim.log.levels.INFO)
-end
-
 local abort = function()
   cmp.abort()
-  -- copilot.dismiss()
 end
 
 -- default mappings: https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/mapping.lua#L368
@@ -121,16 +102,20 @@ M.mapping = {
   ["<M-n>"] = cmp.mapping.scroll_docs(4),
 
   ["<C-c>"] = cmp.mapping(abort),
-  -- ["<C-c>"] = cmp.mapping(switch),
 
   -- Accept
   -- https://www.reddit.com/r/neovim/comments/1at66dc/what_key_do_you_prefer_to_press_to_accept_an/
   ["<CR>"] = cmp.mapping(function(fallback)
     if vim.b.is_menu_opened then
-      cmp.confirm({
-        -- behavior = cmp.ConfirmBehavior.Replace,
+      local confirmed = cmp.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
         select = false, --  Set `select` to `false` to only confirm explicitly selected items.
       })
+      if confirmed then
+        vim.schedule(function()
+          require("copilot.suggestion").dismiss()
+        end)
+      end
     else
       fallback()
     end
@@ -141,6 +126,7 @@ M.mapping = {
   ["<Tab>"] = cmp.mapping(accept_or_jump_next, { "i", "s" }),
   ["<S-Tab>"] = cmp.mapping(jump_prev, { "i", "s" }),
 }
+
 -- Reduce letency of <CR>
 cmp.event:on("menu_opened", function()
   vim.b.is_menu_opened = true

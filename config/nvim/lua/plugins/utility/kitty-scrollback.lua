@@ -1,10 +1,10 @@
 return {
-  -- Useage:
-  -- * <C-S-h> (Mine is shift+cmd+b) toggle kitty-scrollback for all content in terminal screent
-  -- * <C-S-g> (Mine is cmd+b) toggle kitty-scrollback for last command output
+  -- Shortcuts to toggle kitty-scrollback:
+  -- * Cmd+Shift+b (default is <C-S-h>) for all content in terminal screent
+  -- * Cmd+b (default is <C-S-g>) for last command output
   -- See more: https://github.com/mikesmithgh/kitty-scrollback.nvim#-features
   "mikesmithgh/kitty-scrollback.nvim",
-  enabled = false,
+  enabled = true,
   lazy = true,
   cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
   event = { "User KittyScrollbackLaunch" },
@@ -15,8 +15,13 @@ return {
     vim.api.nvim_create_autocmd({ "FileType" }, {
       group = vim.api.nvim_create_augroup("KittyScrollbackNvimFileType", { clear = true }),
       pattern = { "kitty-scrollback" },
-      callback = function(callback_opts)
-        vim.keymap.set("n", "q", "<cmd>q<CR>", { buffer = callback_opts.bufnr })
+      callback = function(_opts)
+        vim.opt.number = true
+        local set = function(mode, lhs, rhs)
+          vim.keymap.set(mode, lhs, rhs, { buffer = _opts.bufnr })
+        end
+        set("n", "q", "<cmd>q<CR>")
+        set("n", "<CR>", "<Plug>(KsbPasteCmd)")
         return true
       end,
     })

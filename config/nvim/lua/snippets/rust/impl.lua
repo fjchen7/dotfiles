@@ -194,7 +194,20 @@ local deserialize = sn(
 )
 
 return {
-  s("impl ?", {
+  s({
+    trig = "impl ? for …",
+    desc = "impl common traits",
+    docstring = {
+      "- From<T>",
+      "- TryFrom<T>",
+      "- FromStr",
+      "- ToString",
+      "- Default",
+      "- Display",
+      "- Serialize",
+      "- Deserialize",
+    },
+  }, {
     t("impl"),
     f(function(args) -- cut space if it is generics impl
       return args[1][1]:sub(1, 1) == "<" and "" or " "

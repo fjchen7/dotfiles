@@ -105,8 +105,8 @@ return {
       --   expr = true,
       -- },
 
-      { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put After Cursor (Linewise)" },
-      { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Before Cursor (Linewise)" },
+      { "sp", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put After Cursor (Linewise)" },
+      { "sP", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Before Cursor (Linewise)" },
 
       { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and Indent Right" },
       { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and Indent Left" },

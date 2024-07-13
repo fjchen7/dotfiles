@@ -12,7 +12,7 @@ M.menu = {
 
 M.maxwidth = 45
 M.format = function(entry, item)
-  local icons = require("lazyvim.config").icons.kinds
+  local icons = LazyVim.config.icons.kinds
   if icons[item.kind] then
     item.kind = icons[item.kind] .. item.kind
   end
@@ -29,7 +29,7 @@ M.format = function(entry, item)
 end
 
 M.format_cmdline = function(entry, item)
-  local icons = require("lazyvim.config").icons.kinds
+  local icons = LazyVim.config.icons.kinds
   if icons[item.kind] then
     item.kind = icons[item.kind] .. item.kind
   end

@@ -13,6 +13,7 @@ M.init = function()
   end
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local keymaps = {
+    { "<leader>cl", false },
     { "<leader>nl", "<cmd>LspInfo<cr>", desc = "Print LSP Info" },
     -- {
     --   "<leader>nL",
@@ -25,16 +26,52 @@ M.init = function()
       desc = "Print and Copy LSP Configuration",
     },
 
-    { "gd", vim.lsp.buf.definition, desc = "Go Definition", has = "definition" },
-    -- {
-    --   "g<leader>D",
-    --   "<cmd>tab split | lua vim.lsp.buf.definition()<CR>",
-    --   desc = "Go Definition and Split",
-    --   has = "definition",
-    -- },
+    -- { "gd", vim.lsp.buf.definition, desc = "Go Definition", has = "definition" },
     { "gD", vim.lsp.buf.declaration, desc = "Go Declaration" },
-    { "gb", vim.lsp.buf.type_definition, desc = "Go Type Definition" },
+    -- { "gb", vim.lsp.buf.type_definition, desc = "Go Type Definition" },
 
+    -- Split
+    {
+      "g<C-D>",
+      function()
+        vim.cmd("vs")
+        vim.schedule(function()
+          vim.lsp.buf.definition()
+        end)
+      end,
+      desc = "Go Definition (Split)",
+      has = "definition",
+    },
+    {
+      "g<C-y>",
+      function()
+        vim.cmd("vs")
+        vim.schedule(function()
+          vim.lsp.buf.type_definition()
+        end)
+      end,
+      desc = "Go Type Definition (Split)",
+    },
+    {
+      "g<C-r>",
+      function()
+        vim.cmd("vs")
+        vim.schedule(function()
+          vim.lsp.buf.references()
+        end)
+      end,
+      desc = "Go References (Split)",
+    },
+    {
+      "g<C-i>",
+      function()
+        vim.cmd("vs")
+        vim.schedule(function()
+          vim.lsp.buf.implementation()
+        end)
+      end,
+      desc = "Go Implementation (Split)",
+    },
     -- {
     --   "gr",
     --   function()
@@ -43,16 +80,16 @@ M.init = function()
     --   end,
     --   desc = "Go References",
     -- },
-    { "gr", "<cmd>Trouble lsp_references refresh=false<cr>", desc = "Go References" },
+    -- { "gr", "<cmd>Trouble lsp_references refresh=false<cr>", desc = "Go References" },
+    -- { "gI", vim.lsp.buf.implementation, desc = "Go Implementation" },
 
-    { "gI", vim.lsp.buf.implementation, desc = "Go Implementation" },
-    { "g<M-d>", goto_preview("goto_preview_definition"), desc = "Go Definition (Preview)", has = "definition" },
-    { "g<M-S-d>", goto_preview("goto_preview_declaration"), desc = "Go Declaration (Preview)" },
-    { "g<M-b>", goto_preview("goto_preview_type_definition"), desc = "Go Type Definition (Preview)" },
+    -- { "g<C-d>", goto_preview("goto_preview_definition"), desc = "Go Definition (Preview)", has = "definition" },
+    -- { "g<C-S-d>", goto_preview("goto_preview_declaration"), desc = "Go Declaration (Preview)" },
+    -- { "g<C-y>", goto_preview("goto_preview_type_definition"), desc = "Go Type Definition (Preview)" },
+
     -- goto-preview show references and implementations by telescope. I don't like.
     -- { "gr", goto_preview("goto_preview_references"), desc = "Go References" },
     -- { "gI", goto_preview("goto_preview_implementation"), desc = "Go Implementation" },
-    { "gy", false },
 
     -- { "K", false },
     {
@@ -120,10 +157,19 @@ M.opts = {
   inlay_hints = {
     enabled = true,
   },
-  -- FIX: rust-analyer has bug. It attach non-rust files.
   codelens = {
     enabled = false,
   },
 }
+
+LazyVim.lsp.on_attach(function(client, buffer)
+  if client.supports_method("textDocument/hover") then
+    client.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "single",
+      width = 80,
+      title = "Hover",
+    })
+  end
+end)
 
 return M

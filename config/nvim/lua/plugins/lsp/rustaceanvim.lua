@@ -1,7 +1,7 @@
 local M = {
   -- A heavily modified fork of rust-tools
   "mrcjkb/rustaceanvim",
-  version = "^4",
+  version = "^5",
   ft = { "rust" },
   dependencies = {
     "neovim/nvim-lspconfig",
@@ -19,8 +19,9 @@ local M = {
 
 local rust_analyzer_server = {
   on_attach = function(client, bufnr)
-    local function map(mode, l, r, desc)
-      vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+    local function map(mode, l, r, desc, _opts)
+      local opts = vim.tbl_extend("force", { buffer = bufnr, desc = desc }, _opts or {})
+      vim.keymap.set(mode, l, r, opts)
     end
     map("n", "J", "<CMD>RustLsp joinLines<CR>", "[RS] Join Lines")
     map("n", "K", function()
@@ -65,7 +66,7 @@ local rust_analyzer_server = {
 
     map("n", "<leader>cs", function()
       local rust_lsp = vim.lsp.get_clients({ name = "rust-analyzer" })[1]
-      local settings = rust_lsp.config.settings
+      local settings = rust_lsp.config.settings or {}
       Util.toggle(settings["rust-analyzer"].checkOnSave, function()
         settings["rust-analyzer"].checkOnSave = not settings["rust-analyzer"].checkOnSave
         rust_lsp.notify("workspace/didChangeConfiguration", { settings = settings })
@@ -132,6 +133,17 @@ local rust_analyzer_server = {
           -- * https://rust-analyzer.github.io/manual.html#format-string-completion
           enable = true,
         },
+        -- snippets = {
+        --   custom = {
+        --     ["Arc::new"] = {
+        --       postfix = "arr",
+        --       body = "Arc::new(${receiver})",
+        --       requires = "std::sync::Arc",
+        --       description = "Put the expression into an `Arc`",
+        --       scope = "expr",
+        --     },
+        --   },
+        -- },
         --   callable = {
         --     -- Whether to add parenthesis and argument snippets when completing function.
         --     -- Possible value: fill_arguments (default), add_parentheses, none

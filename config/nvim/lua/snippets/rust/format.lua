@@ -23,57 +23,32 @@ local last_comma = function(args, snip, old_state)
   end
 end
 
-local format_call = function(trig, method, prefix)
-  if type(trig) == "string" then
-    trig = {
-      trig = trig,
-      desc = method .. "(...);",
-    }
-  else
-  end
+local format_call = function(method, prefix, docstring, semicolon)
+  local trig = {
+    trig = method .. "(…)",
+    desc = "",
+    docstring = docstring or method .. "(…)",
+  }
   return s(
     trig,
-    fmt(method .. '({prefix}"{desc}"{comma});', {
+    fmt(method .. "({prefix}{desc}{comma}){}{}", {
       prefix = t(prefix or ""),
       desc = i(1),
       comma = d(2, last_comma, { 1 }),
+      semicolon and t(";") or t(""),
+      i(0),
     })
   )
 end
 
 -- macro with format input
 ls.add_snippets("rust", {
-  format_call({
-    trig = "(prl|println)",
-    trigEngine = "ecma",
-    name = 'println!(…)',
-    desc = 'println!("…")',
-  }, "println!"),
-  format_call({
-    trig = "(pr|print)",
-    trigEngine = "ecma",
-    name = 'print!(…)',
-    desc = 'print!("…")',
-  }, "print!"),
-  format_call({
-    trig = "(fmt|format)",
-    trigEngine = "ecma",
-    name = 'format!(…)',
-    desc = 'format!("…")',
-  }, "format!"),
-  s({
-    trig = "(td|todo)",
-    trigEngine = "ecma",
-    name = "todo!(…)",
-    desc = "todo!(…)",
-  }, fmt("todo!({});", { i(1) })),
-  s({
-    trig = "(pc|panic)",
-    trigEngine = "ecma",
-    name = "panic!(…)",
-    desc = "panic!(…)",
-  }, fmt("panic!({});", { i(1) })),
-  s("dbg", fmt("dbg!({});", { i(1) })),
+  format_call("println!", nil, nil, true),
+  format_call("print!", nil, nil, true),
+  format_call("format!", nil, "Create a format `String`"),
+  format_call("todo!"),
+  format_call("panic!"),
+  s("dbg", fmt("dbg!({}){}", { i(1), i(0) })),
   -- format_call("write!", "write!", "f, "),
   -- format_call("writeln!", "writeln!", "f, "),
 
@@ -167,10 +142,9 @@ local new_assert_postfix = function(a, aeq, ane, hidden, is_debug)
 end
 
 -- vim.list_extend(M, new_assert_postfix("assert", "assert_eq", "assert_ne"))
-vim.list_extend(M, new_assert_postfix("a", "aeq", "ane", true))
+-- vim.list_extend(M, new_assert_postfix("a", "aeq", "ane", true))
 -- vim.list_extend(M, new_assert_postfix("debug_assert", "debug_assert_eq", "debug_assert_ne", false, true))
-vim.list_extend(M, new_assert_postfix("da", "daeq", "dane", true, true))
-MM = M
+-- vim.list_extend(M, new_assert_postfix("da", "daeq", "dane", true, true))
 -- vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
 
 return M

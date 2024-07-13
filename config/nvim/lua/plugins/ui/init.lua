@@ -7,6 +7,15 @@ vim.list_extend(specs, {
   -- Override:
   -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/colorscheme.lua#L11
   {
+    "folke/tokyonight.nvim",
+    opts = {
+      on_colors = function(colors)
+        -- https://github.com/folke/tokyonight.nvim/issues/34#issuecomment-1347911154
+        colors.border = "#565f89"
+      end,
+    },
+  },
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
@@ -57,7 +66,7 @@ vim.list_extend(specs, {
     "LazyVim/LazyVim",
     opts = {
       -- The default is tokyonight
-      -- colorscheme = "tokyonight-storm",
+      -- colorscheme = "tokyonight-night",
       colorscheme = "catppuccin",
     },
   },

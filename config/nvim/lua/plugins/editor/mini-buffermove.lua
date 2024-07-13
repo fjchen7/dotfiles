@@ -6,7 +6,7 @@ return {
   keys = function()
     return {
       {
-        "q",
+        "<C-b>d",
         function()
           local bufnr = vim.api.nvim_get_current_buf()
           local current_winnr = vim.api.nvim_get_current_win()
@@ -22,7 +22,7 @@ return {
           local windows = vim.api.nvim_list_wins()
           for _, winnr in pairs(windows) do
             if winnr ~= current_winnr and vim.api.nvim_win_get_buf(winnr) == bufnr then
-              vim.notify("Buffer in other window. Can't delete.", vim.log.levels.WARN, { title = "Buffer" })
+              vim.notify("Same buffer in other window. Can't delete.", vim.log.levels.WARN, { title = "Buffer" })
               return
             end
           end
@@ -44,9 +44,8 @@ return {
         end,
         desc = "Delete Buffer",
       },
-      { "<BS>", "q", remap = true, desc = "Delete Buffer" },
       {
-        "<C-BS>",
+        "<C-b>D",
         function()
           local bufnr = vim.api.nvim_get_current_buf()
           vim.cmd("BufferPrevious")

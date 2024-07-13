@@ -3,30 +3,13 @@
 return {
   -- Show function context in first line
   "nvim-treesitter/nvim-treesitter-context",
-  keys = function()
-    return {
-      {
-        "<leader>ox",
-        function()
-          local tsc = require("treesitter-context")
-          tsc.toggle()
-          if LazyVim.inject.get_upvalue(tsc.toggle, "enabled") then
-            LazyVim.info("Enable Treesitter Context", { title = "Option" })
-          else
-            LazyVim.warn("Disable Treesitter Context", { title = "Option" })
-          end
-        end,
-        desc = "Toggle Treesitter Context",
-      },
-    }
-  end,
   config = function(_, opts)
     require("treesitter-context").setup(opts)
     -- set TreesitterContext to Normal's guibg
-    vim.schedule(function()
-      vim.cmd([[hi! TreesitterContext guibg=none gui=bold]])
-      vim.cmd([[hi! link TreesitterContextLineNumber Normal]])
-      -- vim.cmd([[hi! TreesitterContextLineNumber guifg=#e78285]])
-    end)
+    -- vim.schedule(function()
+    --   vim.cmd([[hi! TreesitterContext guibg=none gui=bold]])
+    --   vim.cmd([[hi! link TreesitterContextLineNumber Normal]])
+    --   -- vim.cmd([[hi! TreesitterContextLineNumber guifg=#e78285]])
+    -- end)
   end,
 }

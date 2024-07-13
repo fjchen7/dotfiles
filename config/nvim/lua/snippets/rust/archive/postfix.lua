@@ -100,7 +100,6 @@ local M = {
   postfix({ trig = "ok", desc = "Ok(…)" }, fmt("Ok({}){}", { l(l.POSTFIX_MATCH), i(0) })),
   postfix({ trig = "err", desc = "Err(…)" }, fmt("Err({}){}", { l(l.POSTFIX_MATCH), i(0) })),
   postfix({ trig = "some", desc = "Some(…)" }, fmt("Some({}){}", { l(l.POSTFIX_MATCH), i(0) })),
-  postfix({ trig = "string", desc = "String::from(…)" }, fmt("String::from({}){}", { l(l.POSTFIX_MATCH), i(0) })),
 
   -- Type postfix
   postfix({
@@ -280,40 +279,40 @@ local M = {
   }, fmt("{}({})", { i(1), l(l.POSTFIX_MATCH) })),
 }
 
-vim.list_extend(M, {
-  postfix({
-    trig = ">",
-    desc = "…<T>",
-    disabled_prefix = true,
-    priority = 3000,
-    match_pattern = "['%w_:,]+$",
-    hidden = true,
-  }, fmt("{}<{}>{}", { i(1), l(l.POSTFIX_MATCH), i(0) })),
-  postfix({
-    trig = ",",
-    desc = "(T, …)",
-    disabled_prefix = true,
-    priority = 3000,
-    match_pattern = "['%w_:,]+$",
-    hidden = true,
-  }, fmt("({}, {}){}", { l(l.POSTFIX_MATCH), i(1), i(0) })),
-  postfix({
-    trig = ">",
-    desc = "…<T>",
-    disabled_prefix = true,
-    -- NOTE: limit: fail to complete (usize, usize><tab>), which expands to |<(usize, usize>)
-    match_pattern = "[^ %)>,%-]['%w_%(%):<>, &]*[_%w>%)]$",
-    hidden = true,
-  }, fmt("{}<{}>{}", { i(1), l(l.POSTFIX_MATCH), i(0) })),
-  postfix({
-    trig = ",",
-    desc = "(T, …)",
-    disabled_prefix = true,
-    -- NOTE: limit: fail to complete (usize, usize,<tab>), which expands to ((usize, usize, |))
-    match_pattern = "[^ %)>,%-]['%w_%(%):<>, &]*[_%w>%)]$",
-    hidden = true,
-  }, fmt("({}, {}){}", { l(l.POSTFIX_MATCH), i(1), i(0) })),
-})
+-- vim.list_extend(M, {
+--   postfix({
+--     trig = ">",
+--     desc = "…<T>",
+--     disabled_prefix = true,
+--     priority = 3000,
+--     match_pattern = "['%w_:,]+$",
+--     hidden = true,
+--   }, fmt("{}<{}>{}", { i(1), l(l.POSTFIX_MATCH), i(0) })),
+--   postfix({
+--     trig = ",",
+--     desc = "(T, …)",
+--     disabled_prefix = true,
+--     priority = 3000,
+--     match_pattern = "['%w_:,]+$",
+--     hidden = true,
+--   }, fmt("({}, {}){}", { l(l.POSTFIX_MATCH), i(1), i(0) })),
+--   postfix({
+--     trig = ">",
+--     desc = "…<T>",
+--     disabled_prefix = true,
+--     -- NOTE: limit: fail to complete (usize, usize><tab>), which expands to |<(usize, usize>)
+--     match_pattern = "[^ %)>,%-]['%w_%(%):<>, &]*[_%w>%)]$",
+--     hidden = true,
+--   }, fmt("{}<{}>{}", { i(1), l(l.POSTFIX_MATCH), i(0) })),
+--   postfix({
+--     trig = ",",
+--     desc = "(T, …)",
+--     disabled_prefix = true,
+--     -- NOTE: limit: fail to complete (usize, usize,<tab>), which expands to ((usize, usize, |))
+--     match_pattern = "[^ %)>,%-]['%w_%(%):<>, &]*[_%w>%)]$",
+--     hidden = true,
+--   }, fmt("({}, {}){}", { l(l.POSTFIX_MATCH), i(1), i(0) })),
+-- })
 
 -- not, ref, refm, deref
 vim.list_extend(M, {

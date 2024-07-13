@@ -14,10 +14,21 @@ M.opts = function()
         -- text_objects = false,
         -- operators = false,
         -- motions = false,
-        windows = false,
-        nav = false,
-        z = false,
-        g = false,
+        windows = true,
+        nav = true,
+        z = true,
+        g = true,
+      },
+    },
+    keys = {
+      scroll_down = "<m-d>", -- binding to scroll down inside the popup
+      scroll_up = "<m-u>", -- binding to scroll up inside the popup
+    },
+    icons = {
+      -- Default rules: https://github.com/folke/which-key.nvim/blob/main/lua/which-key/icons.lua#L16
+      rules = {
+        { pattern = "copilot", icon = " ", color = "green" },
+        { pattern = "replace", icon = " ", color = "green" },
       },
     },
   }
@@ -28,41 +39,36 @@ M.config = function(_, opts)
   wk.setup(opts)
 
   local ignored = "which_key_ignore"
-  wk.register({
+  wk.add({
     mode = { "n", "v" },
-    ["g"] = { mode = { "n", "o" }, name = "+goto" },
-    ["s"] = { mode = { "n", "x" }, name = "+misc" },
-    ["]"] = { mode = { "n", "o" }, name = "+next" },
-    ["["] = { mode = { "n", "o" }, name = "+prev" },
-    -- ["<leader><tab>"] = { name = "+tabs" },
-    ["<C-t>"] = { name = "+tab" },
-    ["<C-r>"] = { name = "+neo-tree" },
-    ["<leader>"] = { name = "+leader" },
-    ["<leader>c"] = { name = "+code" },
-    ["<leader>f"] = { name = "+file" },
-    ["<leader>g"] = { name = "+git", },
-    ["<leader>h"] = { name = "+file operation" },
-    ["<leader>d"] = { name = "+diagnostic/todos" },
-    -- ["<leader>q"] = { name = "+quit/session" },
-    -- ["<leader>u"] = { name = "+ui" },
-    ["<leader>o"] = { name = "+toggle option" },
-    ["<leader>q"] = { name = "+quickfix/trouble" },
-    ["<leader>e"] = { name = "+debug" },
-    ["<leader>r"] = { name = "+refactor" },
-    ["<leader>t"] = { name = "+test/run" },
-    ["<leader>i"] = { name = "+symbols" },
-    ["<leader>p"] = { name = "+session" },
-    ["<leader>s"] = { name = "+search/replace" },
-    ["<leader>n"] = { name = "+nvim config" },
-    ["<leader>x"] = {
-      name = ignored,
-      l = ignored,
-      q = ignored,
-    },
-
-    ["{"] = "Prev Blank Line",
-    ["}"] = "Next Blank Line",
-    ["<C-Left>"] = "Decrease Window Width (←↑→↓)",
+    { "g", mode = { "n", "o" }, group = "goto" },
+    -- FIX: s can't invoke cheatsheet
+    { "s", "<Nop>", mode = { "n", "o", "v" }, group = "misc" },
+    { "]", mode = { "n", "o" }, group = "next" },
+    { "[", mode = { "n", "o" }, group = "prev" },
+    -- ["<leader><tab>"] = { group = "+tabs" },
+    { "<C-t>", group = "tab" },
+    { "<C-r>", group = "neo-tree" },
+    { "<leader>", group = "leader" },
+    { "<leader>c", group = "code" },
+    { "<leader>f", group = "file" },
+    { "<leader>g", group = "git" },
+    { "<leader>l", group = "operate file" },
+    { "<leader>d", group = "diagnostic/todos" },
+    { "<leader>u", group = "toggle" },
+    { "<leader>uI", group = "inspect" },
+    { "<leader>h", group = "quickfix/trouble" },
+    { "<leader>e", group = "debug" },
+    { "<leader>r", group = "refactor/replace" },
+    -- { "<leader>s", group = "search" },
+    { "<leader>o", group = "overseer" },
+    { "<leader>t", group = "test" },
+    { "<leader>i", group = "symbols" },
+    { "<leader>p", group = "session" },
+    { "<leader>n", group = "nvim config" },
+    { "{", desc = "Prev Blank Line" },
+    { "}", desc = "Next Blank Line" },
+    { "<C-Left>", desc = "Decrease Window Width (←↑→↓)" },
   }, {})
 
   vim.defer_fn(function()
@@ -76,11 +82,11 @@ M.config = function(_, opts)
       "<C-Right>", "<C-Up>", "<C-Down>",
     }
     for _, key in ipairs(ignored_keys) do
-      wk.register({ [key] = { desc = ignored }, mode = { "n", "x", "o" } })
+      wk.add({ { key, hidden = true }, mode = { "n", "x", "o" } })
     end
   end, 1000)
 
-  require("plugins.editor.which-key.presets")
+  -- require("plugins.editor.which-key.presets")
 
   -- Get back to original poistion from visual mode
   -- Use case: after vib to select and <esc> to cancel the visual, <C-o> can jump back

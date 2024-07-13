@@ -18,7 +18,7 @@ return {
   keys = {
     -- { mode = { "o", "x" }, "i.", "<Plug>(textobj-chainmember-i)", desc = "Chain Member" },
     -- { mode = { "o", "x" }, "a.", "<Plug>(textobj-chainmember-a)", desc = "Chain Member" },
-    { mode = { "o", "x" }, "i\\", "<Plug>(textobj-comment-i)", desc = "Comment" },
-    { mode = { "o", "x" }, "a\\", "<Plug>(textobj-comment-a)", desc = "Comment" },
+    { mode = { "o", "x" }, "ic", "<Plug>(textobj-comment-i)", desc = "Comment" },
+    { mode = { "o", "x" }, "ac", "<Plug>(textobj-comment-a)", desc = "Comment" },
   },
 }

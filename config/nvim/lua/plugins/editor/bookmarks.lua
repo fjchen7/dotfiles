@@ -22,8 +22,8 @@ return {
         -- map("n", "<C-b>m", "<F4>", "Choose Bookmark (bookmarks.nvim)", { remap = true })
         -- map("n", "m<BS>", bm.bookmark_clean, "Clean Bookmarks in Buffer (bookmarks.nvim)")
         vim.defer_fn(function()
-          map({ "n", "v" }, "<M-j>", bm.bookmark_next, "Next Bookmark (bookmarks.nvim)")
-          map({ "n", "v" }, "<M-k>", bm.bookmark_prev, "Prev Bookmark (bookmarks.nvim)")
+          map({ "n", "v" }, "<M-h>", bm.bookmark_next, "Next Bookmark (bookmarks.nvim)")
+          map({ "n", "v" }, "<M-l>", bm.bookmark_prev, "Prev Bookmark (bookmarks.nvim)")
         end, 500)
       end,
     })

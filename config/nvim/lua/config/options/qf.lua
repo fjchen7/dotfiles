@@ -18,9 +18,12 @@ function _G.qftf(info)
   else
     items = fn.getloclist(info.winid, { id = info.id, items = 0 }).items
   end
-  local limit = 40
+  local limit = 30
   local fnameFmt1, fnameFmt2 = "%-" .. limit .. "s", "…%." .. (limit - 1) .. "s"
-  local validFmt = "%s │%5d:%-3d│%s %s"
+  -- local validFmt = "%s │%5d:%-3d│%s %s"
+  local validFmt = "%s │ %4d │ %-s %s"
+  local last_fname = nil
+  local cwd = vim.fn.getcwd()
   for i = info.start_idx, info.end_idx do
     local e = items[i]
     local fname = ""
@@ -28,10 +31,20 @@ function _G.qftf(info)
     if e.valid == 1 then
       if e.bufnr > 0 then
         fname = fn.bufname(e.bufnr)
+        -- CUSTOMIZATION: remove folder
+        if string.sub(fname, 1, #cwd) == cwd then
+          fname = string.sub(fname, #cwd + 2)
+        end
+        -- CUSTOMIZATION: remove the same file in consecution
         if fname == "" then
           fname = "[No Name]"
         else
-          fname = fname:gsub("^" .. vim.env.HOME, "~")
+          if last_fname == fname then
+            fname = ""
+          else
+            last_fname = fname
+            fname = fname:gsub("^" .. vim.env.HOME, "~")
+          end
         end
         -- char in fname may occur more than 1 width, ignore this issue in order to keep performance
         if #fname <= limit then
@@ -43,7 +56,9 @@ function _G.qftf(info)
       local lnum = e.lnum > 99999 and -1 or e.lnum
       local col = e.col > 999 and -1 or e.col
       local qtype = e.type == "" and "" or " " .. e.type:sub(1, 1):upper()
-      str = validFmt:format(fname, lnum, col, qtype, e.text)
+      -- CUSTOMIZATION: remove leading space
+      local text = string.gsub(e.text, "^%s+", "")
+      str = validFmt:format(fname, lnum, qtype, text)
     else
       str = e.text
     end

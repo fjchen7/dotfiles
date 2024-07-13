@@ -52,6 +52,18 @@ local luasnip_offset = function(entry1, entry2)
   return compare.offset(entry1, entry2)
 end
 
+local copilot_first = function(entry1, entry2)
+  local is_copilot1 = entry1.source.name == "copilot"
+  local is_copilot2 = entry2.source.name == "copilot"
+  if is_copilot1 and is_copilot2 then
+    return nil
+  elseif is_copilot1 then
+    return true
+  elseif is_copilot2 then
+    return false
+  end
+end
+
 local luasnip_first = function(entry1, entry2)
   local is_luasnip1 = entry1.source.name == "luasnip"
   local is_luasnip2 = entry2.source.name == "luasnip"
@@ -100,17 +112,51 @@ local luasnip_first = function(entry1, entry2)
   return nil
 end
 
+-- From: https://www.reddit.com/r/neovim/comments/1f406tx/comment/lki5z2p
+local types = require("cmp.types")
+local priority_map = {
+  [types.lsp.CompletionItemKind.EnumMember] = 1,
+  [types.lsp.CompletionItemKind.Variable] = 2,
+  [types.lsp.CompletionItemKind.Text] = 100,
+}
+
+local kind = function(entry1, entry2)
+  local kind1 = entry1:get_kind()
+  local kind2 = entry2:get_kind()
+  kind1 = priority_map[kind1] or kind1
+  kind2 = priority_map[kind2] or kind2
+  if kind1 ~= kind2 then
+    if kind1 == types.lsp.CompletionItemKind.Snippet then
+      return true
+    end
+    if kind2 == types.lsp.CompletionItemKind.Snippet then
+      return false
+    end
+    local diff = kind1 - kind2
+    if diff < 0 then
+      return true
+    elseif diff > 0 then
+      return false
+    end
+  end
+end
+
 -- https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/default.lua#L62-L76
 -- https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/compare.lua
 return {
-  luasnip_first,
-  luasnip_choice,
-  compare.exact,
-  compare.score,
-  -- compare.recently_used,
-  compare.kind,
-  compare.locality,
-  -- compare.sort_text,
-  compare.length,
-  compare.order,
+  comparators = {
+    copilot_first,
+    luasnip_first,
+    luasnip_choice,
+    compare.offset,
+    compare.exact,
+    compare.score,
+    kind,
+    compare.recently_used,
+    compare.locality,
+    compare.kind,
+    -- compare.sort_text,
+    compare.length,
+    compare.order,
+  },
 }

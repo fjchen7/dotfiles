@@ -66,7 +66,7 @@ M.keys = function()
     -- { "<leader>gf", "<cmd>Telescope git_bcommits<CR>", desc = "Show File Commits" },
     -- { "<leader>gF", "<cmd>Telescope git_commits<CR>", desc = "Project Commits" },
     { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git Status" },
-    { "<leader>gh", "<cmd>Telescope git_stash<CR>", desc = "Git Stashes" },
+    { "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "Git Stashes" },
     { "<leader>gr", "<cmd>Telescope git_branches<CR>", desc = "Branches" },
     -- search
     { '<leader>"', "<cmd>Telescope registers<cr>", desc = "Registers" },
@@ -79,7 +79,7 @@ M.keys = function()
     -- Configurations
     { "<F1>", "<CMD>Telescope help_tags<CR>", desc = "List Helps" },
     { "<leader>n<F1>", "<CMD>Telescope help_tags<CR>", desc = "List Helps" },
-    { "<leader>nn", "<CMD>Telescope filetypes<CR>", desc = "Set Filetype" },
+    { "<leader>nf", "<CMD>Telescope filetypes<CR>", desc = "Set Filetype" },
     { "<leader>nh", "<cmd>Telescope highlights<cr>", desc = "List Highlights" },
     { "<leader>na", "<cmd>Telescope autocommands<cr>", desc = "List Auto-Commands" },
     { "<leader>nk", "<cmd>Telescope keymaps<cr>", desc = "List Keymaps" },
@@ -189,16 +189,18 @@ M.opts = function()
     defaults = {
       prompt_prefix = " ",
       selection_caret = " ",
-      -- path_display = {
-      --   truncate = true, -- truncate long file name
-      -- },
+      path_display = {
+        "truncate", -- truncate long file name
+        -- "smart",
+        "filename_first",
+      },
       results_title = false, -- hide results title
       dynamic_preview_title = true, -- Use dynamic preview title if avaliable
       wrap_results = false,
-      sorting_strategy = "ascending", -- cursor starts from top result
-      layout_strategy = "vertical", -- flex, bottom_pane, curcor, center, horizontal, vertical
+      -- sorting_strategy = "ascending", -- cursor starts from top result
+      -- layout_strategy = "vertical", -- flex, bottom_pane, curcor, center, horizontal, vertical
       layout_config = {
-        prompt_position = "top",
+        -- prompt_position = "top",
         flex = {
           -- use vertical layout when window column < filp_columns
           flip_columns = 160,
@@ -212,6 +214,8 @@ M.opts = function()
         },
         horizontal = {
           -- mirror = true,
+          width = 0.85,
+          preview_width = 0.6,
         },
         center = {
           -- mirror = true,
@@ -219,6 +223,9 @@ M.opts = function()
         bottom_pane = {
           height = { 0.5, min = 25, max = 50 },
         },
+      },
+      preview = {
+        hide_on_startup = false,
       },
 
       file_ignore_patterns = { "node_modules", "/dist", "target" },
@@ -240,7 +247,8 @@ M.opts = function()
       mappings = {
         i = {
           ["<Esc>"] = actions.close, -- disable normal mode
-          ["<CR>"] = actions.select_default + actions.center,
+          -- ["<CR>"] = actions.select_default + actions.center,
+          ["<CR>"] = actions.select_default,
           ["<C-s>"] = actions.select_horizontal,
           ["<C-\\>"] = require("telescope.actions.layout").toggle_preview,
           -- qflist / loclist

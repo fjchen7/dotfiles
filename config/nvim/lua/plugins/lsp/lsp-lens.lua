@@ -7,7 +7,7 @@ return {
   event = "VeryLazy",
   enabled = false,
   keys = {
-    { "<leader>ol", "<CMD>LspLensToggle<CR>", "Toggle Definition Info" },
+    { "<leader>us", "<CMD>LspLensToggle<CR>", "Toggle Definition Info" },
   },
   opts = {},
 }

@@ -4,28 +4,27 @@ local del = vim.keymap.del
 -- To use CSIu mapping:
 -- 1. Map two keys individually
 -- 2. Enbable CSIu in terminal or GUI.
--- map("n", "<C-m>", "<Nop>") -- Need to map <Cr> as well
-map({ "n", "o", "x" }, "<Esc>", "<Esc>")
-map({ "n", "o", "x" }, "<C-i>", "<C-i>")
+-- Need to map <Cr> as well
+map("n", "<C-m>", "<F3>", "Toggle Bookmark", { remap = true })
 
--- map("n", "q", function()
---   local current_bufnr = vim.api.nvim_get_current_buf()
---   local current_winnr = vim.api.nvim_get_current_win()
---   local has_others_listed = false
---   for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
---     local bufnr = vim.fn.winbufnr(winnr)
---     local listed = vim.bo[bufnr].buflisted
---     if (bufnr ~= current_bufnr or winnr ~= current_winnr) and listed then
---       has_others_listed = true
---     end
---   end
---   if has_others_listed then
---     vim.cmd("close")
---   else
---     require("notify")("Cannot close last window", vim.log.levels.WARN, { title = "Close" })
---   end
--- end)
--- map("n", "q", "<CMD>close<CR>")
+map("n", "q", function()
+  local current_bufnr = vim.api.nvim_get_current_buf()
+  local current_winnr = vim.api.nvim_get_current_win()
+  local has_others_listed = false
+  for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local bufnr = vim.fn.winbufnr(winnr)
+    local listed = vim.bo[bufnr].buflisted
+    if (bufnr ~= current_bufnr or winnr ~= current_winnr) and listed then
+      has_others_listed = true
+    end
+  end
+  if has_others_listed then
+    vim.cmd("close")
+  else
+    require("notify")("Cannot close last window", vim.log.levels.WARN, { title = "Close" })
+  end
+end)
+map("n", "<leader>q", "q", "Macro")
 -- map("n", "<C-q>", "<CMD>silent! bufdo up<CR><CMD>qa<cr>")
 map("n", "<C-q>", "<CMD>qa<cr>")
 map("n", "U", "<C-r>", "Redo")
@@ -44,6 +43,8 @@ map("i", "<C-s>", "<cmd>w<cr>", "Save File")
 map("x", ".", ":norm .<CR>", "Repeat in Selection")
 map("x", "@", ":norm @q<CR>", "Execute Macro in Selection")
 
+map({ "n", "o", "x" }, "<Esc>", "<Esc>")
+map({ "n", "o", "x" }, "<C-i>", "<C-i>")
 -- Tips: <C-]> and <C-LeftMouse> jump to definition
 --       <C-[> and <C-RightMouse> jump back
 map("n", "<C-]>", [[<cmd>silent! exec "normal! \<C-]>"<cr>]], "Jump to Tag")

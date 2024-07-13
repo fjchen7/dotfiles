@@ -32,9 +32,9 @@ M.keys = function()
     { "[q", prev_qf_or_trouble, desc = "Prev Trouble / Quickfix Item" },
     { "]q", next_qf_or_trouble, desc = "Next Trouble / Quickfix Item" },
 
-    { "<leader>qq", "<cmd>Trouble qflist focus=true refresh=true<cr>", desc = "Quickfix List (Trouble)" },
+    { "<leader>hq", "<cmd>Trouble qflist focus=true refresh=true<cr>", desc = "Quickfix List (Trouble)" },
     -- { "<leader>qq", "<cmd>copen<cr>", desc = "Quickfix List" },
-    { "<leader>ql", "<cmd>Trouble loclist focus=true refresh=true<cr>", desc = "Location List (Trouble)" },
+    { "<leader>hl", "<cmd>Trouble loclist focus=true refresh=true<cr>", desc = "Location List (Trouble)" },
     -- { "<leader>ql", "<cmd>lopen<cr>", desc = "Location List" },
 
     {
@@ -131,7 +131,7 @@ end
 
 M.opts = {
   -- auto_refresh = false,
-  auto_preview = false,
+  auto_preview = true,
   -- follow = false,
   focus = true,
 }

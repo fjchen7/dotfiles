@@ -59,6 +59,19 @@ local cd_to_file_dir = function(prompt_bufnr)
   vim.notify(string.format("cd to %s", dir:gsub(vim.fn.getenv("HOME"), "~")))
 end
 
+Util.is_buf_git_changed = function(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local diff = vim.fn.system("git diff --name-only " .. bufname)
+  if #diff > 0 then
+    return true
+  end
+  local stage_diff = vim.fn.system("git diff --cached --name-only " .. bufname)
+  if #stage_diff > 0 then
+    return true
+  end
+  return false
+end
+
 actions.overwrite_select_default = function(prompt_bufnr)
   local picker = state.get_current_picker(prompt_bufnr)
   local original_winnr = picker.original_win_id
@@ -69,6 +82,7 @@ actions.overwrite_select_default = function(prompt_bufnr)
   if require("barbar.state").is_pinned(bufnr) then
     return
   end
+
   local windows = vim.api.nvim_list_wins()
   for _, winnr in pairs(windows) do
     if winnr ~= original_winnr and vim.api.nvim_win_get_buf(winnr) == bufnr then
@@ -76,18 +90,11 @@ actions.overwrite_select_default = function(prompt_bufnr)
     end
   end
 
-  local bufname = vim.api.nvim_buf_get_name(bufnr)
-  local diff = vim.fn.system("git diff --name-only " .. bufname)
-  if #diff > 0 then
-    return
-  end
-  local stage_diff = vim.fn.system("git diff --cached --name-only " .. bufname)
-  if #stage_diff > 0 then
+  if Util.is_buf_git_changed(bufnr) then
     return
   end
 
   require("mini.bufremove").delete(bufnr)
-
   Util.update_tabline()
 end
 
@@ -234,15 +241,6 @@ M.git_status = {
   },
 }
 
-local defaults = {
-  layout_strategy = "horizontal",
-  layout_config = {
-    height = 0.90,
-    preview_width = 0.6,
-    width = { 0.8, min = 140 },
-  },
-}
-
 local pickers = {
   "git_branches",
   "git_commits",
@@ -251,20 +249,16 @@ local pickers = {
   "git_status",
 }
 for _, picker in ipairs(pickers) do
+  local defaults = {
+    layout_strategy = "horizontal",
+    layout_config = {
+      height = 0.90,
+      preview_width = 0.6,
+      width = { 0.8, min = 140 },
+    },
+  }
   M[picker] = vim.tbl_extend("force", M[picker] or {}, defaults)
 end
-
-local defaults = {
-  layout_strategy = "vertical",
-  layout_config = {
-    -- prompt_position = "bottom",
-    mirror = true,
-    height = 0.6,
-    -- width = { 0.5, min = 80, max = 100 },
-    width = 80,
-  },
-  previewer = false,
-}
 
 local pickers = {
   "find_files",
@@ -273,6 +267,30 @@ local pickers = {
 }
 
 for _, picker in ipairs(pickers) do
+  local defaults = {
+    -- layout_strategy = "vertical",
+    -- layout_config = {
+    --   -- prompt_position = "bottom",
+    --   mirror = true,
+    --   height = 0.6,
+    --   -- width = { 0.5, min = 80, max = 100 },
+    --   width = 80,
+    -- },
+    -- previewer = false,
+  }
+  M[picker] = vim.tbl_extend("force", M[picker] or {}, defaults)
+end
+
+local pickers = {
+  "live_grep",
+  "grep_string",
+  "current_buffer_fuzzy_find",
+}
+
+for _, picker in ipairs(pickers) do
+  local defaults = {
+    path_display = { "truncate", "tail" },
+  }
   M[picker] = vim.tbl_extend("force", M[picker] or {}, defaults)
 end
 

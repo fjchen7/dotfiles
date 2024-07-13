@@ -1,33 +1,40 @@
--- stylua: ignore
 return {
   -- Print for debugging smoothly
   "andrewferrier/debugprint.nvim",
   keys = {
     {
       "<leader>el",
-      function() return require("debugprint").debugprint() end,
+      function()
+        return require("debugprint").debugprint()
+      end,
       desc = "Debug Print Line Below",
-      expr = true
+      expr = true,
     },
     {
       "<leader>eL",
-      function() return require("debugprint").debugprint({ above = true }) end,
+      function()
+        return require("debugprint").debugprint({ above = true })
+      end,
       desc = "Debug Print Line Above",
-      expr = true
+      expr = true,
     },
     {
       "<leader>ev",
       mode = { "n", "x" },
-      function() return require("debugprint").debugprint({ variable = true }) end,
+      function()
+        return require("debugprint").debugprint({ variable = true })
+      end,
       desc = "Debug Print Variable Below",
-      expr = true
+      expr = true,
     },
     {
       "<leader>eV",
       mode = { "n", "x" },
-      function() return require("debugprint").debugprint({ variable = true, above = true }) end,
+      function()
+        return require("debugprint").debugprint({ variable = true, above = true })
+      end,
       desc = "Debug Print Variable Above",
-      expr = true
+      expr = true,
     },
     {
       "<leader>ed",

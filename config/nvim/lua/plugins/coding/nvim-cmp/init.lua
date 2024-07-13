@@ -1,14 +1,19 @@
--- Tracked features:
--- Show completion menu above the cursor.
---   - https://github.com/hrsh7th/nvim-cmp/issues/495
---   - https://github.com/hrsh7th/nvim-cmp/pull/1701
 local M = {
+  -- rebase two branch
+  -- llllvvuu/nvim-cmp, branch feat/above
+  -- yioneko/nvim-cmp, branch perf
   "hrsh7th/nvim-cmp", --   "llllvvuu/nvim-cmp",
   enabled = true,
   event = {
     "InsertEnter",
     "CmdlineEnter",
   },
+  -- Do not update util the PR below is merged.
+  -- Tracked features:
+  -- Show completion menu above the cursor.
+  --   - https://github.com/hrsh7th/nvim-cmp/issues/495
+  --   - https://github.com/hrsh7th/nvim-cmp/pull/1701
+  pin = true,
 }
 
 M.dependencies = {
@@ -17,9 +22,8 @@ M.dependencies = {
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
   -- "saadparwaiz1/cmp_luasnip",
-  "jimzk/cmp_luasnip",
-  "zbirenbaum/copilot.lua",
-  { "jimzk/cmp-luasnip-choice", opts = {} },
+  "fjchen7/cmp_luasnip",
+  { "fjchen7/cmp-luasnip-choice", opts = {} },
   "abecodes/tabout.nvim",
   "altermo/ultimate-autopair.nvim",
   "windwp/nvim-autopairs",
@@ -36,14 +40,6 @@ M.opts = function(_, opts)
     priority = 1000,
   })
 
-  -- for i, source in pairs(opts.sources) do
-  --   if source.name == "luasnip" then
-  --     table.remove(opts.sources, i)
-  --     table.insert(opts.sources, 1, source)
-  --     break
-  --   end
-  -- end
-
   for i, source in ipairs(opts.sources) do
     opts.sources[i] =
       vim.tbl_deep_extend("force", source, require("plugins.coding.nvim-cmp.sources")[source.name] or {})
@@ -53,19 +49,16 @@ M.opts = function(_, opts)
   opts.mapping = {}
 
   local override = {
-    preselect = cmp.PreselectMode.Item,
-    -- preselect = cmp.PreselectMode.None,
+    -- preselect = cmp.PreselectMode.Item,
+    preselect = cmp.PreselectMode.None, -- https://www.reddit.com/r/neovim/comments/1ba6kkp/comment/ku0qwqb
     completion = {
-      -- completeopt = "menu,menuone,noselect", -- Shoud add by manual or preselect == None not work
-      -- completeopt = "menu,menuone",
-      --   -- ISSUE: Two events trigger autocomplete: InsertEnter and TextChanged.
-      --   -- The latter is affect performance significantly, So I disable them.
-      --   -- autocomplete = false,
+      completeopt = "menu,menuone", -- menu,menuone,noselect
       keyword_length = 0,
     },
     experimental = {
-      -- this feature conflict with copilot.vim's preview.
-      ghost_text = false,
+      ghost_text = {
+        hl_group = "CmpGhostText",
+      },
     },
 
     view = {
@@ -77,14 +70,15 @@ M.opts = function(_, opts)
     },
     -- mapping = cmp.mapping.preset.insert(keymaps.mapping),
     mapping = keymaps.mapping,
-    -- performance = {
-    --   -- max_view_entries = 7,
-    --   debounce = 0, -- default is 60
-    --   throttle = 0, -- default is 30
-    -- },
+    -- https://www.reddit.com/r/neovim/comments/1f1rxtx
+    performance = {
+      debounce = 10, --  60ms by default
+      throttle = 5, --  30ms by default
+      fetching_timeout = 20, -- 80ms by default
+    },
     formatting = {
       expandable_indicator = false, -- Do not show ~ indicator
-      format = format.format,
+      -- format = format.format,
     },
     window = {
       completion = {
@@ -95,9 +89,7 @@ M.opts = function(_, opts)
         border = "single",
       },
     },
-    sorting = {
-      comparators = require("plugins.coding.nvim-cmp.comparators"),
-    },
+    sorting = require("plugins.coding.nvim-cmp.sorting"),
   }
 
   opts = vim.tbl_deep_extend("force", opts or {}, override)

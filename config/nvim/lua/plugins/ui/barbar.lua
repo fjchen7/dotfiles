@@ -33,11 +33,11 @@ M.opts = {
     },
     pinned = { button = "", filename = true },
     alternate = { filetype = { enabled = true } },
-    current = {},
+    -- current = { button = false },
     -- inactive = { button = false },
     visible = { modified = { buffer_number = false } },
   },
-  minimum_padding = 0,
+  minimum_padding = 1,
   maximum_padding = 0,
   maximum_length = 20,
   no_name_title = "[New File]",
@@ -60,7 +60,7 @@ M.config = function(_, opts)
   local get_current_buf = vim.api.nvim_get_current_buf
 
   -- Ref: https://github.com/romgrk/barbar.nvim/blob/master/lua/barbar/api.lua#L111
-  local function close_all_but_visible_or_pinned(direction)
+  local function close_buffers(should_keep_fn, direction)
     render.update()
     local idx = index_of(state.buffers, get_current_buf())
     if idx == nil then
@@ -74,11 +74,39 @@ M.config = function(_, opts)
     end
     for i = start, stop, step do
       local bufnr = state.buffers[i]
-      if not (buffer.get_activity(bufnr) >= visible or state.is_pinned(bufnr)) then
+      if not should_keep_fn(bufnr) then
         bdelete(false, bufnr)
       end
     end
     render.update()
+  end
+
+  local function close_all_but_visible_or_pinned(direction)
+    local should_keep_fn = function(bufnr)
+      return buffer.get_activity(bufnr) >= visible or state.is_pinned(bufnr)
+    end
+    close_buffers(should_keep_fn, direction)
+  end
+
+  local function close_all_but_visible_or_pinnned_or_changed()
+    local should_keep_fn = function(bufnr)
+      if buffer.get_activity(bufnr) >= visible or state.is_pinned(bufnr) then
+        return true
+      end
+      local modified = vim.api.nvim_get_option_value("modified", {
+        buf = bufnr,
+      })
+      if modified then
+        return true
+      end
+      local bufname = vim.api.nvim_buf_get_name(bufnr)
+      local diff = vim.fn.system("git diff --name-only " .. bufname)
+      if #diff > 0 then
+        return true
+      end
+      return false
+    end
+    close_buffers(should_keep_fn)
   end
 
   Util.update_tabline = function()
@@ -96,13 +124,14 @@ M.config = function(_, opts)
     map("n", "<M-=>", "<CMD>BufferMoveNext<CR>", "Move Buffer to Next")
 
     -- Remove buffers
-    map("n", "<C-b>d", "<BS>", "Delete Buffer (<BS>)", { remap = true })
-    map("n", "<S-BS>", close_all_but_visible_or_pinned, "Delete Other Buffers")
-    map("n", "<C-b>o", "<S-BS>", "Delete Other Buffers (<S-BS>)", { remap = true })
-    map("n", "<C-b>D", "<CMD>BufferPickDelete<CR>", "Delete Buffer by Pick")
+    -- map("n", "<C-b>d", "<C-w>d", "Delete Buffer", { remap = true })
+    -- map("n", "<C-b>D", "<C-w>D", "Delete Buffer Forcely", { remap = true })
+    map("n", "<C-b>a", close_all_but_visible_or_pinned, "Delete All Buffers")
+    map("n", "<C-b>o", close_all_but_visible_or_pinnned_or_changed, "Delete All Buffers But Changed")
+    map("n", "<C-b><BS>", "<CMD>BufferPickDelete<CR>", "Delete Buffer by Pick")
     -- stylua: ignore start
-    map("n", "<C-b>l", function() close_all_but_visible_or_pinned("right") end, "Delete Buffers Left")
-    map("n", "<C-b>h", function() close_all_but_visible_or_pinned("left") end, "Delete Buffers Right")
+    map("n", "<C-b>]", function() close_all_but_visible_or_pinned("right") end, "Delete Buffers Right")
+    map("n", "<C-b>[", function() close_all_but_visible_or_pinned("left") end, "Delete Buffers Left")
 
     -- Order
     -- map("n", "<C-b>sn", "<CMD>BufferOrderByBufferNumber<CR>", "Order by Buffer Number")
@@ -111,22 +140,24 @@ M.config = function(_, opts)
     -- map("n", "<C-b>sw", "<CMD>BufferOrderByWindowNumber<CR>", "Order Window Number")
 
     -- Utilities
+    map("n", "`", "<C-^>", "Go Alternative Buffer")
     map("n", "<C-b>t", "<CMD>BufferRestore<CR>", "Restore Buffer")
-    -- map("n", "`", "<CMD>BufferPick<CR>", "Pick Buffer")
+    map("n", "<C-b>b", "<CMD>BufferPick<CR>", "Pick Buffer")
     -- Pin buffer
-    map("n", "<C-b>p", "<CMD>BufferPin<CR><CMD>Hbac toggle_pin<CR>", "Pin Buffer")
+    -- map("n", "<C-b>p", "<CMD>BufferPin<CR><CMD>Hbac toggle_pin<CR>", "Pin Buffer")
+    map("n", "<C-b>p", "<CMD>BufferPin<CR>", "Pin Buffer")
 
     -- Go to buffer
-    for i = 0, 9 do
-      local key = "<C-b>" .. i
+    map("n", "<M-0>", "<CMD>BufferLast<CR>", "Go to Last Buffer")
+    map("n", "<M-1>", "<CMD>BufferGoto 1<CR>", "Go to 1st Buffer")
+    for i = 2, 9 do
+      local key = "<M-" .. i .. ">"
       local cmd = i == 0 and "<CMD>BufferLast<CR>" or "<CMD>BufferGoto " .. i .. "<CR>"
       map("n", key, cmd)
     end
 
-    require("which-key").register({
-      ["<C-b>"] = {
-        name = "tabline",
-      },
+    require("which-key").add({
+      { "<C-b>", group = "tabline", },
     })
 
     vim.cmd([[
@@ -155,10 +186,6 @@ M.config = function(_, opts)
             return
           end
           local title = "Neo-tree"
-          -- local session_name = require("possession.session").get_session_name()
-          -- if session_name then
-          --   title = title .. ": " .. session_name
-          -- end
           return require("bufferline.api").set_offset(offset, title)
         end
       end

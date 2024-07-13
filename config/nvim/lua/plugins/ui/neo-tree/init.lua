@@ -135,7 +135,7 @@ M.opts = {
   enable_diagnostics = false,
   commands = require("plugins.ui.neo-tree.commands"),
   close_if_last_window = true,
-  sources = { "filesystem", "buffers", "git_status", "document_symbols", "netman.ui.neo-tree" },
+  sources = { "filesystem", "buffers", "git_status", "document_symbols" },
   -- source_selector = {
   --   winbar = false, -- toggle to show selector on winbar
   --   statusline = true, -- toggle to show selector on statusline
@@ -196,10 +196,11 @@ M.opts.window = {
     d = "trash",
     -- Navigation with HJKL
     -- https://github.com/nvim-neo-tree/neo-tree.nvim/wiki/Tips#navigation-with-hjkl
-    h = "close_node_or_go_parent",
     l = "open_node_or_go_child",
-    H = "go_parent",
-    L = "go_parent_sibling",
+    h = "close_node_or_go_parent",
+    H = "noop",
+    -- H = "go_parent",
+    -- L = "go_parent_sibling",
     K = "prev_sibling",
     J = "next_sibling",
     ["c"] = "toggle_node_smart",
@@ -282,7 +283,7 @@ M.opts.git_status = {
 M.config = function(_, opts)
   require("neo-tree").setup(opts)
   -- Highlight
-  -- vim.cmd("hi! link NeoTreeCursorLine QuickFixLine")
+  vim.cmd("hi! link NeoTreeCursorLine QuickFixLine")
   vim.api.nvim_create_autocmd("FileType", {
     pattern = { "neo-tree" },
     callback = function(opts)

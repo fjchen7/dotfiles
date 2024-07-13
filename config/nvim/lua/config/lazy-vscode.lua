@@ -26,7 +26,15 @@ require("lazy").setup({
       event = "VeryLazy",
       keys = {
         {
-          "R",
+          "t",
+          mode = { "n", "x", "o" },
+          function()
+            require("plugins.text.flash.methods").two_char_jump([[\(^ *\)\@<=\S]])
+          end,
+          desc = "Jump to Line",
+        },
+        {
+          "r",
           mode = { "o" },
           function()
             require("flash").remote()
@@ -34,7 +42,7 @@ require("lazy").setup({
           desc = "Remote (Flash)",
         },
         {
-          "r",
+          "R",
           mode = { "o", "x" },
           function()
             require("flash").treesitter_search({

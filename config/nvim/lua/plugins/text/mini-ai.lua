@@ -30,10 +30,10 @@ return {
           a = { "@block.outer", "@conditional.outer", "@loop.outer" },
           i = { "@block.inner", "@conditional.inner", "@loop.inner" },
         }),
-        m = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
-        c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+        C = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
         t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
-        f = gen_spec.function_call({ name_pattern = "[%w_:%.]" }),
+        m = gen_spec.function_call({ name_pattern = "[%w_:%.]" }),
         -- k = { { "%b<>" }, "^.().*().$" },
       },
     }
@@ -56,7 +56,7 @@ return {
 
     -- register all text objects with which-key
     local ai_whichkey = function()
-      local i = {
+      local objects = {
         [" "] = "Whitespace",
         _ = "Underscore",
         a = "Argument",
@@ -65,21 +65,27 @@ return {
         q = "`...`, \"...\" '...'",
         p = "Paragraph",
         o = "Block, Condition, Loop",
-        m = "Function Body",
-        c = "Class Body",
-        f = "Function Call Arguments",
+        f = "Function Body",
+        C = "Class Body",
+        m = "Function Call Arguments",
         t = "Tag",
         ["?"] = "User Prompt",
       }
       for _, v in ipairs({ '"', "'", "`", "(", ")", ">", "<lt>", "[", "]", ",", "}", "{", "w", "W" }) do
-        i[v] = "which_key_ignore"
+        objects[v] = "which_key_ignore"
       end
-      local a = vim.deepcopy(i)
-      require("which-key").register({
-        mode = { "o", "x" },
-        i = i,
-        a = a,
-      })
+      local ret = { mode = { "o", "x" } }
+      for prefix, name in pairs({
+        i = "inside",
+        a = "around",
+      }) do
+        ret[#ret + 1] = { prefix, group = name }
+        for obj, desc in pairs(objects) do
+          ret[#ret + 1] = { prefix .. obj, desc = desc }
+        end
+      end
+
+      require("which-key").add(ret, { notify = false })
     end
     ai_whichkey()
   end,

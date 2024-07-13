@@ -4,11 +4,11 @@ return {
   event = "VeryLazy",
   keys = {
     {
-      "<leader>oH",
+      "<leader>uH",
       function()
         require("nvim-highlight-colors").toggle()
       end,
-      desc = "Toggle Color Highlight",
+      desc = "Toggle Hex Color Highlight",
     },
   },
   opts = {},

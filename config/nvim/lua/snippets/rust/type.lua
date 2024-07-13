@@ -29,8 +29,11 @@ local get_undefined_generics = function(str)
   local generics = {}
   for generic in string.gmatch(str, "[^,]+") do
     if not string.find(generic, ":") then
-      local result = string.match(generic, "^%s*(.-)%s*$")
-      table.insert(generics, result)
+      local first_char = string.sub(generic, 1, 1)
+      if first_char ~= "'" then
+        local result = string.match(generic, "^%s*(.-)%s*$")
+        table.insert(generics, result)
+      end
     end
   end
   return generics
@@ -74,6 +77,12 @@ local where_clause = function(pos, generic_pos)
   end, { generic_pos })
 end
 
+local line_self_ref = conds.make_condition(function(line_to_cursor, matched_trigger)
+  local str = line_to_cursor:sub(1, -(#matched_trigger + 1))
+  local lastChar = string.sub(str, -1)
+  return lastChar == "(" or lastChar == ""
+end)
+
 local line_self = conds.make_condition(function(line_to_cursor, matched_trigger)
   local str = line_to_cursor:sub(1, -(#matched_trigger + 1))
   local lastChar = string.sub(str, -1)
@@ -81,58 +90,18 @@ local line_self = conds.make_condition(function(line_to_cursor, matched_trigger)
 end)
 
 return {
-  -- s({ trig = "self", desc = "self" }, fmt("self", {}), { condition = line_self }),
-  s({ trig = "self&", desc = "&self", priority = 3000 }, fmt("&self", {}), { condition = line_self }),
-  s({ trig = "self&m", desc = "&mut self", priority = 3000 }, fmt("&mut self", {}), { condition = line_self }),
-  -- s({ trig = "self.", desc = "self." }, fmt("self.{}", { i(1) }), { condition = line_self }),
+  s({ trig = "self", desc = "self" }, fmt("self", {}), { condition = line_self }),
+  s({ trig = "&self", desc = "&self", priority = 3000 }, fmt("&self", {}), { condition = line_self_ref }),
+  s({ trig = "&mut self", desc = "&mut self", priority = 3000 }, fmt("&mut self", {}), { condition = line_self_ref }),
 
-  -- s(
-  --   "t",
-  --   fmt("{modifier}{space}type {} = {};", {
-  --     modifier = util.rust.modifier(1),
-  --     space = n(1, " "),
-  --     i(2, "Foo"),
-  --     i(3, "Bar"),
-  --   })
-  -- ),
   s(
-    "type",
-    fmt("type {} = {};{}", {
-      i(1, "Foo"),
-      i(2, "i32"),
-      i(0),
-    }),
-    { condition = conds_expand.rust_definition }
+    "type … = …",
+    fmt("type {} = {};{}", { i(1, "MyType"), i(2, "Result<(), ()>"), i(0) }),
+    { condition = conds_expand.rust_pub }
   ),
-  s(
-    "mod",
-    fmt("mod {};", {
-      i(1),
-    }),
-    { condition = conds_expand.rust_definition }
-  ),
-  -- s({ trig = "struct", desc = "struct {...}" }, {
-  --   t({ "#[derive(Debug, Clone, Default, Eq, PartialEq, Ord, PartialOrd)]", "" }),
-  --   util.rust.modifier(1),
-  --   n(1, " "),
-  --   t("struct "),
-  --   i(2, "Foo"),
-  --   -- generic
-  --   n(3, "<"),
-  --   i(3, "T: Display"), -- generics
-  --   n(3, ">"),
-  --   -- {...}
-  --   t({ " {", "\t" }),
-  --   util.rust.modifier(4),
-  --   n(4, " "),
-  --   i(5, "bar"),
-  --   t(": "),
-  --   i(6, "Bar"),
-  --   t({ ",", "\t" }),
-  --   i(0),
-  --   t({ "", "}" }),
-  -- }),
-  s({ trig = "struct", desc = "struct {...}" }, {
+  s("mod", fmt("mod {};", { i(1) }), { condition = conds_expand.rust_pub }),
+  s({ trig = "struct { … }", desc = "struct { … }" }, {
+    t({ "#[derive(Debug, Copy, Clone)]", "" }),
     t("struct "),
     i(1, "Foo"),
     -- generic
@@ -146,10 +115,9 @@ return {
     t({ "," }),
     i(0),
     t({ "", "}" }),
-  }, {
-    condition = conds_expand.rust_definition,
-  }),
+  }, { condition = conds_expand.rust_pub }),
   s({ trig = "struct(…)", desc = "struct(…)" }, {
+    t({ "#[derive(Debug, Copy, Clone)]", "" }),
     t("struct "),
     i(1, "Foo"),
     -- generic
@@ -159,19 +127,27 @@ return {
     t("("),
     i(3, "i32"),
     t(");"),
-  }, {
-    condition = conds_expand.rust_definition,
-  }),
-  s("enum", {
+  }, { condition = conds_expand.rust_pub }),
+  s("enum { … }", {
+    t({ "#[derive(Debug, Copy, Clone)]", "" }),
     t("enum "),
     i(1, "Foo"),
     t({ " {", "\t" }),
     i(2, "Foo1"),
     t({ ",", "\t" }),
-    i(3, "Foo2(uint)"),
+    i(3, "Foo2(i32)"),
     t({ ",", "}" }),
+  }, { condition = conds_expand.rust_pub }),
+  s({
+    trig = "where … : …",
+    desc = "where T : TraitA + TraitB",
   }, {
-    condition = conds_expand.rust_definition,
+    t({ "where", "\t" }),
+    i(1, "T"),
+    t(": "),
+    i(2, "TraitA + TraitB"),
+    t({ ",", "\t" }),
+    i(0),
   }),
   -- s("fn", {
   --   util.rust.modifier(1),
@@ -197,7 +173,7 @@ return {
   --   where_clause(7, 5),
   --   util.rust.body(0),
   -- }),
-  s("fn", {
+  s("fn …() { … }", {
     t("fn "), -- fn keyword
     i(1), -- fn name
     generics_bound(3),
@@ -212,14 +188,15 @@ return {
     t({ "{", "\t" }),
     i(0, "todo!()"),
     t({ "", "}" }),
-  }, {
-    condition = conds_expand.rust_definition,
-  }),
-  s("impl", {
+  }, { condition = conds_expand.rust_pub_async }),
+  s("impl …", {
     t("impl"),
     -- generics_bound(3),
     f(function(args)
-      return #args[1][1] > 0 and "<" .. args[1][1] .. ">" or ""
+      if #args[1][1] > 0 then
+        -- Do not return '_
+        return string.match(args[1][1], "%a") and "<" .. args[1][1] .. ">" or ""
+      end
     end, { 2 }),
     t(" "),
     i(1, "Type"),
@@ -232,10 +209,8 @@ return {
     i(0),
     t({ "", "}" }),
     -- }, { condition = conds_expand.line_begin * conds_expand.line_end }),
-  }, {
-    condition = conds_expand.line_begin,
-  }),
-  s("impl for", {
+  }, { condition = conds_expand.line_begin }),
+  s("impl … for …", {
     t("impl"),
     -- generics_bound(5),
     f(function(args)
@@ -266,9 +241,7 @@ return {
     t({ "{", "\t" }),
     i(0),
     t({ "", "}" }),
-  }, {
-    condition = conds_expand.line_begin,
-  }),
+  }, { condition = conds_expand.line_begin }),
   s("trait", {
     t("trait "),
     i(1, "Type"),
@@ -297,15 +270,13 @@ return {
     i(7, "usize"), -- return type
     t(";"),
     t({ "", "}" }),
-  }, {
-    condition = conds_expand.rust_definition,
-  }),
+  }, { condition = conds_expand.rust_pub }),
   s(
-    { trig = "const", desc = "const ...: ... = ...;" },
+    { trig = "const", desc = "const …: … = …;" },
     fmt("const {}: {} = {};", {
       i(1, "CONSTANT_VAR"),
-      i(2, "Type"),
-      i(3, "init"),
+      i(2, "i32"),
+      i(3, "1"),
     }),
     { condition = conds_expand.line_begin }
   ),

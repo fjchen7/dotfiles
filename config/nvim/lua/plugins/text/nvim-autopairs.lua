@@ -1,10 +1,10 @@
 local M = {
   "windwp/nvim-autopairs",
-  enabled = true,
+  enabled = false,
   event = "InsertEnter",
-  dependencies = {
-    { "echasnovski/mini.pairs", enabled = false },
-  },
+  -- dependencies = {
+  --   { "echasnovski/mini.pairs", enabled = false },
+  -- },
 }
 
 M.opts = {
@@ -42,20 +42,14 @@ M.config = function(_, opts)
   -- Add <>
   -- Ref: https://github.com/windwp/nvim-autopairs/issues/301#issuecomment-1382215955
   -- Implementation: https://github.com/windwp/nvim-autopairs/blob/master/lua/nvim-autopairs/rules/basic.lua
-  local basic = require("nvim-autopairs.rules.basic")
-  local utils = require("nvim-autopairs.utils")
-  utils.is_close_bracket = (function(func)
-    return function(char)
-      return func(char) or char == ">"
-    end
-  end)(utils.is_close_bracket)
-  local bracket = basic.bracket_creator(npairs.config)
-  npairs.add_rules({
-    -- Add new rule
-    bracket("<", ">", { "rust" }):with_pair(cond.not_before_text(" ")),
-    -- Modify existing rule
-    -- bracket("'", "'"):with_pair(cond.not_filetypes({ "rust" })),
-  })
+  -- local basic = require("nvim-autopairs.rules.basic")
+  -- local bracket = basic.bracket_creator(npairs.config)
+  -- npairs.add_rules({
+  --   -- Add new rule
+  --   bracket("<", ">", { "rust" }):with_pair(cond.not_before_text(" ")),
+  --   -- Modify existing rule
+  --   -- bracket("'", "'"):with_pair(cond.not_filetypes({ "rust" })),
+  -- })
 
   -- Get Treesitter node:
   -- 1) require('nvim-treesitter.ts_utils').get_node_at_cursor():type()

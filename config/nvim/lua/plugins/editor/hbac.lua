@@ -1,13 +1,9 @@
 local M = {
   -- Automatically close unmodified buffers if numbers of buffers exceed the threshold
   "axkirillov/hbac.nvim",
-  event = "BufRead",
-  enabled = true, -- I don't need it as I use Harpoon for tabline
+  event = "BufReadPost",
+  enabled = false,
 }
-
--- M.keys = {
---   { "<leader>fb", "<cmd>Telescope hbac buffers<cr>", desc = "Find Buffers" },
--- }
 
 M.opts = function()
   -- local actions = require("telescope.actions")

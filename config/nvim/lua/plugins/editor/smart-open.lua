@@ -41,7 +41,7 @@ return {
       local action_state = require("telescope.actions.state")
       local line = action_state.get_current_line()
       local themes = require("telescope.themes")
-      require("telescope").extensions.smart_open.smart_open(themes.get_dropdown({
+      require("telescope").extensions.smart_open.smart_open({
         -- smart-open configuration
         -- https://github.com/barklan/smart-open.nvim/blob/main/lua/telescope/_extensions/smart_open/default_config.lua
         ignore_patterns = { "*.git/*", "*/tmp/*" },
@@ -49,10 +49,10 @@ return {
         cwd_only = true,
         filename_first = true,
         -- Telescope config
-        layout_config = {
-          height = 30,
-        },
-        previewer = false,
+        -- layout_config = {
+        --   height = 30,
+        -- },
+        -- previewer = false,
         prompt_title = "Smart Open",
         hidden = true,
         no_ignore = true,
@@ -73,8 +73,9 @@ return {
           --     vim.api.nvim_buf_set_lines(prompt_bufnr, position[1] - 1, position[1], false, { "" })
           --   end
           -- end, { desc = "Close or Clean" })
-          map("i", "<cr>", actions.overwrite_select_default, { desc = "overwrite_select_default" })
-          map("i", "<C-cr>", actions.select_default + actions.center)
+          map("i", "<CR>", actions.select_default, { desc = "overwrite_select_default" })
+          -- map("i", "<CR>", actions.overwrite_select_default, { desc = "overwrite_select_default" })
+          -- map("i", "<C-CR>", actions.select_default + actions.center)
 
           -- actions.pin_buffer = function(prompt_bufnr)
           --   local state = require("telescope.actions.state")
@@ -86,7 +87,7 @@ return {
           -- map("i", "<M-p>", actions.pin_buffer, { desc = "Pin Buffer" })
           return true
         end,
-      }))
+      })
     end
   end,
 }

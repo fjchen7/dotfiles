@@ -10,6 +10,7 @@ return {
   --
   -- Ref: https://www.reddit.com/r/neovim/comments/1acrgn3/comment/kjwm29a
   "miversen33/netman.nvim",
+  enabled = false,
   keys = {
     { "<leader>fm", "<CMD>Neotree remote<CR>", desc = "Remote File NeoTree" },
   },

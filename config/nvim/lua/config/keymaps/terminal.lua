@@ -11,12 +11,12 @@ del("n", "<leader>fT")
 del("n", "<c-/>")
 del("n", "<c-_>")
 
-del("t", "<C-h>")
-del("t", "<C-j>")
-del("t", "<C-k>")
-del("t", "<C-l>")
-del("t", "<C-/>")
-del("t", "<c-_>")
+-- del("t", "<C-h>")
+-- del("t", "<C-j>")
+-- del("t", "<C-k>")
+-- del("t", "<C-l>")
+-- del("t", "<C-/>")
+-- del("t", "<c-_>")
 del("t", "<Esc><Esc>")
 
 -- <C-\><C-n> to normal mode in terminal

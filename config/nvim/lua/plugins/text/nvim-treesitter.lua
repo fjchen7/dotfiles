@@ -1,10 +1,8 @@
--- Override:
--- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/treesitter.lua#L5C1-L6C39
 local M = {
   "nvim-treesitter/nvim-treesitter",
 }
 
-local highlight_disabled_langs = { "rust", "lua", "python" }
+local highlight_disabled_langs = { "rust", "lua", "python", "copilot-chat", }
 local opts = {
   -- ensure_installed = "all",
   indent = { enable = true },

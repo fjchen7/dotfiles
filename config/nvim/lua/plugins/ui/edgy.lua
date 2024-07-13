@@ -7,6 +7,11 @@ local M = {
 M.keys = function(_, opts)
   return {
     {
+      "<S-Esc>",
+      require("edgy").close,
+      "Edgy Close",
+    },
+    {
       "<leader>y",
       function()
         require("edgy").toggle()

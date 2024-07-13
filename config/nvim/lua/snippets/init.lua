@@ -20,9 +20,17 @@ conds_expand.line_contains_pub = conds.make_condition(function(line_to_cursor, m
   return line_to_cursor:match("%s*pub")
 end)
 
-conds_expand.rust_definition = conds_expand.line_begin + conds_expand.line_contains_pub
+local conds_async = conds.make_condition(function(line_to_cursor, matched_trigger)
+  -- line_to_cursor = line_to_cursor:sub(1, -(#matched_trigger + 1)) -- line before cursor without trigger
+  -- return line_to_cursor:match("%s*pub")
+  return line_to_cursor:sub(1, -(#matched_trigger + 1)):match("^%s*async")
+end)
 
--- NOTE: Using jimzk/cmp-luasnip-choice to complete choice node by cmp requires the nested snippet node has
+conds_expand.rust_pub = conds_expand.line_begin + conds_expand.line_contains_pub
+conds_expand.rust_pub_async = conds_expand.line_begin + conds_expand.line_contains_pub + conds_async
+conds_expand.rust_async = conds_expand.line_begin + conds_async
+
+-- NOTE: Using fjchen7/cmp-luasnip-choice to complete choice node by cmp requires the nested snippet node has
 -- the field docstring, otherwise a error will be thrown. And we can't customized what is shown in completion menu either..
 -- Reproduction snippet: the snippet "class" in https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets#L214-L244
 -- This is a wordaound.
@@ -45,9 +53,9 @@ local wrap = function(context, nodes, opts)
   if type(context) == "string" then
     context = { trig = context }
   end
-  if not context.docstring then
-    context.docstring = ""
-  end
+  -- if not context.docstring then
+  --   context.docstring = ""
+  -- end
   return context, nodes, opts
 end
 
@@ -97,11 +105,10 @@ postfix.postfix = function(context, nodes, opts)
     -- default is [%w%.%_%-]+$
     -- See https://zjp-cn.github.io/neovim0.6-blogs/nvim/luasnip/doc1.html#postfix
     context.match_pattern = pattern .. match_pattern_postfix
-    -- context.match_pattern = [[['"%w%.%_%-%(%)?&!*:<>]*[%w%)?>'"]+$]]
   end
-  if context.hidden == nil then
-    context.hidden = true
-  end
+  -- if context.hidden == nil then
+  --   context.hidden = false
+  -- end
   -- Default is 1000. Make sure postfix is the highest priority.
   context.priority = 2000
   opts = opts and opts or {}
@@ -127,26 +134,26 @@ postfix.postfix = function(context, nodes, opts)
   return _pf(context, nodes, opts)
 end
 
-local ts_postfix = require("luasnip.extras.treesitter_postfix")
-local _ts_postfix = ts_postfix.treesitter_postfix
-ts_postfix.treesitter_postfix = function(context, nodes, opts)
-  opts = opts or {}
-  if not context.disabled_prefix then
-    context.trig = postfix_trigger .. context.trig -- add prefix
-  end
-  -- if not opts.show_condition and opts.condition then
-  --   opts.show_condition = function(line_to_cursor)
-  --     line_to_cursor = string.sub(line_to_cursor, 1, -3)
-  --     return opts.condition(line_to_cursor .. context.trig, context.trig)
-  --   end
-  -- end
-  context, nodes, opts = wrap(context, nodes, opts)
-  return _ts_postfix(context, nodes, opts)
-end
+-- local ts_postfix = require("luasnip.extras.treesitter_postfix")
+-- local _ts_postfix = ts_postfix.treesitter_postfix
+-- ts_postfix.treesitter_postfix = function(context, nodes, opts)
+--   opts = opts or {}
+--   if not context.disabled_prefix then
+--     context.trig = postfix_trigger .. context.trig -- add prefix
+--   end
+--   -- if not opts.show_condition and opts.condition then
+--   --   opts.show_condition = function(line_to_cursor)
+--   --     line_to_cursor = string.sub(line_to_cursor, 1, -3)
+--   --     return opts.condition(line_to_cursor .. context.trig, context.trig)
+--   --   end
+--   -- end
+--   context, nodes, opts = wrap(context, nodes, opts)
+--   return _ts_postfix(context, nodes, opts)
+-- end
 
 local snippets = {
   rust = {
-    "postfix",
+    -- "postfix",
     "keyword",
     "format",
     "test",
@@ -156,8 +163,8 @@ local snippets = {
   },
   lua = {
     "keyword",
-    "postfix",
-    "ts_postfix",
+    -- "postfix",
+    -- "ts_postfix",
     "nvim",
   },
 }

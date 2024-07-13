@@ -6,18 +6,18 @@ return {
   enabled = false,
   cmd = { "Oil" },
   keys = {
+    -- {
+    --   "<C-r>o",
+    --   function()
+    --     require("oil").open()
+    --     -- vim.defer_fn(function()
+    --     --   require("oil").open_preview()
+    --     -- end, 1000)
+    --   end,
+    --   desc = "Open Oil",
+    -- },
     {
       "<C-r>o",
-      function()
-        require("oil").open()
-        -- vim.defer_fn(function()
-        --   require("oil").open_preview()
-        -- end, 1000)
-      end,
-      desc = "Open Oil",
-    },
-    {
-      "<C-r>O",
       function()
         require("oil").toggle_float()
       end,
@@ -48,15 +48,20 @@ return {
   opts = function()
     local oil = require("oil")
     return {
-      columns = {
-        "icon",
-        "size",
-        { "mtime", format = "%Y-%m-%d %H:%M" },
+      -- columns = {
+      --   "icon",
+      --   "size",
+      --   { "mtime", format = "%Y-%m-%d %H:%M" },
+      -- },
+      buf_options = {
+        buflisted = false,
+        bufhidden = "hide",
       },
-      win_options = {
-        signcolumn = "number",
-        relativenumber = false,
-      },
+      -- win_options = {
+      -- number = false,
+      -- signcolumn = "number",
+      -- relativenumber = false,
+      -- },
       -- Remove Oil from jumplist
       cleanup_delay_ms = 100,
       delete_to_trash = true,
@@ -102,15 +107,16 @@ return {
         ["g<C-l>"] = "actions.add_to_loclist",
       },
       float = {
-        padding = 10,
-        max_width = 50,
+        padding = 2,
+        -- max_width = 50,
         max_height = 30,
         win_options = {
           winblend = 0,
+          number = false,
         },
       },
       preview = {
-        min_width = { 100, 0.6 },
+        min_width = { 120, 0.8 },
       },
     }
   end,

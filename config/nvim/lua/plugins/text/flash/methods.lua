@@ -12,7 +12,9 @@ M.two_char_jump = function(pattern)
   end
 
   Flash.jump({
-    labels = "asdfqwerkliobcdemnpuvw",
+    labels = "tjkiohlbnmpuyg",
+    -- labels = "iojkuferfwsxcvbnmghtyplqa",
+    -- adferjkliobcdemnpuvw",
     search = { mode = "search", multi_window = true },
     label = { after = false, before = { 0, 0 }, uppercase = false, format = format },
     pattern = pattern or [[\<]],
@@ -140,25 +142,6 @@ M.treesitter_remote = function(opts)
       style = "inline",
     },
     remote_op = { restore = true, motion = true },
-  }
-  opts = vim.tbl_deep_extend("force", default_opts, opts or {})
-  Flash.jump(opts)
-end
-
--- Search -> Jump -> Tresitter in the pos
--- FIX: has issue with wrong range and can't operate across windows
--- References:
--- * https://github.com/folke/flash.nvim/discussions/24
-M._remote_treesitter = function(opts)
-  local default_opts = {
-    action = function(match, state)
-      -- state:hide()
-      -- vim.api.nvim_win_call(match.win, function()
-      vim.api.nvim_win_set_cursor(match.win, match.pos)
-      Flash.treesitter()
-      -- end)
-      state:restore()
-    end,
   }
   opts = vim.tbl_deep_extend("force", default_opts, opts or {})
   Flash.jump(opts)

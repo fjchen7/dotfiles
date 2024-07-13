@@ -54,17 +54,17 @@ return {
       vim.keymap.set(mode, key_next, next_ref_repeat, { desc = "Next Reference / Bracket", buffer = buffer })
       vim.keymap.set(mode, key_prev, prev_ref_repeat, { desc = "Prev Reference / Bracket", buffer = buffer })
     end
-    map_ref("<C-n>", "<C-p>")
+    map_ref("<M-n>", "<M-p>")
 
-    vim.g.illuminate_enabled = true
-
-    local map = Util.map
-    map("n", "<leader>oi", function()
-      Util.toggle(vim.g.illuminate_enabled, function()
+    LazyVim.toggle.map("<leader>ua", {
+      name = "Variable Highlight (Illuminate)",
+      get = function()
+        return il.is_paused()
+      end,
+      set = function(enabled)
         il.toggle()
-        vim.g.illuminate_enabled = not vim.g.illuminate_enabled
-      end, "Illuminate")
-    end, "Toggle Illuminate")
+      end,
+    })
 
     -- vim.cmd([[
     --   hi! IlluminatedWordText guibg=#626787 gui=underline

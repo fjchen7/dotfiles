@@ -77,11 +77,11 @@ M.config = function(_, opts)
   vim.defer_fn(function()
     -- Comment (exclusive comment in operation mode)
     -- map_move({ "o" }, "\\", "comment", { wrap = true })
-    map_move({ "n", "x", "o" }, "g", "comment")
+    -- map_move({ "n", "x", "o" }, "/", "comment")
     map_move({ "n", "x", "o" }, "x", "conflict")
     -- map_move({ "n", "x", "o" }, "\\", "treesitter")
     -- map_move({ "n" }, "j", "jump", "jumplist in Buffer")
-    map_move({ "n" }, { "]\\", "[\\" }, "file", nil, {
+    map_move({ "n" }, { "<M-h>", "<M-l>" }, "file", nil, {
       post_hook = function()
         if Util.is_neo_tree_shown() then
           vim.cmd("Neotree reveal action=show")
