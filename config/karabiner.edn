@@ -48,6 +48,7 @@
     :Hammerspoon ["^org\\.hammerspoon\\.Hammerspoon$"]
 
     :OpenCat ["^tech\\.baye\\.OpenCat$"]
+    :ChatGPT ["^com\\.openai\\.chat$"]
     :Obsidian ["^md\\.obsidian$"]
     :Notion ["^notion\\.id$"]
     :Things3 ["^com\\.culturedcode\\.ThingsMac$"]
@@ -120,7 +121,7 @@
         ; [:escape :escape nil {:alone [:hs "spoon.Win.switchApp()"]}]
         [:escape nil nil {:alone :dashboard}]
         ; [:##right_shift :right_shift nil {:alone :!Cspacebar}]
-        [:##right_shift :right_shift nil {:alone [:openApp "OpenCat"]}]
+        [:##right_shift :right_shift nil {:alone [:openApp "ChatGPT"]}]
         ; [:##right_shift :right_shift nil {:alone [:hs "spoon.Win.activate()"]}] ;; Window management
         ; [:##right_command :right_command nil {:alone [:openApp "kitty"]}]
         ; [:##right_shift :right_shift nil {:alone [:openApp "Obsidian"]}]
@@ -151,12 +152,15 @@
         [:!T4 [:openObsidian "Web"]]
         [:!T5 [:openObsidian "Photography"]]
         [:!T0 [:openObsidian "Web3"]]
+        [:!Tp [:openApp "Obsidian"]]
 
-        [:!Tl [:openApp "Arc"]]
+        ; [:!Tl [:openApp "Arc"]]
         [:!Tgrave_accent_and_tilde [:openApp "Google Chrome"]]
         [:!Tv [:openApp "Visual Studio Code"]]
+        [:!Tr [:openApp "RustRover"]]
         [:!Te [:openApp "Finder"]]
         ; [:!Tk [:openApp "Alacritty"]]
+        [:!Tk :!Ch :Kitty]
         [:!Tk [:openApp "Kitty"]]
         [:!Tbackslash [:openApp "Bitwarden"]]
 
@@ -165,7 +169,7 @@
         [:!Tn [:openApp "Notes"]]
         ; [:!Tr :!CTS4]  ;; Look word up in Eudic dictionary
         [:!Ty [:openApp "网易有道翻译"]]
-        [:!T0 [:hs "spoon.Win.activate()"]] ;; Window management
+        [:!Tl [:hs "spoon.Win.activate()"]] ;; Window management
 
         [:!Cw [:zellij "close-pane"] :Alacritty]
         ; [:!Cl [:zellij "focus-next-pane"] :Alacritty]
