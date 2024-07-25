@@ -59,6 +59,7 @@ nmap <C-S-j> <Action>(StretchSplitToBotto)
 nmap <C-S-k> <Action>(StretchSplitToTop)
 nmap <C-S-l> <Action>(StretchSplitToRight)
 nmap <C-w>q <Action>(CloseAllUnpinnedEditors)
+nmap K <Action>(ShowHoverInfo)
 
 """ settings in settings
 sethandler <C-;> a:vim
