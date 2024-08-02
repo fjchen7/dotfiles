@@ -102,3 +102,6 @@ source $DOTFILES_ZSH_HOME/zle.zsh
 source $DOTFILES_ZSH_HOME/alias.zsh
 source $DOTFILES_ZSH_HOME/lazy_load.zsh
 [[ -e $DOTFILES_ZSH_HOME/zshrc.local ]] && source $DOTFILES_ZSH_HOME/zshrc.local
+
+# eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(atuin init zsh)"
