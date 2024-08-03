@@ -18,21 +18,22 @@ export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="l gti g"
 alias cls='clear'
 
 # ls
-alias exa='exa -Fh --git --time-style=long-iso --sort=name'
+# alias exa='exa -Fh --git --time-style=long-iso --sort=name'
+alias eza='eza --sort=name --time-style=long-iso'
 alias gls='gls --color=tty -F'
-alias ls='exa'
-alias l='exa'
-alias ll='exa -lg'
-alias la='exa -a'
-alias lla='exa -alg'
+alias ls='eza'
+alias l='eza'
+alias ll='eza -lg'
+alias la='eza -a'
+alias lla='eza -alg'
 # only list directories
-alias ld='exa -D'
-alias lld='exa -Dlg'
+alias ld='eza -D'
+alias lld='eza -Dlg'
 # only list hidden files (dotfiles)
-alias l.='_f(){ (cd ${@:-.}; exa -ad .*)}; _f'
-alias ll.='_f(){ (cd ${@:-.}; exa -algd .*)}; _f'
+alias l.='_f(){ (cd ${@:-.}; eza -ad .*)}; _f'
+alias ll.='_f(){ (cd ${@:-.}; eza -algd .*)}; _f'
 # only list symlinks
-alias lls='_f(){ (cd ${@:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && exa -algd $_fs) }; _f'
+alias lls='_f(){ (cd ${@:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && eza -algd $_fs) }; _f'
 
 # cd
 alias cdl='_f(){ cd $@; ls }; _f'  # cd and list
@@ -49,14 +50,14 @@ alias 'ls?'='_f() {
         local dir=$PWD
         [[ "$#" != 1 ]] && dir=$1 && shift
         _fs=( $(cd $dir && fd -d1 --hidden | grep -i $1) );
-        exa -ad -1 $_fs
+        eza -ad -1 $_fs
     }; _f'
 alias 'l?'='ls?'
 alias 'll?'='_f() {
         local dir=$PWD
         [[ "$#" != 1 ]] && dir=$1 && shift
         _fs=( $(cd $dir && fd -d1 --hidden | grep -i $1) );
-        exa -ald $_fs
+        eza -ald $_fs
     }; _f'
 alias 'ps?'='_quick_grep "ps aux" $@'
 alias 'path?'='_quick_grep "_list_path" $@'
@@ -224,7 +225,7 @@ alias loadzsh="echo 'Zsh is reloaded!'; exec zsh"
 alias loadhammerspoon="hs -c 'hs.reload()'; echo 'HammerSpoon is reloaded!'"
 alias loadgoku="goku; echo 'Goku is reloaded!'"
 alias loadall="loadhammerspoon; loadgoku; loadzsh"
-alias "]app"='open "/Applications/$(exa /Applications | fzf)"'
+alias "]app"='open "/Applications/$(eza /Applications | fzf)"'
 alias "]blog"='code $BLOG_HOME'
 
 # helper functions
