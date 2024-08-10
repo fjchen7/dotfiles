@@ -420,6 +420,7 @@ function M.openOrHideObsidian(valut)
         end
     end
     hs.execute(string.format("open 'obsidian://open?vault=%s'", valut))
+    hs.application.launchOrFocus("Obsidian")
 end
 
 -- local apps = {
