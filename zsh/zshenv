@@ -28,7 +28,8 @@ export WORKSPACE=$HOME/workspace
 export BLOG_HOME=$WORKSPACE/blog
 
 # https://github.com/ohmyzsh/ohmyzsh/issues/8743
-export WORDCHARS=$'!"#$%&\'()*+,-.:;<=>?@[\\]^_`{|}~'
+# export WORDCHARS=$'!"#$%&\'()*+,-.:;<=>?@[\\]^_`{|}~'
+export WORDCHARS=$'*?[]~&!%^(){}<>[]\\'
 
 # editor
 # if [[ -n $(command -v nvim) ]]; then
