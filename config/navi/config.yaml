@@ -3,7 +3,7 @@
 
 style:
   tag:
-    color: cyan # text color. possible values: https://bit.ly/3gloNNI
+    color: red # text color. possible values: https://bit.ly/3gloNNI
     width_percentage: 17 # column width relative to the terminal window
     min_width: 20 # minimum column width as number of characters
   comment:
