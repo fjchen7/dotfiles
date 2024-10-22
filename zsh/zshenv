@@ -104,9 +104,11 @@ _set_path() {
     PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:$PATH"
     # use homebew gnu command line tools instead of built-in those
     if [[ $OSTYPE == 'darwin'* ]]; then
+        # local BREW_PREFIX=$(brew --prefix)
+        local BREW_PREFIX="/opt/homebrew"
         local packages=(gnu-tar gnu-which grep gawk gnu-sed findutils coreutils)
         for i in "${packages[@]}"; do
-            PATH="$(brew --prefix)/opt/$i/libexec/gnubin:$PATH"
+            PATH="$BREW_PREFIX/opt/$i/libexec/gnubin:$PATH"
         done
     fi
     PATH="$HOME/.cargo/bin:$PATH"  # bin from third party
