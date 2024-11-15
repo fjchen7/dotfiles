@@ -65,6 +65,7 @@ map({ "n", "i" }, "<M-o>", "<Cmd>call append(line('.'), repeat([''], v:count1))<
 -- map({ "i" }, "<S-CR>", function()
 --   vim.api.nvim_put({ "", "" }, "c", false, false)
 -- end, "Break Line")
+map({ "i" }, "<S-cr>", "<C-o>o")
 -- map({ "i" }, "<S-cr>", function()
 --   local last_chars = {
 --     rust = ";",

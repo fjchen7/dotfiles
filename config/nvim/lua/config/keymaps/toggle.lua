@@ -1,13 +1,12 @@
 local map = Util.map
 local del = vim.keymap.del
-local map_toggle = LazyVim.toggle.map
 
-map_toggle("<leader>u-", LazyVim.toggle("cursorline"))
-map_toggle("<leader>uC", LazyVim.toggle("ignorecase"))
+Snacks.toggle.option("cursorline", { name = "Cursorline" }):map("<leader>u-")
+Snacks.toggle.option("ignorecase", { name = "Ignorecase" }):map("<leader>uC")
 
 del("n", "<leader>uT")
-map_toggle("<leader>uh", LazyVim.toggle.treesitter)
-map_toggle("<leader>ui", LazyVim.toggle.inlay_hints)
+Snacks.toggle.treesitter():map("<leader>uh")
+Snacks.toggle.inlay_hints():map("<leader>ui")
 
 del("n", "<leader>uI")
 map("n", "<leader>uIp", vim.show_pos, "Inspect Pos")
@@ -18,7 +17,7 @@ map("n", "<leader>uIn", function()
   vim.notify('Treesitter node under cursor is "' .. node .. '". Name copied.')
 end, "Inspect Treesitter Ndoe under Cursor")
 
-map_toggle("<leader>uD", {
+Snacks.toggle({
   name = "Inline Diagnostics",
   get = function()
     return vim.diagnostic.config().virtual_text ~= false
@@ -26,9 +25,9 @@ map_toggle("<leader>uD", {
   set = function(enabled)
     vim.cmd("Corn toggle")
   end,
-})
+}):map("<leader>uD")
 
-map_toggle("<leader>um", {
+Snacks.toggle({
   name = "Modified",
   get = function()
     return vim.bo[0].modifiable
@@ -37,9 +36,9 @@ map_toggle("<leader>um", {
     local bo = vim.bo[0]
     bo.modifiable = not bo.modifiable
   end,
-})
+}):map("<leader>um")
 
-map_toggle("<leader>u<cr>", {
+Snacks.toggle({
   name = "Always Center",
   get = function()
     return vim.wo.scrolloff > 100
@@ -60,7 +59,7 @@ map_toggle("<leader>u<cr>", {
       end
     end
   end,
-})
+}):map("<leader>u<cr>")
 
 -- stylua: ignore start
 map("n", "<leader>u<Tab>", function()

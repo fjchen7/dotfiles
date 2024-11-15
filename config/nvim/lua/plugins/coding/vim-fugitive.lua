@@ -18,21 +18,28 @@ return {
       "<cmd>Git blame --date=format:'%Y-%m-%d %H:%M'<cr>",
       desc = "File Blame (fugitive)",
     },
+    -- {
+    --   mode = "n",
+    --   "<leader>go",
+    --   function()
+    --     local clipboard = vim.fn.getreg("+")
+    --     vim.cmd([[silent! GBrowse!]])
+    --     local url = vim.fn.getreg("+")
+    --     local line, _ = unpack(vim.api.nvim_win_get_cursor(0))
+    --     url = url .. [[\#L]] .. tonumber(line)
+    --     vim.cmd([[silent! !open "]] .. url .. [["]])
+    --     vim.fn.setreg("+", clipboard)
+    --   end,
+    --   desc = "Open File's GitHub URL",
+    -- },
     {
       mode = "n",
       "<leader>go",
       function()
-        local clipboard = vim.fn.getreg("+")
-        vim.cmd([[silent! GBrowse!]])
-        local url = vim.fn.getreg("+")
-        local line, _ = unpack(vim.api.nvim_win_get_cursor(0))
-        url = url .. [[\#L]] .. tonumber(line)
-        vim.cmd([[silent! !open "]] .. url .. [["]])
-        vim.fn.setreg("+", clipboard)
+        Snacks.gitbrowse()
       end,
       desc = "Open File's GitHub URL",
     },
-    { mode = "n", "<leader>gO", LazyVim.lazygit.browse, desc = "Open Repo's GitHub URL" },
     {
       mode = "n",
       "<leader>gy",

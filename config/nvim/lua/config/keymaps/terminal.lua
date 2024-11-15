@@ -17,7 +17,7 @@ del("n", "<c-_>")
 -- del("t", "<C-l>")
 -- del("t", "<C-/>")
 -- del("t", "<c-_>")
-del("t", "<Esc><Esc>")
+-- del("t", "<Esc><Esc>")
 
 -- <C-\><C-n> to normal mode in terminal
 -- map("n", "<C-\\>", lazyterm, "Terminal (Root)")

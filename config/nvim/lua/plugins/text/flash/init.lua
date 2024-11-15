@@ -109,7 +109,7 @@ end
 vim.g.FLASH_SEARCH_ENABLED = true
 M.config = function(_, opts)
   require("flash").setup(opts)
-  LazyVim.toggle.map("<leader>u/", {
+  Snacks.toggle({
     name = "Search (Flash)",
     get = function()
       return vim.g.FLASH_SEARCH_ENABLED
@@ -118,7 +118,7 @@ M.config = function(_, opts)
       require("flash").toggle()
       vim.g.FLASH_SEARCH_ENABLED = not vim.g.FLASH_SEARCH_ENABLED
     end,
-  })
+  }):map("<leader>u/")
 end
 
 M.opts = {

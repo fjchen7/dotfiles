@@ -56,7 +56,7 @@ return {
     end
     map_ref("<M-n>", "<M-p>")
 
-    LazyVim.toggle.map("<leader>ua", {
+    Snacks.toggle({
       name = "Variable Highlight (Illuminate)",
       get = function()
         return il.is_paused()
@@ -64,7 +64,7 @@ return {
       set = function(enabled)
         il.toggle()
       end,
-    })
+    }):map("<leader>ua")
 
     -- vim.cmd([[
     --   hi! IlluminatedWordText guibg=#626787 gui=underline

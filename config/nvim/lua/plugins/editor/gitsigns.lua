@@ -74,7 +74,7 @@ M.config = function(_, opts)
   local config = require("gitsigns.config").config
   gitsigns.setup(opts)
   vim.defer_fn(function()
-    LazyVim.toggle.map("<leader>ub", {
+    Snacks.toggle({
       name = "Inline Git Blame",
       get = function()
         return config.current_line_blame
@@ -82,8 +82,8 @@ M.config = function(_, opts)
       set = function(_)
         gitsigns.toggle_current_line_blame()
       end,
-    })
-    LazyVim.toggle.map("<leader>ug", {
+    }):map("<leader>ub")
+    Snacks.toggle({
       name = "Inline Git Diff",
       get = function()
         return config.word_diff
@@ -91,8 +91,8 @@ M.config = function(_, opts)
       set = function(_)
         gitsigns.toggle_word_diff()
       end,
-    })
-    LazyVim.toggle.map("<leader>uG", {
+    }):map("<leader>ug")
+    Snacks.toggle({
       name = "Inline Git Deleted",
       get = function()
         return config.show_deleted
@@ -100,7 +100,8 @@ M.config = function(_, opts)
       set = function(_)
         gitsigns.toggle_deleted()
       end,
-    })
+    }):map("<leader>uG")
+    -- :map("<leader>ug")
     -- vim.cmd([[
     --   hi! GitSignsChangeInline guibg=#656149
     --   hi! GitSignsChangeLnInline guifg=none

@@ -115,6 +115,8 @@ M.mapping = {
         vim.schedule(function()
           require("copilot.suggestion").dismiss()
         end)
+      else
+        fallback()
       end
     else
       fallback()

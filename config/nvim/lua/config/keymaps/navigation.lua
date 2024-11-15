@@ -64,9 +64,7 @@ map({ "n", "t" }, "<M-tab>", function()
 end, "Alternative Window", { remap = true })
 -- map("n", "<C-w>V", "<cmd>vs #<cr>", "Split Alternative Buffer")
 -- map("n", "<C-w>S", "<cmd>sp #<cr>", "Split Alternative Buffer (Vertical)")
-map("n", "<C-w>m", function()
-  LazyVim.toggle.maximize()
-end, "Maximize Toggle")
+LazyVim.ui.maximize():map("<C-w>m")
 map("n", "<C-w><C-m>", "<C-w>m", nil, { remap = true })
 
 -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/config/keymaps.lua#L132

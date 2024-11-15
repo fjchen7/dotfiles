@@ -1,7 +1,7 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   opts = function()
-    LazyVim.toggle.map("<leader>u|", {
+    Snacks.toggle({
       name = "Indention Guides",
       get = function()
         return require("ibl.config").get_config(0).enabled
@@ -9,7 +9,7 @@ return {
       set = function(state)
         require("ibl").setup_buffer(0, { enabled = state })
       end,
-    })
+    }):map("<leader>u|")
 
     return {
       indent = {

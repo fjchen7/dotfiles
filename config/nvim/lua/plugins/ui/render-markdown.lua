@@ -7,7 +7,7 @@ return {
   config = function(_, opts)
     require("render-markdown").setup(opts)
     vim.treesitter.language.register("markdown", "copilot-chat")
-    LazyVim.toggle.map("<leader>uM", {
+    Snacks.toggle({
       name = "Render Markdown",
       get = function()
         return require("render-markdown.state").enabled
@@ -20,6 +20,6 @@ return {
           m.disable()
         end
       end,
-    })
+    }):map("<leader>uM")
   end,
 }

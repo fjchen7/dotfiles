@@ -1,6 +1,10 @@
 -- References:
 -- * https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets
 -- * Examples: https://github.com/molleweide/LuaSnip-snippets.nvim
+if true then
+  return
+end
+
 local ls = require("luasnip")
 local conds = require("luasnip.extras.conditions")
 local conds_expand = require("luasnip.extras.conditions.expand")

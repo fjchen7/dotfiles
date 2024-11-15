@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 local M = {
   -- rebase two branch
   -- llllvvuu/nvim-cmp, branch feat/above
@@ -52,13 +55,14 @@ M.opts = function(_, opts)
     -- preselect = cmp.PreselectMode.Item,
     preselect = cmp.PreselectMode.None, -- https://www.reddit.com/r/neovim/comments/1ba6kkp/comment/ku0qwqb
     completion = {
-      completeopt = "menu,menuone", -- menu,menuone,noselect
+      completeopt = "menu,menuone,noselect", -- menu,menuone,noselect
       keyword_length = 0,
     },
     experimental = {
-      ghost_text = {
-        hl_group = "CmpGhostText",
-      },
+      ghost_text = false,
+      -- ghost_text = {
+      --   hl_group = "CmpGhostText",
+      -- },
     },
 
     view = {
@@ -71,11 +75,11 @@ M.opts = function(_, opts)
     -- mapping = cmp.mapping.preset.insert(keymaps.mapping),
     mapping = keymaps.mapping,
     -- https://www.reddit.com/r/neovim/comments/1f1rxtx
-    performance = {
-      debounce = 10, --  60ms by default
-      throttle = 5, --  30ms by default
-      fetching_timeout = 20, -- 80ms by default
-    },
+    -- performance = {
+    --   debounce = 10, --  60ms by default
+    --   throttle = 5, --  30ms by default
+    --   fetching_timeout = 20, -- 80ms by default
+    -- },
     formatting = {
       expandable_indicator = false, -- Do not show ~ indicator
       -- format = format.format,
