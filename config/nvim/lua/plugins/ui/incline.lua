@@ -2,18 +2,7 @@ local M = {
   -- Float windows to show file info
   "b0o/incline.nvim",
   event = "VeryLazy",
-  enabled = false,
-}
-
-M.keys = {
-  {
-    "<leader>ue",
-    function()
-      local incline = require("incline")
-      Util.toggle(incline.is_enabled, incline.toggle, "Incline")
-    end,
-    desc = "Toggle Incline",
-  },
+  enabled = true,
 }
 
 M.opts = {
@@ -22,7 +11,7 @@ M.opts = {
     margin = { horizontal = 0 },
     placement = {
       horizontal = "right",
-      vertical = "bottom", -- bottom
+      vertical = "top", -- bottom
     },
   },
   highlight = {
@@ -120,11 +109,24 @@ M.opts = {
     return {
       { get_diagnostic_label() },
       { get_git_diff() },
-      { get_progress() },
+      -- { get_progress() },
       { get_filename() },
       { " " },
     }
   end,
 }
+
+M.config = function(_, opts)
+  Snacks.toggle({
+    name = "Incline",
+    get = function()
+      return require("incline").is_enabled()
+    end,
+    set = function(enabled)
+      require("incline").toggle()
+    end,
+  }):map("<leader>ue")
+  require("incline").setup(opts)
+end
 
 return M

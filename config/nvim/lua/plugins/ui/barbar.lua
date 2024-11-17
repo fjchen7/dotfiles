@@ -31,6 +31,7 @@ M.opts = {
       [vim.diagnostic.severity.INFO] = { enabled = false },
       [vim.diagnostic.severity.HINT] = { enabled = false },
     },
+    button = "×",
     pinned = { button = "", filename = true },
     alternate = { filetype = { enabled = true } },
     -- current = { button = false },
@@ -164,6 +165,16 @@ M.config = function(_, opts)
       hi BufferDefaultAlternate guifg=#494d65
       hi! link BufferCurrentMod BufferCurrent
       hi BufferCurrentModBtn guibg=#494d65 guifg=#a6d18a
+
+      hi BufferDefaultCurrentWARN guibg=#494d65
+      hi BufferDefaultCurrentERROR guibg=#494d65
+      hi BufferDefaultCurrentHINT guibg=#494d65
+      hi BufferDefaultCurrentINFO guibg=#494d65
+      hi BufferDefaultInactiveWARN guibg=#1e2031
+      hi BufferDefaultInactiveERROR guibg=#1e2031
+      hi BufferDefaultInactiveHINT guibg=#1e2031
+      hi BufferDefaultInactiveINFO guibg=#1e2031
+
       hi! link BufferVisibleMod BufferVisible
       hi BufferVisibleModBtn guifg=#a6d18a
       " hi BufferDefaultVisible guifg=#a6d18a

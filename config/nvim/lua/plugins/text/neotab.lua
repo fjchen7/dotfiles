@@ -8,7 +8,6 @@ return {
       "abecodes/tabout.nvim",
       enabled = false,
     },
-    "hrsh7th/nvim-cmp", -- Should load after cmp
   },
   opts = {
     act_as_tab = false,

@@ -3,7 +3,7 @@ return {
   -- https://www.reddit.com/r/neovim/comments/181bsu8/my_take_on_a_word_movement/
   -- enabled = false,
   "chrisgrieser/nvim-spider",
-  enabled = false,
+  enabled = true,
   event = "VeryLazy",
   keys = function()
     local motion = function(key, motionOpts)

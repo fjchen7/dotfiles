@@ -154,8 +154,8 @@ M.opts = function()
   end
 
   -- #6369a7
-  opts.winbar = get_winbar({ bg = "#6e69a7", fg = "#c6d0f6" })
-  opts.inactive_winbar = get_winbar({ bg = "Normal", fg = "#c6d0f6" })
+  -- opts.winbar = get_winbar({ bg = "#6e69a7", fg = "#c6d0f6" })
+  -- opts.inactive_winbar = get_winbar({ bg = "Normal", fg = "#c6d0f6" })
 
   opts.sections = {
     lualine_a = {
@@ -274,9 +274,6 @@ M.opts = function()
         cond = require("lazy.status").has_updates,
         color = LazyVim.ui.fg("Special"),
       },
-    },
-    lualine_y = {
-      -- require("plugins.ui.lualine.visual-line"),
       components.copilot({
         -- separator = "",
         padding = { left = 1, right = 0 },
@@ -294,10 +291,17 @@ M.opts = function()
       }),
       components.lsp_clients({
         separator = "",
-        padding = { left = 1, right = 0 },
+        padding = { left = 1, right = 1 },
         color = {
           fg = "#8caaef",
         },
+      }),
+    },
+    lualine_y = {
+      -- require("plugins.ui.lualine.visual-line"),
+      components.progress({
+        separator = "",
+        padding = { left = 1, right = 0 },
       }),
       components.indent_width({
         padding = { left = 1, right = 1 },

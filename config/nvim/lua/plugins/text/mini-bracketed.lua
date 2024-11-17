@@ -81,7 +81,7 @@ M.config = function(_, opts)
     map_move({ "n", "x", "o" }, "x", "conflict")
     -- map_move({ "n", "x", "o" }, "\\", "treesitter")
     -- map_move({ "n" }, "j", "jump", "jumplist in Buffer")
-    map_move({ "n" }, { "<M-l>", "<M-h>" }, "file", nil, {
+    map_move({ "n" }, { "]\\", "[\\" }, "file", nil, {
       post_hook = function()
         if Util.is_neo_tree_shown() then
           vim.cmd("Neotree reveal action=show")
