@@ -2,6 +2,8 @@
 -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/ui.lua#L247
 return {
   "echasnovski/mini.indentscope",
+  event = "LazyFile",
+  enabled = false,
   opts = {
     -- symbol = "┃",
     draw = {
