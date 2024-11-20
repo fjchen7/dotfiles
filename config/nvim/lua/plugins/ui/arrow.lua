@@ -9,32 +9,34 @@ return {
       -- marks in local file
       { "<M-j>", commands.next_buffer_bookmark, mode = { "n", "v", "i" }, desc = "Next Mark (Arrow)" },
       { "<M-k>", commands.prev_buffer_bookmark, mode = { "n", "v", "i" }, desc = "Prev Mark (Arrow)" },
+      { "<F3>", "<leader><leader>", remap = true, desc = "Bookmark" },
       {
         "<F4>",
         function()
           arrow.toggle()
+          Snacks.notifier.hide()
           if statusline.is_on_arrow_file() then
             vim.notify("Add Bookmark", vim.log.levels.INFO, { title = "Arrow" })
           else
             vim.notify("Remove Bookmark", vim.log.levels.WARN, { title = "Arrow" })
           end
         end,
-        desc = "Toggle Arrow List",
+        desc = "Add/Remove Bookmark",
       },
     }
-    -- for i = 1, 9 do
-    --   table.insert(keys, {
-    --     "<M-" .. i .. ">",
-    --     function()
-    --       arrow.go_to(i)
-    --     end,
-    --     desc = i == 1 and "Navigate File 1 (Arrow)" or "which_key_ignore",
-    --   })
-    -- end
+    for i = 1, 9 do
+      table.insert(keys, {
+        "<leader>" .. i,
+        function()
+          arrow.go_to(i)
+        end,
+        desc = i == 1 and "Navigate File 1 (Arrow)" or "which_key_ignore",
+      })
+    end
     return keys
   end,
   opts = {
-    leader_key = "M",
+    leader_key = "<leader><leader>",
     buffer_leader_key = "m",
     always_show_path = true,
     separate_save_and_remove = false,

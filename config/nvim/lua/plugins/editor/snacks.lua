@@ -44,6 +44,50 @@ M.opts = {
       },
     },
   },
+  zen = {
+    enabled = true,
+    toggles = {
+      dim = false,
+    },
+    show = {
+      statusline = true,
+      tabline = true,
+    },
+  },
+  scroll = {
+    enabled = true,
+    animate = {
+      duration = { step = 1, total = 250 },
+    },
+  },
+  input = { enabled = true },
+  indent = { enabled = true },
+  styles = {
+    zoom_indicator = {
+      text = "▍ zoom  󰊓",
+      row = 1,
+      col = -1,
+    },
+    input = {
+      height = 1,
+      relative = "editor",
+      row = 20,
+    },
+  },
 }
+
+M.keys = function()
+  -- stylua: ignore
+  return {
+      -- { "<leader><cr>",  function() Snacks.zen() end, desc = "Zen Mode" },
+      { "<leader>z",  function() Snacks.zen.zoom()end, desc = "Zoom Mode (Maximize)" },
+
+      { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      -- { "<leader><A-.>",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+
+      { "<leader>nn", function() Snacks.notifier.show_history() end, desc = "Notification History" },
+      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+    }
+end
 
 return M

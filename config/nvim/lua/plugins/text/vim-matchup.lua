@@ -44,7 +44,7 @@ return {
     vim.defer_fn(function()
       vim.cmd([[
         hi! link MatchBackground DiffText
-        hi! MatchParen guibg=#626787
+        hi! MatchParen guifg=none guibg=#555555
         hi! MatchParenCur gui=none
         hi! MatchWord guibg=#626787
         " hi! MatchWordCur gui=none

@@ -43,7 +43,7 @@ map("n", "<leader>rsr", ":g/C/g!/D/s/A/B/g", "Replace A by B in lines having C a
 -- Search in visual range
 map("x", "/", '"hy/<C-r>h', "Search Cursor Word")
 map("n", "<leader>/", "/<C-r>/", "Last Search")
--- map("x", "<leader>s/", "<Esc>/\\%V", "Search in the Visual")
+map("x", "<C-/>", "<Esc>/\\%V", "Search in the Visual")
 
 -- Search in visible range (:h search-range)
 map("n", "<C-/>", function()
@@ -53,4 +53,4 @@ map("n", "<C-/>", function()
   local keys = string.format([[/\%%>%sl\%%<%sl]], topline - 1, bottomline)
   Util.feedkeys(keys)()
 end, "Search in Visible Area")
-map("n", "<C-/>", "<leader>s/", "Search in Visible Area", { remap = true })
+-- map("n", "<C-/>", "<leader>s/", "Search in Visible Area", { remap = true })

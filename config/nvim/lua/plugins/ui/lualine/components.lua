@@ -28,10 +28,10 @@ end
 -- Copied from https://github.com/LazyVim/LazyVim/blob/d0120ccdd11af8c421e23655c487c3cd68dc0199/lua/lazyvim/plugins/extras/coding/copilot.lua#L21
 M.copilot = function(opts)
   local colors = {
-    [""] = LazyVim.ui.fg("Special"),
-    ["Normal"] = LazyVim.ui.fg("Special"),
-    ["Warning"] = LazyVim.ui.fg("DiagnosticError"),
-    ["InProgress"] = LazyVim.ui.fg("DiagnosticWarn"),
+    [""] = Snacks.util.color("Special"),
+    ["Normal"] = Snacks.util.color("Special"),
+    ["Warning"] = Snacks.util.color("DiagnosticError"),
+    ["InProgress"] = Snacks.util.color("DiagnosticWarn"),
   }
   local component = {
     function()
@@ -54,7 +54,7 @@ M.copilot = function(opts)
         return
       end
       local status = require("copilot.api").status.data
-      return colors[status.status] or colors[""]
+      return { fg = colors[status.status] or colors[""] }
     end,
   }
   return vim.tbl_extend("force", component, opts or {})
@@ -241,7 +241,8 @@ M.progress = function(opts)
       -- return [[%l(%p%%) %LL]]
       -- return [[%l:%c (%p%%)]]
       -- return [[%3l:%c (%LL)]]
-      return [[%l:%c (%LL)]]
+      -- return [[%03l:%02c (%LL)]]
+      return [[%p%% %3l:%02c]]
     end,
     separator = "",
   }

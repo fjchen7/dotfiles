@@ -1,9 +1,6 @@
 -- References:
 -- * https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets
 -- * Examples: https://github.com/molleweide/LuaSnip-snippets.nvim
-if true then
-  return
-end
 
 local ls = require("luasnip")
 local conds = require("luasnip.extras.conditions")
@@ -43,14 +40,6 @@ ls.snippet_node = function(pos, nodes, opts, docstring)
   local node = _sn(pos, nodes, opts)
   node.docstring = type(docstring) == "string" and { docstring } or docstring
   return node
-end
-
-local _c = ls.choice_node
-ls._choice_node = _c
-ls.choice_node = function(jump_index, choices, node_opts)
-  -- Need to append a t otherwise choice menu won't show up
-  table.insert(choices, 1, ls.t(""))
-  return _c(jump_index, choices, node_opts)
 end
 
 local wrap = function(context, nodes, opts)

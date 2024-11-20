@@ -81,20 +81,20 @@ M.opts = {
       local copilot_chat = require("CopilotChat")
       copilot_chat.load(name)
       copilot_chat.close()
-      local manager = require("neo-tree.sources.manager")
-      local renderer = require("neo-tree.ui.renderer")
-      local state = manager.get_state("filesystem")
-      local neo_tree_exists = renderer.window_exists(state)
-      if neo_tree_exists then
-        local timer = require("luv").new_timer()
-        timer:start(
-          100,
-          0,
-          vim.schedule_wrap(function()
-            vim.cmd("Neotree reveal action=show")
-          end)
-        )
-      end
+      -- local manager = require("neo-tree.sources.manager")
+      -- local renderer = require("neo-tree.ui.renderer")
+      -- local state = manager.get_state("filesystem")
+      -- local neo_tree_exists = renderer.window_exists(state)
+      -- if neo_tree_exists then
+      --   local timer = require("luv").new_timer()
+      --   timer:start(
+      --     100,
+      --     0,
+      --     vim.schedule_wrap(function()
+      --       vim.cmd("Neotree reveal action=show")
+      --     end)
+      --   )
+      -- end
     end,
   },
   --

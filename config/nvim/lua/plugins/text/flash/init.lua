@@ -106,7 +106,7 @@ M.keys = function()
   }
 end
 
-vim.g.FLASH_SEARCH_ENABLED = true
+vim.g.FLASH_SEARCH_ENABLED = false
 M.config = function(_, opts)
   require("flash").setup(opts)
   Snacks.toggle({

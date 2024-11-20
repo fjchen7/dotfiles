@@ -4,8 +4,8 @@ local del = vim.keymap.del
 Snacks.toggle.option("cursorline", { name = "Cursorline" }):map("<leader>u-")
 Snacks.toggle.option("ignorecase", { name = "Ignorecase" }):map("<leader>uC")
 
-del("n", "<leader>uT")
-Snacks.toggle.treesitter():map("<leader>uh")
+-- del("n", "<leader>uT")
+-- Snacks.toggle.treesitter():map("<leader>uh")
 Snacks.toggle.inlay_hints():map("<leader>ui")
 
 del("n", "<leader>uI")
@@ -18,7 +18,7 @@ map("n", "<leader>uIn", function()
 end, "Inspect Treesitter Ndoe under Cursor")
 
 Snacks.toggle({
-  name = "Inline Diagnostics",
+  name = "Diagnostics (Inline)",
   get = function()
     return vim.diagnostic.config().virtual_text ~= false
   end,
@@ -37,6 +37,8 @@ Snacks.toggle({
     bo.modifiable = not bo.modifiable
   end,
 }):map("<leader>um")
+
+Snacks.toggle.zoom():map("<leader>z")
 
 Snacks.toggle({
   name = "Always Center",
@@ -60,6 +62,8 @@ Snacks.toggle({
     end
   end,
 }):map("<leader>u<cr>")
+
+-- LazyVim.ui.maximize():map("<leader>zM")
 
 -- stylua: ignore start
 map("n", "<leader>u<Tab>", function()
@@ -104,6 +108,5 @@ map("n", "<leader>li", file_detail, "File Info")
 -- Lazy
 del("n", "<leader>l")
 map("n", "<leader>nz", "<cmd>Lazy<cr>", "Lazy")
-map("n", "<leader>nZ", function()
-  LazyVim.news.changelog()
-end, "LazyVim Changelog")
+-- stylua: ignore
+map("n", "<leader>nZ", function() LazyVim.news.changelog() end, "LazyVim Changelog")

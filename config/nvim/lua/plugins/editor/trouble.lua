@@ -32,33 +32,35 @@ M.keys = function()
     { "[q", prev_qf_or_trouble, desc = "Prev Trouble / Quickfix Item" },
     { "]q", next_qf_or_trouble, desc = "Next Trouble / Quickfix Item" },
 
-    { "<leader>hq", "<cmd>Trouble qflist focus=true refresh=true<cr>", desc = "Quickfix List (Trouble)" },
+    { "<leader>dq", "<cmd>Trouble qflist focus=true refresh=true<cr>", desc = "Quickfix List (Trouble)" },
     -- { "<leader>qq", "<cmd>copen<cr>", desc = "Quickfix List" },
-    { "<leader>hl", "<cmd>Trouble loclist focus=true refresh=true<cr>", desc = "Location List (Trouble)" },
+    { "<leader>dl", "<cmd>Trouble loclist focus=true refresh=true<cr>", desc = "Location List (Trouble)" },
     -- { "<leader>ql", "<cmd>lopen<cr>", desc = "Location List" },
 
-    {
-      "<leader>db",
-      function()
-        -- https://github.com/folke/trouble.nvim/blob/main/docs/examples.md#diagnostics-cascade
-        local opts = {
-          mode = "diagnostics", -- inherit from diagnostics mode
-          refresh = false,
-          filter = function(items)
-            local bufnr = vim.api.nvim_get_current_buf()
-            local severity = vim.diagnostic.severity.HINT
-            for _, item in ipairs(items) do
-              severity = math.min(severity, item.severity)
-            end
-            return vim.tbl_filter(function(item)
-              return (item.severity == severity) and (item.buf == bufnr)
-            end, items)
-          end,
-        }
-        require("trouble").open(opts)
-      end,
-      desc = "Buffer Diagnostics (Trouble)",
-    },
+    -- {
+    --   "<leader>db",
+    --   function()
+    --     -- https://github.com/folke/trouble.nvim/blob/main/docs/examples.md#diagnostics-cascade
+    --     local opts = {
+    --       mode = "diagnostics", -- inherit from diagnostics mode
+    --       refresh = false,
+    --       filter = function(items)
+    --         local bufnr = vim.api.nvim_get_current_buf()
+    --         -- filter out diagnostics whose level lower than HINT
+    --         local severity = vim.diagnostic.severity.HINT
+    --         for _, item in ipairs(items) do
+    --           severity = math.min(severity, item.severity)
+    --         end
+    --         return vim.tbl_filter(function(item)
+    --           return (item.severity == severity) and (item.buf == bufnr)
+    --         end, items)
+    --       end,
+    --     }
+    --     require("trouble").open(opts)
+    --   end,
+    --   desc = "Buffer Diagnostics (Trouble)",
+    -- },
+    { "<leader>db", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
     { "<leader>dB", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics (Telescope)" },
 
     { "<leader>dw", "<cmd>Trouble diagnostics refresh=true<cr>", desc = "Workspace Diagnostics (Trouble)" },
