@@ -2,7 +2,7 @@ local M = {
   -- Float windows to show file info
   "b0o/incline.nvim",
   event = "VeryLazy",
-  enabled = true,
+  enabled = false,
 }
 
 M.opts = {
@@ -11,18 +11,20 @@ M.opts = {
     margin = { horizontal = 0 },
     placement = {
       horizontal = "right",
-      vertical = "top", -- bottom
+      vertical = "bottom", -- bottom
     },
   },
   highlight = {
     groups = {
       InclineNormal = {
-        guibg = "#6e69a7", -- #44406e
+        -- guibg = "#6e69a7", -- #44406e
+        guibg = "none",
         default = true,
         -- group = "@text.danger",
       },
       InclineNormalNC = {
-        guibg = "#44406e", -- #44406, #2d2a49
+        -- guibg = "#44406e", -- #44406, #2d2a49
+        guibg = "none",
         -- guifg = "#838ba8",
         default = true,
       },
@@ -69,15 +71,31 @@ M.opts = {
     end
 
     local function get_git_diff()
-      local icons = { added = "", changed = "", removed = "" }
       local signs = vim.b[props.buf].gitsigns_status_dict
       local labels = {}
       if signs == nil then
         return labels
       end
-      for name, icon in pairs(icons) do
-        if tonumber(signs[name]) and signs[name] > 0 then
-          table.insert(labels, { icon .. " " .. signs[name], group = "Diff" .. name })
+      local diffs = {
+        {
+          icon = "+", -- ""
+          sign = signs["added"],
+          highlight = "diffAdded",
+        },
+        {
+          icon = "-", -- ""
+          sign = signs["changed"],
+          highlight = "diffRemoved",
+        },
+        {
+          icon = "~", -- ""
+          sign = signs["removed"],
+          highlight = "diffChanged",
+        },
+      }
+      for _, diff in ipairs(diffs) do
+        if diff.sign > 0 then
+          table.insert(labels, { diff.icon .. "" .. diff.sign, group = diff.highlight })
         end
       end
       format_labels(labels)
@@ -107,11 +125,11 @@ M.opts = {
     end
 
     return {
-      { get_diagnostic_label() },
       { get_git_diff() },
+      { get_diagnostic_label() },
       -- { get_progress() },
-      { get_filename() },
-      { " " },
+      -- { get_filename() },
+      -- { " " },
     }
   end,
 }

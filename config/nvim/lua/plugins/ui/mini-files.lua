@@ -2,6 +2,7 @@
 -- https://www.reddit.com/r/neovim/comments/1cfd5w1/minifiles_git_status_integration/
 local M = {
   "echasnovski/mini.files",
+  enabled = false,
 }
 
 M.keys = {
@@ -21,7 +22,6 @@ M.keys = {
     end,
     desc = "Open Mini Files",
   },
-  { "<leader><space>", "<C-r>r", desc = "Open Mini Files", remap = true },
 }
 
 M.opts = {
@@ -136,10 +136,11 @@ M.config = function(_, opts)
     end,
   })
 
+  -- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md#minifiles
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniFilesActionRename",
     callback = function(event)
-      LazyVim.lsp.on_rename(event.data.from, event.data.to)
+      Snacks.rename.on_rename_file(event.data.from, event.data.to)
     end,
   })
 end

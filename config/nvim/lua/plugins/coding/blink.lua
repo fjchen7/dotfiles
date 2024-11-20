@@ -3,15 +3,13 @@ return {
   -- https://github.com/Saghen/blink.cmp#advantages
   opts = {
     keymap = {
+      -- https://cmp.saghen.dev/configuration/keymap#enter
       preset = "enter",
       ["<C-e>"] = { "fallback" },
       ["<C-c>"] = { "hide", "fallback" },
     },
-    windows = {
-      autocomplete = {
-        border = "none",
-        winblend = 0,
-      },
-    },
+    -- sources = {
+    --   cmdline = { "buffer", "path" },
+    -- },
   },
 }

@@ -24,8 +24,10 @@ M.keys = function()
     --   end,
     --   desc = "Symbols (Aerial)",
     -- },
-    { "go", "<CMD>AerialToggle<CR>", desc = "Symbols (Aerial)" },
-    { "gO", "<CMD>AerialNavToggle<CR>", desc = "Navigate Symbols (Aerial)" },
+    -- { "go", "<CMD>AerialToggle<CR>", desc = "Symbols (Aerial)" },
+    -- { "gO", "<CMD>AerialNavToggle<CR>", desc = "Navigate Symbols (Aerial)" },
+    { "<leader>io", "<CMD>AerialToggle<CR>", desc = "Symbols (Aerial)" },
+    { "<leader>iO", "<CMD>AerialNavToggle<CR>", desc = "Navigate Symbols (Aerial)" },
     { "]]", next_fn, desc = "Next Symbol (Aerial)" },
     { "[[", prev_fn, desc = "Prev Symbol (Aerial)" },
   }

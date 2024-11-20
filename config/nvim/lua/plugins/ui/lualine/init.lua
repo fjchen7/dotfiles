@@ -37,7 +37,7 @@ M.opts = function()
     extensions = {
       -- "aerial",
       "lazy",
-      -- "neo-tree",
+      "neo-tree",
       "nvim-dap-ui",
       "quickfix",
       "trouble",
@@ -81,36 +81,39 @@ M.opts = function()
           newfile_status = true,
           file_status = false,
           path = 1,
-          padding = { left = 0, right = 0 },
+          padding = { left = 0, right = 1 },
           color = color,
         },
         {
           function()
             local bufnr = vim.api.nvim_get_current_buf()
             if not vim.bo[bufnr].modifiable then
-              return " "
+              return ""
             else
               return ""
             end
           end,
           color = color,
-          padding = { left = 0, right = 0 },
+          padding = { left = 0, right = 1 },
         },
-        components.progress({
-          separator = "",
-          -- icon = { "|", color = { fg = "#6983a7" } },
-          color = {
-            bg = color.bg,
-            fg = "#eeeeee",
-          },
-          padding = { left = 1, right = 1 },
-        }),
+        -- components.progress({
+        --   separator = "",
+        --   -- icon = { "|", color = { fg = "#6983a7" } },
+        --   color = {
+        --     bg = color.bg,
+        --     fg = "#eeeeee",
+        --   },
+        --   padding = { left = 1, right = 1 },
+        -- }),
         {
           "diff",
           symbols = {
-            added = icons.git.added,
-            modified = icons.git.modified,
-            removed = icons.git.removed,
+            -- added = icons.git.added,
+            -- modified = icons.git.modified,
+            -- removed = icons.git.removed,
+            added = "+",
+            modified = "~",
+            removed = "-",
           },
           source = function()
             local gitsigns = vim.b.gitsigns_status_dict
@@ -148,6 +151,23 @@ M.opts = function()
             bg = "Normal",
           },
         },
+      },
+      lualine_z = {
+        vim.tbl_extend(
+          "force",
+          LazyVim.lualine.root_dir({
+            cwd = true,
+            icon = "󱉭",
+          }),
+          {
+            separator = "",
+            padding = { left = 1, right = 1 },
+            color = {
+              bg = "#6e69a7",
+              fg = "#c6d0f6",
+            },
+          }
+        ),
       },
     }
     return winbnar
@@ -187,31 +207,16 @@ M.opts = function()
           gui = "none",
         },
       },
-      vim.tbl_extend(
-        "force",
-        LazyVim.lualine.root_dir({
-          cwd = true,
-          icon = "󱉭",
-        }),
-        {
-          separator = "",
-          padding = { left = 1, right = 1 },
-          color = {
-            bg = "#6e69a7",
-            fg = "#c6d0f6",
-          },
-        }
-      ),
+    },
+    lualine_b = {
       {
         "branch",
         icon = "",
-        color = {
-          bg = "#83b7c4",
-          fg = "#292c3d",
-        },
+        -- color = {
+        --   bg = "#83b7c4",
+        --   fg = "#292c3d",
+        -- },
       },
-    },
-    lualine_b = {
       -- {
       --   function()
       --     -- return vim.g.cut_clipboard_enabled and "󰅇" or ""
@@ -244,36 +249,64 @@ M.opts = function()
       --   depth = -1,
       -- },
       -- https://github.com/folke/trouble.nvim#statusline-component
-      (function()
-        local trouble = require("trouble")
-        local symbols = trouble.statusline({
-          mode = "lsp_document_symbols",
-          groups = {},
-          title = false,
-          filter = { range = true },
-          format = "{kind_icon}{symbol.name:Normal}",
-          -- The following line is needed to fix the background color
-          -- Set it to the lualine section you want to use
-          hl_group = "lualine_c_normal",
-        })
-        return {
-          symbols.get,
-          cond = symbols.has,
-        }
-      end)(),
+      {
+        "diff",
+        symbols = {
+          -- added = icons.git.added,
+          -- modified = icons.git.modified,
+          -- removed = icons.git.removed,
+          added = "+",
+          modified = "~",
+          removed = "-",
+        },
+        source = function()
+          local gitsigns = vim.b.gitsigns_status_dict
+          if gitsigns then
+            return {
+              added = gitsigns.added,
+              modified = gitsigns.changed,
+              removed = gitsigns.removed,
+            }
+          end
+        end,
+        separator = "",
+        padding = { left = 1, right = 0 },
+      },
+      {
+        "diagnostics",
+        symbols = {
+          error = icons.diagnostics.Error,
+          warn = icons.diagnostics.Warn,
+          info = icons.diagnostics.Info,
+          hint = icons.diagnostics.Hint,
+        },
+        separator = "",
+        padding = { left = 1, right = 0 },
+      },
     },
     lualine_x = {
       -- stylua: ignore
       {
         function() return "  " .. require("dap").status() end,
         cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-        color = LazyVim.ui.fg("Debug"),
+        color = function() return { fg = Snacks.util.color("Debug") } end,
       },
+      -- stylua: ignore
       {
         require("lazy.status").updates,
         cond = require("lazy.status").has_updates,
-        color = LazyVim.ui.fg("Special"),
+        color = function() return { fg = Snacks.util.color("Special") } end,
       },
+      -- {
+      --   "diagnostics",
+      --   symbols = {
+      --     error = icons.diagnostics.Error,
+      --     warn = icons.diagnostics.Warn,
+      --     info = icons.diagnostics.Info,
+      --     hint = icons.diagnostics.Hint,
+      --   },
+      --   padding = { left = 1, right = 0 },
+      -- },
       components.copilot({
         -- separator = "",
         padding = { left = 1, right = 0 },
@@ -308,11 +341,18 @@ M.opts = function()
       }),
     },
     lualine_z = {
-      {
-        function()
-          return " " .. os.date("%R")
+      LazyVim.lualine.root_dir({
+        cwd = true,
+        icon = "󱉭",
+        color = function()
+          return {}
         end,
-      },
+      }),
+      -- {
+      --   function()
+      --     return " " .. os.date("%R")
+      --   end,
+      -- },
     },
   }
   return opts

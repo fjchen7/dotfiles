@@ -11,9 +11,6 @@ M.opts = {
     completion = true,
     hover = true,
   },
-  completion = {
-    cmp = { enabled = true },
-  },
   popup = {
     autofocus = true,
   },

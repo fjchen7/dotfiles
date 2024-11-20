@@ -4,7 +4,9 @@ local M = {
 }
 
 M.opts = {
-  useDefaultKeymaps = false,
+  keymaps = {
+    useDefaults = false,
+  },
 }
 
 -- stylua: ignore

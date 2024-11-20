@@ -32,14 +32,8 @@ return {
     --   end,
     --   desc = "Open File's GitHub URL",
     -- },
-    {
-      mode = "n",
-      "<leader>go",
-      function()
-        Snacks.gitbrowse()
-      end,
-      desc = "Open File's GitHub URL",
-    },
+    -- stylua: ignore
+    { mode = "n", "<leader>go", function() Snacks.gitbrowse() end, desc = "Open File's GitHub URL", },
     {
       mode = "n",
       "<leader>gy",
@@ -78,7 +72,6 @@ return {
       end,
       desc = "[G] Delete File Forcely",
     },
-    -- stylua: ignore end
     {
       mode = "n",
       "<leader>lm",
