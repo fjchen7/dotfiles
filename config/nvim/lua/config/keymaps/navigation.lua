@@ -1,5 +1,7 @@
 local map = Util.map
-local del = vim.keymap.del
+local del = function(...)
+  pcall(vim.keymap.del, ...)
+end
 
 -- Tabs
 -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/config/keymaps.lua#L164
@@ -46,7 +48,8 @@ remap_ctrl_key("r")
 -- Windows
 del("n", "<leader>w")
 del("n", "<leader>wd")
-del("n", "<leader>wm")
+del("n", "<leader>bo")
+-- del("n", "<leader>wm")
 del("n", "<leader>-")
 del("n", "<leader>|")
 map("n", "<C-w>n", "<CMD>vnew<CR>", "New Window")
@@ -64,8 +67,6 @@ map({ "n", "t" }, "<M-tab>", function()
 end, "Alternative Window", { remap = true })
 -- map("n", "<C-w>V", "<cmd>vs #<cr>", "Split Alternative Buffer")
 -- map("n", "<C-w>S", "<cmd>sp #<cr>", "Split Alternative Buffer (Vertical)")
-LazyVim.ui.maximize():map("<C-w>m")
-map("n", "<C-w><C-m>", "<C-w>m", nil, { remap = true })
 
 -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/config/keymaps.lua#L132
 -- del("n", "<leader>qq")
@@ -76,7 +77,7 @@ del("n", "<leader>gl")
 del("n", "<leader>gL")
 
 map("n", "<leader>gh", function()
-  LazyVim.lazygit({ args = { "log" }, cwd = LazyVim.root.git() })
+  Snacks.lazygit({ args = { "log" }, cwd = LazyVim.root.git() })
 end, "Commits History (LazyGit)")
 -- map("n", "<leader>gH", function()
 --   LazyVim.lazygit({ args = { "log" } })

@@ -31,10 +31,10 @@ M.keys = {
   { mode = { "n", "t" }, "<C-Up>", fn("resize_up"), desc = ignored },
   { mode = { "n", "t" }, "<C-Right>", fn("resize_right"), desc = ignored },
 
-  { mode = { "n", "x" }, "<C-h>", fn("move_cursor_left"), desc = "Navigate to Window Left (HJKL)" },
-  { mode = { "n", "x" }, "<C-j>", fn("move_cursor_down"), desc = ignored },
-  { mode = { "n", "x" }, "<C-k>", fn("move_cursor_up"), desc = ignored },
-  { mode = { "n", "x" }, "<C-l>", fn("move_cursor_right"), desc = ignored },
+  { mode = { "n", "x", "t" }, "<C-h>", fn("move_cursor_left"), desc = "Navigate to Window Left (HJKL)" },
+  { mode = { "n", "x", "t" }, "<C-j>", fn("move_cursor_down"), desc = ignored },
+  { mode = { "n", "x", "t" }, "<C-k>", fn("move_cursor_up"), desc = ignored },
+  { mode = { "n", "x", "t" }, "<C-l>", fn("move_cursor_right"), desc = ignored },
 
   { mode = { "n" }, "<C-M-h>", "<CMD>wincmd H<CR>", desc = "Move Window to Left (HJKL)" },
   { mode = { "n" }, "<C-M-j>", "<CMD>wincmd J<CR>", desc = ignored },

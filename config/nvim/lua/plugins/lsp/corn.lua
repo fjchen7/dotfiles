@@ -52,6 +52,7 @@ M.config = function(_, opts)
     hi! DiagnosticVirtualTextHint guibg=none
     hi! DiagnosticVirtualTextInfo guibg=none
   ]])
+  -- vim.cmd("Corn toggle")
 end
 
 return M

@@ -18,6 +18,8 @@ return {
     -- { "<leader><space>", "<leader>fs", remap = true, desc = "Smart Open Files" },
   },
   config = function()
+    table.insert(require("smart-open").config.ignore_patterns, "*target/*")
+
     local telescope = require("telescope")
     -- local actions = require("telescope.actions")
     -- local hbac = function()
@@ -44,7 +46,7 @@ return {
       require("telescope").extensions.smart_open.smart_open({
         -- smart-open configuration
         -- https://github.com/barklan/smart-open.nvim/blob/main/lua/telescope/_extensions/smart_open/default_config.lua
-        ignore_patterns = { "*.git/*", "*/tmp/*" },
+        -- ignore_patterns = { "*.git/*", "*/tmp/*" },
         -- Telescope configuration
         cwd_only = true,
         filename_first = true,

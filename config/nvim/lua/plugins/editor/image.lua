@@ -6,7 +6,8 @@
 -- 4. brew install lua51 (You must have lua 5.1 on your system)
 return {
   "3rd/image.nvim",
-  enabled = not vim.g.neovide and not vim.env.KITTY_SCROLLBACK_NVIM,
+  -- enabled = not vim.g.neovide and not vim.env.KITTY_SCROLLBACK_NVIM,
+  enabled = false,
   event = "BufReadPost",
   opts = {},
   config = function(_, opts)

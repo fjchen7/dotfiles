@@ -20,10 +20,6 @@ M.opts = function()
         g = true,
       },
     },
-    keys = {
-      scroll_down = "<m-d>", -- binding to scroll down inside the popup
-      scroll_up = "<m-u>", -- binding to scroll up inside the popup
-    },
     icons = {
       -- Default rules: https://github.com/folke/which-key.nvim/blob/main/lua/which-key/icons.lua#L16
       rules = {
@@ -51,14 +47,14 @@ M.config = function(_, opts)
     { "<C-r>", group = "neo-tree" },
     { "<leader>", group = "leader" },
     { "<leader>c", group = "code" },
-    { "<leader>f", group = "file" },
+    { "<leader>f", group = "find" },
     { "<leader>g", group = "git" },
-    { "<leader>l", group = "operate file" },
+    { "<leader>l", group = "file/directory/path" },
     { "<leader>d", group = "diagnostic/todos" },
     { "<leader>u", group = "toggle" },
     { "<leader>uI", group = "inspect" },
-    { "<leader>h", group = "quickfix/trouble" },
-    { "<leader>e", group = "debug" },
+    -- { "<leader>h", group = "quickfix/trouble" },
+    { "<leader>e", group = "debug print" },
     { "<leader>r", group = "refactor/replace" },
     -- { "<leader>s", group = "search" },
     { "<leader>o", group = "overseer" },
@@ -80,6 +76,8 @@ M.config = function(_, opts)
       "gg",
       ",", ";",
       "<C-Right>", "<C-Up>", "<C-Down>",
+      -- Hide some LazyVim default keymaps
+      "<leader>wm", "<leader>uz", "<leader>uZ"
     }
     for _, key in ipairs(ignored_keys) do
       wk.add({ { key, hidden = true }, mode = { "n", "x", "o" } })

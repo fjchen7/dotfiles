@@ -58,14 +58,15 @@ end
 --   )
 -- end, "Store Clipboard in Register x")
 map({ "n", "x" }, "<leader>x", '"_d', "Blackhole Delete")
+map({ "n", "x" }, "<leader>xx", '"_dd', "Blackhole Delete")
 
 map({ "n", "i" }, "<M-S-o>", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", "Add New Line Above")
 map({ "n", "i" }, "<M-o>", "<Cmd>call append(line('.'), repeat([''], v:count1))<CR>", "Add New Line Aelow")
 -- map({ "i" }, "<C-cr>", Util.feedkeys("<m-o>", "t"), "Add New Line Down and Move Cursor")
--- map({ "i" }, "<S-CR>", function()
---   vim.api.nvim_put({ "", "" }, "c", false, false)
--- end, "Break Line")
-map({ "i" }, "<S-cr>", "<C-o>o")
+map({ "i" }, "<S-CR>", function()
+  vim.api.nvim_put({ "", "" }, "c", false, false)
+end, "Break Line")
+-- map({ "i" }, "<S-cr>", "<C-o>o")
 -- map({ "i" }, "<S-cr>", function()
 --   local last_chars = {
 --     rust = ";",
@@ -92,13 +93,13 @@ local function home()
 end
 map({ "n", "x", "o" }, "<Home>", home)
 map({ "n", "x", "o" }, "0", home)
-map({ "n", "x", "o" }, "H", home)
 map("x", "$", "$h")
-map({ "n", "o" }, "L", "$")
-map("x", "L", "$h")
 -- map({ "n", "x", "o" }, "H", home)
--- del("n", "L")
--- del("n", "H")
+-- map({ "n", "o" }, "L", "$")
+-- map("x", "L", "$h")
+-- map({ "n", "x", "o" }, "H", home)
+del("n", "L")
+del("n", "H")
 
 -- Ecmas keymappings. See:
 -- - :h emacs-keys*

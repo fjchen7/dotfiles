@@ -2,7 +2,8 @@ return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
   build = ":Copilot auth",
-  enabled = not vim.env.KITTY_SCROLLBACK_NVIM,
+  -- enabled = not vim.env.KITTY_SCROLLBACK_NVIM,
+  enabled = true,
   keys = {
     { mode = { "i" }, "<C-y>", "<CMD>Copilot panel<CR>", desc = "[copilot] open panel" },
   },

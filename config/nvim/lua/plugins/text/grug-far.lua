@@ -1,4 +1,6 @@
-local M = { "MagicDuck/grug-far.nvim" }
+local M = {
+  "MagicDuck/grug-far.nvim",
+}
 
 M.keys = function()
   local replace = function(path)
@@ -17,20 +19,18 @@ M.keys = function()
   return {
     {
       "<leader>rr",
+      mode = { "n", "v" },
       function()
         local path = vim.fn.expand("%")
         replace(path)
       end,
-      mode = { "n", "v" },
-      desc = "Replace in Buffer",
+      desc = "Search/Replace in Buffer",
     },
+    -- stylua: ignore
     {
-      "<leader>rR",
-      function()
-        replace()
-      end,
-      mode = { "n", "v" },
-      desc = "Replace in Global",
+      "<leader>rR", mode = { "n", "v" },
+      function() replace() end,
+      desc = "Search/Replace in Global",
     },
     {
       "<leader>rw",

@@ -231,12 +231,16 @@ M.opts.filesystem = {
     enabled = false,
     leave_dirs_open = true,
   },
-  never_show = {
-    ".DS_Store",
-    "thumbs.db",
-  },
-  always_show = { -- remains visible even if other settings would normally hide it
-    ".gitignored",
+  group_empty_dirs = true,
+  filtered_items = {
+    hide_gitignored = false,
+    always_show = { -- remains visible even if other settings would normally hide it
+      ".gitignore",
+    },
+    never_show = {
+      ".DS_Store",
+      "thumbs.db",
+    },
   },
   window = {
     width = 35,
@@ -289,6 +293,17 @@ M.config = function(_, opts)
     callback = function(opts)
       vim.keymap.set("n", "<C-v>", "V", { buffer = opts.buf, remap = false })
     end,
+  })
+
+  -- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md#neo-treenvim
+  local function on_move(data)
+    Snacks.rename.on_rename_file(data.source, data.destination)
+  end
+  local events = require("neo-tree.events")
+  opts.event_handlers = opts.event_handlers or {}
+  vim.list_extend(opts.event_handlers, {
+    { event = events.FILE_MOVED, handler = on_move },
+    { event = events.FILE_RENAMED, handler = on_move },
   })
 end
 

@@ -2,6 +2,7 @@
 return {
   "ray-x/lsp_signature.nvim",
   event = "VeryLazy",
+  enabled = false,
   dependencies = {
     "neovim/nvim-lspconfig",
   },

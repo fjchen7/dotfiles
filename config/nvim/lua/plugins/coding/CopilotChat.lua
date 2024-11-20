@@ -35,11 +35,11 @@ M.keys = function()
   end
 
   return {
-    { "<leader>k", "", desc = "+Copulot Chat", mode = { "n", "v" } },
+    { "<leader>k", "", desc = "+Copilot Chat", mode = { "n", "v" } },
     { mode = { "n", "x", "i" }, "<C-CR>", "<cmd>CopilotChatToggle<CR>", desc = "Toggle Copilot Chat" },
-    { mode = { "n", "x" }, "<leader>kx", "<cmd>CopilotChatReset<CR>", desc = "Clear Copilot Chat" },
+    { mode = { "n", "x" }, "<leader>kx", "<cmd>CopilotChatReset<CR>", desc = "Reset Copilot Chat" },
     {
-      "<leader>kl",
+      "<leader>k<Tab>",
       function()
         local options = { "vertical", "horizontal", "float" }
         vim.ui.select(options, {
@@ -61,7 +61,8 @@ M.keys = function()
       desc = "Change Layout",
     },
     {
-      "<leader>kp",
+      "<leader>kl",
+      mode = { "n", "x" },
       function()
         local questions = {
           ["Explain Code"] = "CopilotChatExplain",
@@ -101,8 +102,7 @@ M.keys = function()
         end
         vim.ui.select(options, { prompt = "Select an CopilotChat Action:" }, callback)
       end,
-      desc = "Action",
-      mode = { "n", "x" },
+      desc = "Action (Explain, Diagnostic, Generate Doc or Test ...)",
     },
     {
       mode = { "n", "x" },
@@ -154,7 +154,7 @@ M.keys = function()
     --   end,
     --   desc = "Explain Code",
     -- },
-    { "<leader>kd", pick("help"), desc = "Diagnostic Action", mode = { "n", "v" } },
+    -- { "<leader>kd", pick("help"), desc = "Diagnostic Action", mode = { "n", "v" } },
     -- { "<leader>kp", pick("prompt"), desc = "Prompt Actions", mode = { "n", "v" } },
   }
 end
@@ -162,16 +162,16 @@ end
 M.opts = {
   question_header = " User ",
   answer_header = "  Copilot ",
+  auto_follow_cursor = true,
+  auto_insert_mode = false,
   selection = function(source)
     local select = require("CopilotChat.select")
     return select.visual(source) or select.buffer(source)
   end,
-  auto_follow_cursor = true,
-  auto_insert_mode = true,
   window = {
     layout = "vertical",
     relative = "cursor",
-    width = 0.4,
+    width = 0.45,
     height = 0.6,
     row = 1,
     col = -10,

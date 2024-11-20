@@ -18,7 +18,7 @@ M.opts = {
   animation = false,
   exclude_ft = {},
   exclude_name = { "package.json", "lazy-lock.json" },
-  hide = { extensions = true },
+  -- hide = { extensions = true },
   highlight_alternate = false,
   highlight_inactive_file_icons = false,
   highlight_visible = true,
@@ -26,10 +26,15 @@ M.opts = {
     buffer_index = true,
     -- Enables / disables diagnostic symbols
     diagnostics = {
-      [vim.diagnostic.severity.ERROR] = { enabled = true },
-      [vim.diagnostic.severity.WARN] = { enabled = true },
+      [vim.diagnostic.severity.ERROR] = { enabled = false },
+      [vim.diagnostic.severity.WARN] = { enabled = false },
       [vim.diagnostic.severity.INFO] = { enabled = false },
       [vim.diagnostic.severity.HINT] = { enabled = false },
+    },
+    gitsigns = {
+      added = { enabled = false, icon = "+" },
+      changed = { enabled = false, icon = "~" },
+      deleted = { enabled = false, icon = "-" },
     },
     button = "×",
     pinned = { button = "", filename = true },
@@ -127,7 +132,7 @@ M.config = function(_, opts)
     -- Remove buffers
     -- map("n", "<C-b>d", "<C-w>d", "Delete Buffer", { remap = true })
     -- map("n", "<C-b>D", "<C-w>D", "Delete Buffer Forcely", { remap = true })
-    map("n", "<C-b>a", close_all_but_visible_or_pinned, "Delete All Buffers")
+    map("n", "<C-b>O", close_all_but_visible_or_pinned, "Delete All Buffers")
     map("n", "<C-b>o", close_all_but_visible_or_pinnned_or_changed, "Delete All Buffers But Changed")
     map("n", "<C-b><BS>", "<CMD>BufferPickDelete<CR>", "Delete Buffer by Pick")
     -- stylua: ignore start
@@ -175,6 +180,13 @@ M.config = function(_, opts)
       hi BufferDefaultInactiveHINT guibg=#1e2031
       hi BufferDefaultInactiveINFO guibg=#1e2031
 
+      hi BufferDefaultCurrentADDED guibg=#494d65
+      hi BufferDefaultCurrentCHANGED guibg=#494d65
+      hi BufferDefaultCurrentDELETED guibg=#494d65
+      hi BufferDefaultVisibleADDED guifg=#a6da96 guibg=#1e2031
+      hi BufferDefaultVisibleCHANGED guifg=#eed4a0 guibg=#1e2031
+      hi BufferDefaultVisibleDELETED guifg=#ed8797 guibg=#1e2031
+
       hi! link BufferVisibleMod BufferVisible
       hi BufferVisibleModBtn guifg=#a6d18a
       " hi BufferDefaultVisible guifg=#a6d18a
@@ -186,23 +198,23 @@ M.config = function(_, opts)
 
   -- Auto resize
   -- https://github.com/romgrk/barbar.nvim/issues/355#issuecomment-1396431625
-  vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWipeout", "WinResized" }, {
-    pattern = "*",
-    callback = function()
-      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        local bufnr = vim.api.nvim_win_get_buf(win)
-        if vim.api.nvim_get_option_value("ft", { buf = bufnr }) == "neo-tree" then
-          local ok, offset = pcall(vim.api.nvim_win_get_width, win)
-          if not ok then
-            return
-          end
-          local title = "Neo-tree"
-          return require("bufferline.api").set_offset(offset, title)
-        end
-      end
-      return require("bufferline.api").set_offset(0)
-    end,
-  })
+  -- vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWipeout", "WinResized" }, {
+  --   pattern = "*",
+  --   callback = function()
+  --     for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+  --       local bufnr = vim.api.nvim_win_get_buf(win)
+  --       if vim.api.nvim_get_option_value("ft", { buf = bufnr }) == "neo-tree" then
+  --         local ok, offset = pcall(vim.api.nvim_win_get_width, win)
+  --         if not ok then
+  --           return
+  --         end
+  --         local title = "Neo-tree"
+  --         return require("bufferline.api").set_offset(offset, title)
+  --       end
+  --     end
+  --     return require("bufferline.api").set_offset(0)
+  --   end,
+  -- })
 end
 
 return M

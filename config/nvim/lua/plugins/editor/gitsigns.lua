@@ -9,7 +9,7 @@ M.opts = {
   signs_staged_enable = false,
   attach_to_untracked = true,
   word_diff = false,
-  current_line_blame = true,
+  current_line_blame = false,
   current_line_blame_opts = {
     delay = 200,
   },

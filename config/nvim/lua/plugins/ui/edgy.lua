@@ -42,7 +42,9 @@ M.opts = function()
         size = 35,
         -- wo = { winbar = true },
       },
-      right = { size = 0.4 },
+      right = {
+        size = 35, -- 0.4
+      },
       bottom = {
         size = 20,
         -- wo = { winbar = false },

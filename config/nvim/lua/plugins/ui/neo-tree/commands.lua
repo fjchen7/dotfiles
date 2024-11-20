@@ -115,23 +115,23 @@ M.open_node_or_go_child = function(state) -- Go to first child or open node
       require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
     end
   else
-    -- -- open or focus
-    -- local file_win_id = nil
-    -- local node_path = node.path
-    -- local win_ids = vim.api.nvim_list_wins()
-    -- for _, win_id in pairs(win_ids) do
-    --   local buf_id = vim.api.nvim_win_get_buf(win_id)
-    --   local path = vim.api.nvim_buf_get_name(buf_id)
-    --   if node_path == path then
-    --     file_win_id = win_id
-    --   end
-    -- end
-    -- if file_win_id then
-    --   vim.api.nvim_set_current_win(file_win_id)
-    -- else
-    --   state.commands["open"](state)
-    --   vim.cmd("Neotree reveal")
-    -- end
+    -- open or focus
+    local file_win_id = nil
+    local node_path = node.path
+    local win_ids = vim.api.nvim_list_wins()
+    for _, win_id in pairs(win_ids) do
+      local buf_id = vim.api.nvim_win_get_buf(win_id)
+      local path = vim.api.nvim_buf_get_name(buf_id)
+      if node_path == path then
+        file_win_id = win_id
+      end
+    end
+    if file_win_id then
+      vim.api.nvim_set_current_win(file_win_id)
+    else
+      state.commands["open"](state)
+      vim.cmd("Neotree reveal")
+    end
   end
 end
 
