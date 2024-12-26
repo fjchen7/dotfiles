@@ -25,6 +25,7 @@ config/oh-my-zsh
 config/raycast
 config/lazygit/state.yml
 config/jgit
+config/yazi/plugins
 
 config/nvim/.luarc.json
 config/ranger/trash_history

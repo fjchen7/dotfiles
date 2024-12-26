@@ -1,0 +1,11 @@
+[manager]
+show_hidden = false
+show_symlink = true
+sort_dir_first = true
+
+[plugin]
+prepend_fetchers = [
+  { id = "git", name = "*", run = "git" },
+  { id = "mactag", name = "*", run = "mactag" },
+  { id = "mactag", name = "*/", run = "mactag" },
+]

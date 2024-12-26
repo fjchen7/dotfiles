@@ -1,0 +1,9 @@
+[plugin]
+deps = [
+  { use = "yazi-rs/plugins:hide-preview", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:smart-enter", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:git", rev = "71c4fc2" }, { use = "yazi-rs/plugins:max-preview", rev = "71c4fc2" }, { use = "yazi-rs/plugins:smart-filter", rev = "71c4fc2" }, { use = "yazi-rs/plugins:mactag", rev = "71c4fc2" },
+]
+
+[flavor]
+deps = []
