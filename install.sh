@@ -106,15 +106,15 @@ setup_tools() {
     # install formulas
     brew update
     # basic
-    brew install go zsh starship tmux autojump bash vim less ripgrep exa fd fzf navi bat jq httpie procs gh git-extras git-delta koekeishiya/formulae/yabai yqrashawn/goku/goku
+    brew install zsh starship autojump bash less ripgrep eza fd fzf navi bat jq httpie procs gh git-extras git-delta koekeishiya/formulae/yabai yqrashawn/goku/goku
     # good tools
-    brew install tree thefuck tokei beeftornado/rmtree/brew-rmtree pstree dust duf nnn dog
+    brew install tree thefuck beeftornado/rmtree/brew-rmtree pstree dust duf dog atuin starship
     # dev tools
-    brew install python shellcheck yarn node cmake openssl
+    brew install python shellcheck yarn node openssl neovim vim
     # gnu replacement
     brew install coreutils findutils gnutls gnu-sed gnu-which gawk grep gnu-tar gzip watch
     # macos utility
-    brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency qlvideo
+    # brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency qlvideo
 
     # install nodejs package
     npm install -g tldr
