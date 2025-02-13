@@ -78,22 +78,21 @@
   }
 
   :templates {
-    ;; :launch "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch%sument \"\"'"
     :open "open \"%s\""
-    :openApp "/usr/local/bin/hs -c \"spoon.Win.openOrHideApp('%s')\""
-    :safeOpen "/usr/local/bin/hs -c \"SafeOpen('%s')\""
+    :openApp "/opt/homebrew/bin/hs -c \"spoon.Win.openOrHideApp('%s')\""
+    :safeOpen "/opt/homebrew/bin/hs -c \"SafeOpen('%s')\""
     :edit "/usr/local/bin/code \"%s\""
     ;; AppleScipt keystroke and key code table: https://eastmanreference.com/complete-list-of-applescript-key-codes
     ;; have permission issues: 'System Events got an error: osascript is not allowed to send keystrokes.'
     ;; :alfred "osascript -e 'tell application \"Alfred 4\" to search' -e 'tell application \"System Events\" to keystroke \"%s\"'"
     ;; :alfred-execute "osascript -e 'tell application \"Alfred 4\" to search' -e 'tell application \"System Events\"' -e 'keystroke \"%s\"' -e 'key code 36' -e 'end tell'"
-    :alfred "/usr/local/bin/hs -c \"Alfred('%s')\""
-    :alfred-execute "/usr/local/bin/hs -c \"Alfred('%s', true)\""
+    :alfred "/opt/homebrew/bin/hs -c \"Alfred('%s')\""
+    :alfred-execute "/opt/homebrew/bin/hs -c \"Alfred('%s', true)\""
     :alfred-flow "osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
-    :hs "/usr/local/bin/hs -c \"%s\""
+    :hs "/opt/homebrew/bin/hs -c \"%s\""
     :script "/usr/local/bin/bash ~/.dotfiles/karabiner/scripts/%s"
 
-    :openObsidian "/usr/local/bin/hs -c \"spoon.Win.openOrHideObsidian('%s')\""
+    :openObsidian "/opt/homebrew/bin/hs -c \"spoon.Win.openOrHideObsidian('%s')\""
     :zellij "/opt/homebrew/bin/zellij -s 'default' action %s"
   }
 
