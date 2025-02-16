@@ -1,7 +1,7 @@
 .vscode
 
 cheatsheets
-git/gitconfig.local
+git/*.local
 zsh/zshrc.local
 zsh/zshenv.local
 

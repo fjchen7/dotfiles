@@ -6,3 +6,14 @@
 [user]
     name = USERNAME
     email = USEREMAIL
+
+# Different gitconfig according to remote url
+# [includeIf "hasconfig:remote.*.url:git@github.com:**/**"]
+#     path = ~/.dotfiles/git/gitconfig.github.local
+# [includeIf "hasconfig:remote.*.url:https://github.com/**/**"]
+#     path = ~/.dotfiles/git/gitconfig.github.local
+#
+# [includeIf "hasconfig:remote.*.url:git@gitlab.com:**/**"]
+#     path = ~/.dotfiles/git/gitconfig.gitlab.local
+# [includeIf "hasconfig:remote.*.url:https://gitlab.com/**/**"]
+#     path = ~/.dotfiles/git/gitconfig.gitlab.local
