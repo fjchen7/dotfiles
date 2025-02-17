@@ -164,10 +164,11 @@ alias @user-all='less /etc/passwd'
 alias @file-permission="stat -c '%n %U:%G-%a' * | column -t"
 alias @ip='curl -s "cip.cc"'
 alias wtf='_wtf'
+alias which='_wtf'
 
 # more efficient
 alias now='date +"%Y-%m-%d %T"'
-alias zj='_f() { if [[ "$#" -eq 0 ]]; then zellij attach -c default; else ls "$@"; fi; }; _f'
+alias rustrover='func() { if [ $# -eq 0 ]; then open -na "RustRover.app" --args .; else open -na "RustRover.app" --args "$@"; fi; }; func'
 
 # Shorter
 alias o="open"
