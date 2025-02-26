@@ -12,6 +12,11 @@
     preloadindex = true
     fscache = true
     quotepath = off
+    # Below two options speed up git status
+    # run a filesystem monitor per repository to monitor file changes
+    fsmonitor = true
+    # update cache so git status doesn't need to check file changes each time
+    untrackedCache = true
 [init]
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#init-defaultbranch-main
     defaultBranch = main
@@ -23,6 +28,8 @@
     colorMoved = default
     # include more context in diffs
     context = 10
+    # detect if a file has been renamed
+    renames = true
 [push]
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#push-default-simple-push-default-current
     default = current
@@ -102,16 +109,21 @@
 [pull]
     # use fast forward only mode when pulling (avoid merge commit)
     ff = only
+    # rebase branch at git pull
+    rebase = true
 [merge]
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#merge-conflictstyle-zdiff3
+    # https://blog.gitbutler.com/how-git-core-devs-configure-git/
     conflictstyle = zdiff3
     # get rid of the .orig files git creates during a merge conflict
     keepbackup = false
     # use git mergetool to help resolve merge conflicts
     tool = meld
-[rerere]
+[rerere] # rerere is Resuse Recorded Resolution
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#rerere-enabled-true
+    # Enable rerere, which records the before and after states of rebase conflicts
     enabled = true
+    autoupdate = true
 [url "git@github.com:"]
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options
     insteadOf = "https://github.com/"
@@ -125,3 +137,6 @@
     # automatically delete remote tracking branches/tags that have been deleted
     prune = true
     prunetags = true
+[help]
+    # guess and correct the wrong git command that is executed
+    autocorrect = prompt
