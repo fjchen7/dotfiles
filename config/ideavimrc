@@ -1,3 +1,8 @@
+" Before using this configuration, In IntelliJ install these plugins:
+" - IdeaVim
+" - IdeaVim-EasyMotion
+" - IdeaVimExtension
+"
 """ Map leader to space ---------------------
 nnoremap " " <Nop>
 let mapleader=" "
@@ -92,12 +97,12 @@ set matchit
 let g:EasyMotion_do_mapping = 0
 " Search by typing
 " map <tab> <Plug>(easymotion-s)
-map <C-;> <Plug>(easymotion-bd-jk)
+" map <C-;> <Plug>(easymotion-bd-jk)
 " Search by char
-map f <Plug>(easymotion-f)
-map F <Plug>(easymotion-F)
-omap f <Plug>(easymotion-t)
-omap F <Plug>(easymotion-T)
+map f <Plug>(easymotion-bd-f)
+" map F <Plug>(easymotion-F)
+omap f <Plug>(easymotion-bd-t)
+" omap F <Plug>(easymotion-T)
 
 " targets.vim
 " let g:targets_aiAI = 'aIAi'
