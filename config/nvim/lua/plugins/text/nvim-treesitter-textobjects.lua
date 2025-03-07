@@ -1,6 +1,3 @@
--- Override:
--- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/treesitter.lua#L89
--- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/treesitter.lua#L21
 local M = {
   -- Enhance text object to select/move/swap function and class
   "nvim-treesitter/nvim-treesitter-textobjects",

@@ -1,5 +1,3 @@
--- Override:
--- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/treesitter.lua#L118
 return {
   -- Show function context in first line
   "nvim-treesitter/nvim-treesitter-context",

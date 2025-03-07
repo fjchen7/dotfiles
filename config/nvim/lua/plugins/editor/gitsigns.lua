@@ -1,12 +1,9 @@
--- Override default gitsigns
--- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/editor.lua#L334-L368
 local M = {
   "lewis6991/gitsigns.nvim",
   event = "VeryLazy",
 }
 
 M.opts = {
-  signs_staged_enable = false,
   attach_to_untracked = true,
   word_diff = false,
   current_line_blame = false,
@@ -41,16 +38,14 @@ M.opts = {
     map({ "n", "x", "o" }, "(", prev_hunk_repeat, "[G] Prev Git Change")
 
       -- stylua: ignore start
-      map("n", "<M-a>", gitsigns.stage_hunk, "[G] Stage Git Hunk")
-      map("v", "<M-a>", function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "[G] Stage Git Hunk")
+      map("n", "<M-a>", gitsigns.stage_hunk, "[G] Stage/Unstage Git Hunk")
+      map("v", "<M-a>", function()
+        gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      end, "[G] Stage Git Hunk")
       map("n", "<M-S-a>", function()
         gitsigns.stage_buffer()
         vim.notify("Stage Buffer", "info", { title = "Gitsigns" })
       end, "[G] Stage Buffer")
-      map("n", "<leader><M-a>", function()
-        gitsigns.undo_stage_hunk()
-        vim.notify("Undo Stage Hunk", "info", { title = "Gitsigns" })
-      end, "[G] Undo Stage Hunk")
 
       map("n", "<M-u>", gitsigns.reset_hunk, "[G] Reset Hunk")
       map("v", "<M-u>", function() gitsigns.reset_hunk ({ vim.fn.line('.'), vim.fn.line('v') }) end, "[G] Reset Hunk")

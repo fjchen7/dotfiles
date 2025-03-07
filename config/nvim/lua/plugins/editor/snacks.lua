@@ -15,12 +15,13 @@ local open_config = function()
   vim.cmd("PossessionLoad config")
 end
 
-local smart_open = function()
-  require("telescope").extensions.smart_open.smart_open({
-    prompt_title = "Smart Open",
-    cwd_only = true,
-    filename_first = true,
-  })
+local find_files = function()
+  -- require("telescope").extensions.smart_open.smart_open({
+  --   prompt_title = "Smart Open",
+  --   cwd_only = true,
+  --   filename_first = true,
+  -- })
+  LazyVim.pick("files")()
 end
 
 M.opts = {
@@ -32,15 +33,34 @@ M.opts = {
         -- { action = frecency,                    desc = " Find File",       icon = " ", key = "f" },
         -- { action = "Telescope oldfiles",        desc = " Old File",        icon = " ", key = "o" },
         -- { action = "Telescope live_grep",       desc = " Find text",       icon = " ", key = "g" },
+        -- { icon = " ", desc = "Search Text",  key = "s", action = ":Telescope live_grep_args" },
         { icon = " ", desc = "Session",      key = "p", action = load_session },
-        { icon = " ", desc = "Find File",    key = "f", action = smart_open },
+        { icon = " ", desc = "Find File",    key = "f", action = find_files },
         { icon = " ", desc = "New File",     key = "n", action = ":ene | startinsert" },
-        { icon = " ", desc = "Recent Files", key = "r", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-        { icon = " ", desc = "Search Text",  key = "s", action = ":Telescope live_grep_args" },
-        { icon = " ", desc = "Git Project",  key = "g", action = ":Telescope project" },
+        { icon = " ", desc = "Search Text",  key = "s", action = LazyVim.pick("live_grep") },
+        { icon = " ", desc = "Recent Files", key = "r", action = function() Snacks.picker.recent({ title = "Recent Files" }) end, },
+        { icon = " ", desc = "Git Project",  key = "g", action = function() Snacks.picker.projects() end },
         { icon = " ", desc = "Config",       key = "c", action = open_config },
         { icon = "󰒲 ", desc = "Lazy",         key = "z", action = ":Lazy" },
         { icon = " ", desc = "Quit",         key = "q", action = ":qa" },
+      },
+    },
+  },
+  picker = {
+    enabled = true,
+    win = {
+      input = {
+        -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#%EF%B8%8F-config
+        keys = {
+          ["<Esc>"] = { "cancel", mode = { "n", "i" } },
+          ["<C-c>"] = { "<Esc>", mode = { "n", "i" }, expr = true },
+          ["<C-u>"] = { "<c-u>", mode = { "i" }, expr = true, desc = "clean line" },
+          -- ["<C-a>"] = { "<c-a>", mode = { "i" }, expr = true, desc = "Start" },
+          -- ["<C-e>"] = { "<c-e>", mode = { "i" }, expr = true, desc = "end" },
+          ["<C-/>"] = { "toggle_help_input", mode = { "n", "i" } },
+          ["<c-a-p>"] = { "list_scroll_up", mode = { "i", "n" } },
+          ["<c-a-n>"] = { "list_scroll_down", mode = { "i", "n" } },
+        },
       },
     },
   },
@@ -61,7 +81,6 @@ M.opts = {
     },
   },
   input = { enabled = true },
-  indent = { enabled = true },
   styles = {
     zoom_indicator = {
       text = "▍ zoom  󰊓",

@@ -3,91 +3,86 @@ local M = {
 }
 
 M.keys = function()
+  -- stylua: ignore
   return {
-    { "<leader><Tab>", "<cmd>Telescope resume<cr>", desc = "Resume Telescope" },
-    -- find files
-    { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Find Buffers" },
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { "<leader>fB", function()
+      Snacks.picker.buffers({ hidden = true, nofile = true, tittle = "Buffers (all)" })
+    end, desc = "Buffers (all)" },
+    -- {
+    --   "<leader>ff",
+    --   LazyVim.pick("files", { cwd = nil, hidden = false, no_ignore = false, follow = true, }),
+    --   desc = "Find Files",
+    -- },
+    { "<Tab>", "<leader>ff", remap = true },
+    { "<leader>ff", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+    { "<leader>fF", LazyVim.pick("files", { root = false, title = "Files (cwd)" }), desc = "Find Files (cwd)" },
+    -- { "<leader>fF", LazyVim.pick("files", { root = false, title = "Files (cwd)" }), desc = "Find Files (File Root)" },
+    -- { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
     {
-      "<leader>ff",
-      LazyVim.pick("find_files", {
-        cwd = nil,
-        hidden = false,
-        no_ignore = false,
-        follow = true,
-      }),
-      desc = "Find Files",
-    },
-    -- { "<leader>fF", LazyVim.pick("files"), desc = "Find Files (Root)" },
-    {
-      "<leader>fg",
-      LazyVim.pick("git_files", {
-        show_untracked = true,
-      }),
-      desc = "Find Files (Git Files)",
-    },
-    {
-      "<leader>fF",
+      "<leader>f<C-f>",
       function()
         local path = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
-        local home = os.getenv("HOME")
-        local shorter_path = string.gsub(path, "^" .. home, "~")
-        LazyVim.pick("find_files", {
+        -- local home = os.getenv("HOME")
+        -- local path = string.gsub(path, "^" .. home, "~")
+        -- local start = math.max(1, #path - 19)
+        -- local trim_path = string.sub(path, start)
+        LazyVim.pick("files", {
           cwd = path,
-          prompt_title = "Find Files (" .. shorter_path .. "/)",
+          -- title = "Find Files ( ..." .. trim_path .. "/)",
+          title = "Find Files (File Root)",
           hidden = true,
-          no_ignore = true,
+          ignored = false,
           follow = true,
         })()
       end,
-      desc = "Find Files (File Directory)",
+      desc = "Find Files (File Root)",
     },
+    { "<leader>fg", function()
+      Snacks.picker.git_files( { untracked = true } )
+    end, desc = "Find Files (Git)" },
 
     {
       "<leader>fr",
-      function()
-        local path = vim.loop.cwd()
-        local home = os.getenv("HOME")
-        local shorter_path = string.gsub(path, "^" .. home, "~")
-        LazyVim.pick("oldfiles", {
-          cwd = path,
-          prompt_title = "Oldfiles (" .. shorter_path .. "/)",
-        })()
-      end,
-      desc = "Find Recent Files (cwd)",
+      function() Snacks.picker.recent({ title = "Recent Files" }) end,
+      desc = "Recent Files",
     },
     {
       "<leader>fR",
-      "<cmd>Telescope oldfiles prompt_title=Oldfiles\\ (Global)<cr>",
-      desc = "Find Recent Files (Global)",
+      function() Snacks.picker.recent({ filter = { cwd = true }, title = "Recent (cwd)" }) end,
+      desc = "Recent Files (cwd)",
     },
+    { "<leader>pp", function() Snacks.picker.projects() end, desc = "Projects" },
+
+    { "<C-f>", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
+    { "<C-f>", LazyVim.pick("grep_word"), desc = "Grep Selection (Root Dir)", mode = { "x" } },
+    { "<leader>nZ", function() Snacks.picker.lazy() end, desc = "Search LazyVim Plugin" },
+    { "<leader>nC", LazyVim.pick.config_files(), desc = "Find Config File" },
+
     -- git
     -- { "<leader>gf", "<cmd>Telescope git_bcommits<CR>", desc = "Show File Commits" },
     -- { "<leader>gF", "<cmd>Telescope git_commits<CR>", desc = "Project Commits" },
-    { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git Status" },
-    { "<leader>gS", "<cmd>Telescope git_stash<CR>", desc = "Git Stashes" },
-    { "<leader>gr", "<cmd>Telescope git_branches<CR>", desc = "Branches" },
-    -- search
-    { '<leader>"', "<cmd>Telescope registers<cr>", desc = "Registers" },
-
-    -- Not use
-    -- { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+    { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+    { "<leader>gr", function() Snacks.picker.git_branches() end, desc = "Git Branch" },
+    { "<leader>gl", function() Snacks.picker.git_log_file() end, { desc = "Git Log (File)" } },
+    { "<leader>gL", function() Snacks.picker.git_log({ cwd = LazyVim.root.git() }) end, { desc = "Git Log (Project)" } },
+    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (hunks)" },
 
     -- { "<leader>qj", "<cmd>Telescope marks<cr>", desc = "Jump to Mark (Telescope)" },
 
-    -- Configurations
-    { "<F1>", "<CMD>Telescope help_tags<CR>", desc = "List Helps" },
-    { "<leader>n<F1>", "<CMD>Telescope help_tags<CR>", desc = "List Helps" },
+    { "<leader><Tab>", function() Snacks.picker.resume() end, desc = "Resume" },
+    { "<F1>", function() Snacks.picker.help() end, desc = "List Help", },
+    { "<leader>nh", function() Snacks.picker.highlights() end, desc = "Highlights", },
+    { "<leader>na", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
+    { "<leader>nk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>nc", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    { "<leader>nm", function() Snacks.picker.man() end, desc = "Man Pages" },
+    { '<leader>"', function() Snacks.picker.registers() end, desc = "Registers" },
+    -- { "<leader>nM", "<cmd>norm! K<cr>", desc = "Man Page under Cursor Word" },
     { "<leader>nf", "<CMD>Telescope filetypes<CR>", desc = "Set Filetype" },
-    { "<leader>nh", "<cmd>Telescope highlights<cr>", desc = "List Highlights" },
-    { "<leader>na", "<cmd>Telescope autocommands<cr>", desc = "List Auto-Commands" },
-    { "<leader>nk", "<cmd>Telescope keymaps<cr>", desc = "List Keymaps" },
-    { "<leader>no", "<cmd>Telescope vim_options<cr>", desc = "List Vim Options" },
-    { "<leader>n:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-    -- { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-    { "<leader>nc", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "List Colorschemes" },
-
-    { "<leader>nm", "<cmd>norm! K<cr>", desc = "Man Page under Cursor Word" },
-    { "<leader>nM", "<cmd>Telescope man_pages<cr>", desc = "List Man Pages" },
+    -- { "<leader>no", "<cmd>Telescope vim_options<cr>", desc = "List Vim Options" },
 
     -- Search Text
     -- { "<leader>/", LazyVim.pick("live_grep", { cwd = false }), desc = "Grep (cwd)" },
@@ -96,62 +91,60 @@ M.keys = function()
     -- { "<C-M-f>", LazyVim.pick("live_grep"), desc = "Grep (root dir)" },
     -- { "<C-M-f>", LazyVim.pick("grep_string"), mode = "v", desc = "Grep (root dir)" },
 
-    -- stylua: ignore start
     -- { "<leader><C-f>", LazyVim.pick("grep_string", { cwd = false, word_match = "-w" }), desc = "Grep Word under Cursor (cwd)", },
     -- { "<leader><C-M-f>", LazyVim.pick("grep_string", { word_match = "-w" }), desc = "Grep Word under Cursor (root dir)" },
-    -- stylua: ignore end
 
     -- Symbols
-    {
-      "<leader>it",
-      function()
-        require("telescope.builtin").lsp_dynamic_workspace_symbols({
-          symbols = { "Class", "Enum", "Interface", "Struct", "Trait", "TypeParameter" },
-          prompt_title = "LSP Workspace Symbols (Type)",
-        })
-      end,
-      desc = "List Types",
-    },
-    {
-      "<leader>iT",
-      function()
-        require("telescope.builtin").lsp_document_symbols({
-          symbols = { "Class", "Enum", "Interface", "Struct", "Trait", "TypeParameter" },
-          prompt_title = "LSP Workspace Symbols (Type) in Buffer",
-        })
-      end,
-      desc = "List Types in Buffer",
-    },
-    {
-      "<leader>if",
-      function()
-        require("telescope.builtin").lsp_dynamic_workspace_symbols({
-          symbols = { "Function", "Method", "Constructor" },
-          prompt_title = "LSP Workspace Symbols (Function)",
-        })
-      end,
-      desc = "List Functions",
-    },
-    {
-      "<leader>iF",
-      function()
-        require("telescope.builtin").lsp_document_symbols({
-          symbols = { "Function", "Method", "Constructor" },
-          prompt_title = "LSP Workspace Symbols (Function) in Buffer",
-        })
-      end,
-      desc = "List Functions in Buffer",
-    },
-    {
-      "<leader>il",
-      function()
-        require("telescope.builtin").lsp_dynamic_workspace_symbols({
-          symbols = { "Package", "Namespace", "Module" },
-          prompt_title = "LSP Workspace Symbols (Module)",
-        })
-      end,
-      desc = "List Modules",
-    },
+    -- {
+    --   "<leader>it",
+    --   function()
+    --     require("telescope.builtin").lsp_dynamic_workspace_symbols({
+    --       symbols = { "Class", "Enum", "Interface", "Struct", "Trait", "TypeParameter" },
+    --       prompt_title = "LSP Workspace Symbols (Type)",
+    --     })
+    --   end,
+    --   desc = "List Types",
+    -- },
+    -- {
+    --   "<leader>iT",
+    --   function()
+    --     require("telescope.builtin").lsp_document_symbols({
+    --       symbols = { "Class", "Enum", "Interface", "Struct", "Trait", "TypeParameter" },
+    --       prompt_title = "LSP Workspace Symbols (Type) in Buffer",
+    --     })
+    --   end,
+    --   desc = "List Types in Buffer",
+    -- },
+    -- {
+    --   "<leader>if",
+    --   function()
+    --     require("telescope.builtin").lsp_dynamic_workspace_symbols({
+    --       symbols = { "Function", "Method", "Constructor" },
+    --       prompt_title = "LSP Workspace Symbols (Function)",
+    --     })
+    --   end,
+    --   desc = "List Functions",
+    -- },
+    -- {
+    --   "<leader>iF",
+    --   function()
+    --     require("telescope.builtin").lsp_document_symbols({
+    --       symbols = { "Function", "Method", "Constructor" },
+    --       prompt_title = "LSP Workspace Symbols (Function) in Buffer",
+    --     })
+    --   end,
+    --   desc = "List Functions in Buffer",
+    -- },
+    -- {
+    --   "<leader>il",
+    --   function()
+    --     require("telescope.builtin").lsp_dynamic_workspace_symbols({
+    --       symbols = { "Package", "Namespace", "Module" },
+    --       prompt_title = "LSP Workspace Symbols (Module)",
+    --     })
+    --   end,
+    --   desc = "List Modules",
+    -- },
     -- {
     --   "<leader>ic",
     --   function()
@@ -163,17 +156,17 @@ M.keys = function()
     --   end,
     --   desc = "List Constants",
     -- },
-    {
-      "<leader>ia",
-      function()
-        require("telescope.builtin").lsp_dynamic_workspace_symbols({
-          -- List: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#documentSymbolParams
-          -- symbols = require("lazyvim.config").get_kind_filter(),
-          prompt_title = "LSP Workspace Symbols (All)",
-        })
-      end,
-      desc = "List All Symbols",
-    },
+    -- {
+    --   "<leader>ia",
+    --   function()
+    --     require("telescope.builtin").lsp_dynamic_workspace_symbols({
+    --       -- List: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#documentSymbolParams
+    --       -- symbols = require("lazyvim.config").get_kind_filter(),
+    --       prompt_title = "LSP Workspace Symbols (All)",
+    --     })
+    --   end,
+    --   desc = "List All Symbols",
+    -- },
   }
 end
 

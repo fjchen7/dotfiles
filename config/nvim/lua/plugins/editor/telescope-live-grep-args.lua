@@ -4,6 +4,7 @@ local M = {
     "nvim-telescope/telescope.nvim",
   },
   event = "VeryLazy",
+  enabled = false,
 }
 
 M.keys = function()

@@ -1,6 +1,6 @@
 local M = {
   "sindrets/diffview.nvim",
-  enabled = true,
+  enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
   },

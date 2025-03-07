@@ -2,30 +2,9 @@ local M = {
   -- Auto resize focused window
   "nvim-focus/focus.nvim",
   enabled = true,
+  -- stylua: ignore
   keys = {
-    {
-      "<C-w>\\",
-      function()
-        Util.toggle(not vim.g.focus_disable, function()
-          vim.cmd("FocusToggle")
-        end, "Windows Autoresize (Focus)", "Option")
-      end,
-      desc = "Toggle Windows Autoresize (Focus)",
-    },
-    -- {
-    --   "<C-w>a",
-    --   function()
-    --     vim.cmd("FocusEnable")
-    --     -- ISSUE:in autoresize mode the first will equalize
-    --     vim.cmd("FocusMaxOrEqual")
-    --     -- if is_win_maximize() then
-    --     --   vim.cmd("FocusEqualise")
-    --     -- else
-    --     --   vim.cmd("FocusMaximise")
-    --     -- end
-    --   end,
-    --   desc = "Toggle Full Window (Focus)",
-    -- },
+    { "<C-w>\\", function() vim.cmd("FocusToggle") end, desc = "Toggle Windows Autoresize (Focus)", },
   },
 }
 
@@ -71,12 +50,5 @@ M.opts = {
     cursorline = true,
   },
 }
-
-M.config = function(_, opts)
-  local focus = require("focus")
-  focus.setup(opts)
-  -- This plugin can only disable autoresize entirely
-  vim.cmd("FocusDisable")
-end
 
 return M

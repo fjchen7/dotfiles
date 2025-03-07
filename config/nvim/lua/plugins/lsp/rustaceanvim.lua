@@ -91,14 +91,6 @@ local rust_analyzer_server = {
         -- Passing -p <package> to cargo check instead of --workspace
         workspace = false,
       },
-      procMacro = {
-        enable = true,
-        ignored = {
-          ["async-trait"] = { "async_trait" },
-          ["napi-derive"] = { "napi" },
-          ["async-recursion"] = { "async_recursion" },
-        },
-      },
       diagnostics = {
         disabled = {
           -- https://www.reddit.com/r/rust/comments/vj2ghz/comment/idhpunt/

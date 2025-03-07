@@ -12,6 +12,7 @@ M.init = function()
     end
   end
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+  -- stylua: ignore
   local keymaps = {
     { "<leader>cl", false },
     { "<leader>nl", "<cmd>LspInfo<cr>", desc = "Print LSP Info" },
@@ -26,10 +27,66 @@ M.init = function()
       desc = "Print and Copy LSP Configuration",
     },
 
-    -- { "gd", vim.lsp.buf.definition, desc = "Go Definition", has = "definition" },
-    { "gD", vim.lsp.buf.declaration, desc = "Go Declaration" },
-    -- { "gb", vim.lsp.buf.type_definition, desc = "Go Type Definition" },
+    {
+      "<leader>st",
+      function()
+        Snacks.picker.lsp_symbols({
+          filter = { default = { "Class", "Enum", "Interface", "Struct", "Trait", "TypeParameter" } },
+          title = "LSP Types (Buffer)",
+        })
+      end,
+      desc = "List Types (Buffer)",
+      has = "documentSymbol",
+    },
+    {
+      "<leader>sT",
+      function()
+        Snacks.picker.lsp_workspace_symbols({
+          filter = { default = { "Class", "Enum", "Interface", "Struct", "Trait", "TypeParameter" } },
+          title = "LSP Types (Workspace)",
+        })
+      end,
+      desc = "List Types (Workspace)",
+      has = "workspace/symbols",
+    },
+    {
+      "<leader>sf",
+      function()
+        Snacks.picker.lsp_symbols({
+          filter = { default = { "Function", "Method", "Constructor" } },
+          title = "LSP Functions (Buffer)",
+        })
+      end,
+      desc = "List Functions (Buffer)",
+      has = "documentSymbol",
+    },
+    {
+      "<leader>sF",
+      function()
+        Snacks.picker.lsp_workspace_symbols({
+          filter = { default = { "Function", "Method", "Constructor" } },
+          title = "LSP Functions (Workspace)",
+        })
+      end,
+      desc = "List Functions (Workspace)",
+      has = "workspace/symbols",
+    },
+    {
+      "<leader>sm",
+      function()
+        Snacks.picker.lsp_workspace_symbols({
+          filter = { default = { "Package", "Namespace", "Module" } },
+          title = "LSP Modules",
+        })
+      end,
+      desc = "List Modules",
+      has = "workspace/symbols",
+    },
 
+    { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+    -- { "gd", vim.lsp.buf.definition, desc = "Go Definition", has = "definition" },
+    -- { "gD", vim.lsp.buf.declaration, desc = "Go Declaration" },
+    -- { "gb", vim.lsp.buf.type_definition, desc = "Go Type Definition" },
     -- Split
     {
       "g<C-D>",
@@ -91,7 +148,6 @@ M.init = function()
     -- { "gr", goto_preview("goto_preview_references"), desc = "Go References" },
     -- { "gI", goto_preview("goto_preview_implementation"), desc = "Go Implementation" },
 
-    -- { "K", false },
     {
       -- Mapping K in visual mode to avoid annoying v_K
       mode = { "n", "x" },
@@ -112,9 +168,11 @@ M.init = function()
       desc = "Hover / Peek Fold",
     },
 
-    { "gK", false },
-    { "<C-k>", mode = "i", false },
     -- { "<M-s>", vim.lsp.buf.signature_help, mode = { "i", "n" }, desc = "Signature Help", has = "signatureHelp" },
+
+    -- Taken over by vim-illuminate
+    { "<M-n>", false },
+    { "<M-p>", false },
 
     { "<leader>ca", false },
     { "<M-cr>", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v", "i" }, has = "codeAction" },

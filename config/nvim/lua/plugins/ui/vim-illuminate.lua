@@ -66,10 +66,10 @@ return {
       end,
     }):map("<leader>ua")
 
-    -- vim.cmd([[
-    --   hi! IlluminatedWordText guibg=#626787 gui=underline
-    --   hi! IlluminatedWordRead guibg=#626787 gui=underline
-    --   hi! IlluminatedWordWrite guibg=#626787 gui=underline
-    -- ]])
+    vim.cmd([[
+      hi! IlluminatedWordText guibg=#626787 gui=underline
+      hi! IlluminatedWordRead guibg=#626787 gui=underline
+      hi! IlluminatedWordWrite guibg=#626787 gui=underline
+    ]])
   end,
 }
