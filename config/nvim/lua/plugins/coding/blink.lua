@@ -4,9 +4,10 @@ return {
   opts = {
     keymap = {
       -- https://cmp.saghen.dev/configuration/keymap#enter
-      preset = "enter",
+      preset = "super-tab",
       ["<C-e>"] = { "fallback" },
       ["<C-c>"] = { "hide", "fallback" },
+      ["<CR>"] = { "accept", "fallback" },
     },
     -- sources = {
     --   cmdline = { "buffer", "path" },

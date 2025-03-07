@@ -1,5 +1,3 @@
--- Override:
--- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/editor.lua#L300
 local M = {
   "folke/which-key.nvim",
 }
@@ -59,7 +57,9 @@ M.config = function(_, opts)
     -- { "<leader>s", group = "search" },
     { "<leader>o", group = "overseer" },
     { "<leader>t", group = "test" },
-    { "<leader>i", group = "symbols" },
+    { "<leader>s", group = "symbols" },
+    { "<leader>ss", desc = "List Symbol (Buffer)" },
+    { "<leader>sS", desc = "List Symbol (Workspace)" },
     { "<leader>p", group = "session" },
     { "<leader>n", group = "nvim config" },
     { "{", desc = "Prev Blank Line" },

@@ -1,6 +1,6 @@
 return {
   "nvim-telescope/telescope-project.nvim",
-  enabled = true,
+  enabled = false,
   keys = {
     {
       "<leader>pp",

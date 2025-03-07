@@ -60,11 +60,24 @@ M.keys = function()
     --   end,
     --   desc = "Buffer Diagnostics (Trouble)",
     -- },
-    { "<leader>db", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
-    { "<leader>dB", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics (Telescope)" },
-
-    { "<leader>dw", "<cmd>Trouble diagnostics refresh=true<cr>", desc = "Workspace Diagnostics (Trouble)" },
-    { "<leader>dW", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics (Telescope)" },
+    { "<leader>dB", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+    -- { "<leader>dB", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics (Telescope)" },
+    {
+      "<leader>db",
+      function()
+        Snacks.picker.diagnostics_buffer()
+      end,
+      desc = "Buffer Diagnostics",
+    },
+    { "<leader>dW", "<cmd>Trouble diagnostics refresh=true<cr>", desc = "Workspace Diagnostics (Trouble)" },
+    -- { "<leader>dW", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics (Telescope)" },
+    {
+      "<leader>dw",
+      function()
+        Snacks.picker.diagnostics()
+      end,
+      desc = "Workspace Diagnostics",
+    },
     -- { "<leader>dW", vim.diagnostic.setqflist, desc = "Workspace Diagnostics (Quickfix)" },
 
     -- { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
@@ -75,12 +88,12 @@ M.keys = function()
     -- },
 
     {
-      "<leader>i[",
+      "<leader>s[",
       "<cmd>Trouble lsp_incoming_calls toggle<cr>",
       desc = "Incoming Calls (Trouble)",
     },
     {
-      "<leader>i]",
+      "<leader>s]",
       "<cmd>Trouble lsp_outgoing_calls toggle<cr>",
       desc = "Outgoing Calls (Trouble)",
     },

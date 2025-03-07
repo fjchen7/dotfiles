@@ -4,8 +4,6 @@ vim.list_extend(specs, {
   { "folke/noice.nvim", enabled = false },
 
   -- Colorscheme
-  -- Override:
-  -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/colorscheme.lua#L11
   {
     "folke/tokyonight.nvim",
     opts = {

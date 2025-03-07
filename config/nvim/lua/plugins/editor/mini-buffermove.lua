@@ -1,5 +1,3 @@
--- Override:
--- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/editor.lua#L411
 return {
   "echasnovski/mini.bufremove",
   event = "BufReadPost",

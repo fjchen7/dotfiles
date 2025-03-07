@@ -108,5 +108,3 @@ map("n", "<leader>li", file_detail, "File Info")
 -- Lazy
 del("n", "<leader>l")
 map("n", "<leader>nz", "<cmd>Lazy<cr>", "Lazy")
--- stylua: ignore
-map("n", "<leader>nZ", function() LazyVim.news.changelog() end, "LazyVim Changelog")

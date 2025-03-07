@@ -30,14 +30,13 @@ return {
     --   _put(...)
     -- end
 
+    -- stylua: ignore
     return {
       { "iy", mode = { "o", "x" }, require("yanky.textobj").last_put, desc = "Last Put Text" },
       { "ay", "iy", mode = { "o", "x" }, desc = "Last Put Text", remap = true },
 
-      -- stylua: ignore start
-      -- { "<M-h>", function() yanky.cycle(1) end, "Cycle Prev Yank", },
-      -- { "<M-l>", function() yanky.cycle(-1) end, "Cycle Next Yank", },
-      -- stylua: ignore end
+      { "]y", function() yanky.cycle(1) end, "Cycle Prev Yank", },
+      { "[y", function() yanky.cycle(-1) end, "Cycle Next Yank", },
       -- { "]k", next_yank },
       -- { "[k", prev_yank },
 
@@ -105,8 +104,10 @@ return {
       --   expr = true,
       -- },
 
-      { "sp", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put After Cursor (Linewise)" },
-      { "sP", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Before Cursor (Linewise)" },
+      { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
+      { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
+      { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
+      { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
 
       { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and Indent Right" },
       { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and Indent Left" },

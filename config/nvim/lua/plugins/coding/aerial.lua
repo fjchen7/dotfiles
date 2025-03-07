@@ -12,7 +12,6 @@ M.keys = function()
   return {
     -- { "<leader>ii", "m`<CMD>AerialToggle float<CR>", desc = "Symbols Popup (Aerial)" },
     -- { "t", "m`<CMD>AerialToggle float<CR>", desc = "Symbols Popup (Aerial)" },
-    -- { "<leader>ii", "m`<CMD>AerialToggle float<CR>", desc = "Symbols Popup (Aerial)" },
     -- {
     --   "go",
     --   function()
@@ -26,8 +25,8 @@ M.keys = function()
     -- },
     -- { "go", "<CMD>AerialToggle<CR>", desc = "Symbols (Aerial)" },
     -- { "gO", "<CMD>AerialNavToggle<CR>", desc = "Navigate Symbols (Aerial)" },
-    { "<leader>io", "<CMD>AerialToggle<CR>", desc = "Symbols (Aerial)" },
-    { "<leader>iO", "<CMD>AerialNavToggle<CR>", desc = "Navigate Symbols (Aerial)" },
+    { "<leader>so", "<CMD>AerialToggle<CR>", desc = "Symbols (Aerial)" },
+    { "<leader>sO", "<CMD>AerialNavToggle<CR>", desc = "Navigate Symbols (Aerial)" },
     { "]]", next_fn, desc = "Next Symbol (Aerial)" },
     { "[[", prev_fn, desc = "Prev Symbol (Aerial)" },
   }

@@ -1,4 +1,3 @@
--- Override: https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/plugins/editor.lua#L481
 return {
   "folke/todo-comments.nvim",
   cmd = { "TodoTrouble", "TodoTelescope" },
@@ -14,8 +13,16 @@ return {
       --   end,
       --   desc = "Buffer TODOs",
       -- },
-      { "<leader>dt", "<cmd>Trouble todo toggle filter = {tag = {TODO}}<cr>", desc = "Workspace TODOs" },
-      { "<leader>dT", "<cmd>TodoTelescope keywords=TODO<cr>", desc = "Workspace TODOs (Telescope)" },
+      {
+        "<leader>dt",
+        function()
+          Snacks.picker.todo_comments({ keywords = { "TODO" } })
+        end,
+        desc = "Todo/Fix/Fixme",
+      },
+      -- { "<leader>dt", "<cmd>Trouble todo toggle filter = {tag = {TODO}}<cr>", desc = "Workspace TODOs" },
+      -- { "<leader>dT", "<cmd>TodoTelescope keywords=TODO<cr>", desc = "Workspace TODOs (Telescope)" },
+
       -- {
       --   "<leader>qfb",
       --   function()
@@ -24,12 +31,19 @@ return {
       --   end,
       --   desc = "Buffer TODO/FIX",
       -- },
-      { "<leader>df", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Workspace TODO/FIX" },
       {
-        "<leader>dF",
-        "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
-        desc = "Workspace TODO/FIX (Telescope)",
+        "<leader>dT",
+        function()
+          Snacks.picker.todo_comments()
+        end,
+        desc = "Todo/Fix/Fixme",
       },
+      -- { "<leader>df", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Workspace TODO/FIX" },
+      -- {
+      --   "<leader>dF",
+      --   "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
+      --   desc = "Workspace TODO/FIX (Telescope)",
+      -- },
     }
   end,
   opts = {

@@ -12,7 +12,7 @@ return {
   },
   keys = {
     {
-      "<leader>ii",
+      "<leader>sl",
       "<CMD>Navbuddy<CR>",
       desc = "Select Symbols (Navbuddy)",
     },
