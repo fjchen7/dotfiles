@@ -25,8 +25,6 @@ _is_proxy() {
 
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="l gti g"
 
-alias cls='clear'
-
 # ls
 # alias exa='exa -Fh --git --time-style=long-iso --sort=name'
 alias eza='eza --sort=name --time-style=long-iso'
@@ -51,7 +49,7 @@ alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
 # Create a new directory and enter it
-alias mkcd='_f(){ mkdir -p "$@" && cd "$_" }; _f'
+alias mkdircd='_f(){ mkdir -p "$@" && cd "$_" }; _f'
 
 # quick grep
 # ls? abc    - search "abc" from $PWD
@@ -142,13 +140,12 @@ alias c='cargo'
 alias cb='cargo build'
 alias cr='cargo run'
 alias cre='cargo run --example'
-alias ct='cargo nextest'
-alias ctr='cargo nextest run --run-ignored all'
-alias ctr!='cargo nextest run --no-capture --run-ignored all'
-alias cc='cargo clean'
-alias ca='cargo add'
-alias co='cargo doc --open'
-alias ci='cargo init'
+alias cc='cargo check'
+alias cn='cargo nextest'
+alias cnl='cargo nextest list'
+alias cnr='cargo netest run --run-ignored all'
+alias cnr!='cargo nextest run --no-capture --run-ignored all'
+alias cC='cargo clean'
 alias cu='cargo update'
 alias cU='cargo upgrade'
 
@@ -168,11 +165,11 @@ alias which='_wtf'
 
 # more efficient
 alias now='date +"%Y-%m-%d %T"'
-alias rustrover='func() { if [ $# -eq 0 ]; then open -na "RustRover.app" --args .; else open -na "RustRover.app" --args "$@"; fi; }; func'
+alias rr='func() { if [ $# -eq 0 ]; then open -na "RustRover.app" --args .; else open -na "RustRover.app" --args "$@"; fi; }; func'
 
 # Shorter
 alias o="open"
-alias cl="clear"
+alias cls='clear'
 alias h="fc -l"
 alias q="exit"
 alias n='nnn -T d -io -P v'
