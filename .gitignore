@@ -28,6 +28,7 @@ config/jgit
 config/yazi/plugins
 
 config/nvim/.luarc.json
+config/nvim/lazy-lock.json
 config/ranger/trash_history
 
 .luarc.json
