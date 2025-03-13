@@ -158,8 +158,10 @@ function M.moveToScreen(direction)
             cwin:moveOneScreenWest(false, true)
         elseif direction == "right" then
             cwin:moveOneScreenEast(false, true)
-        elseif direction == "next" then
+        elseif direction == "previous" then
             cwin:moveToScreen(cscreen:next(), false, true)
+        elseif direction == "next" then
+            cwin:moveToScreen(cscreen:previous(), false, true)
         end
     else
         hs.alert.show("No focused window!")
@@ -192,36 +194,52 @@ end
 
 function M.direction(ratio)
     local cwin = hs.window.focusedWindow()
-    if not cwin then return end
+    if not cwin then
+        hs.alert.show("No focused window found!")
+        return
+    end
     local sf = cwin:screen():frame()
     local wf = cwin:frame()
-    if sf == wf then
+    ratio = ratio or 0.5
+    -- hs.alert.show("ratio: " .. ratio)
+    -- hs.alert.show("sf.w: " .. sf.w .. ", sf.h: " .. sf.h .. ", sf.x: " .. sf.x .. ", sf.y: " .. sf.y)
+    -- hs.alert.show("wf.w: " .. wf.w .. ", wf.h: " .. wf.h .. ", wf.x: " .. wf.x .. ", wf.y: " .. wf.y)
+    if sf.w == wf.w and sf.h == wf.h then
+        -- hs.alert.show("fullscreen")
         return "fullscreen", true
     end
-    ratio = ratio or 0.5
     if wf.h == sf.h then
+        -- hs.alert.show("wf.h == sf.h")
         local is_w_equal = math.floor(wf.w) == math.floor(ratio * sf.w)
-        if wf.x + wf.w <= ratio * sf.w then
+        if wf.x <= sf.x * 1.01 then
+            -- hs.alert.show("left " .. tostring(is_w_equal))
             return "left", is_w_equal
-        elseif wf.x >= ratio * sf.w then
+        elseif wf.x + wf.w >= (sf.x + wf.w) * 0.99 then
+            -- hs.alert.show("right " .. tostring(is_w_equal))
             return  "right", is_w_equal
+        else
+            hs.alert.show("found unkown direction (wf.h == sf.h)")
         end
-    elseif wf.w == wf.w then
+    elseif wf.w == sf.w then
+        -- hs.alert.show("wf.w == sf.w")
         local is_h_equal = math.floor(wf.h) == math.floor(ratio * sf.h)
-        -- Height does not start with 0
-        if (wf.y - sf.y) + wf.h <= ratio * sf.h then
+        if wf.y <= sf.y * 1.01 then
+            -- hs.alert.show("top " .. tostring(is_h_equal))
             return "top", is_h_equal
-        elseif wf.y >= ratio * sf.h then
+        elseif wf.y + wf.h >= (sf.y + wf.h) * 0.99 then
+            -- hs.alert.show("bottom " .. tostring(is_h_equal))
             return "bottom", is_h_equal
+        else
+            hs.alert.show("found unkown direction (wf.w == sf.w)")
         end
     end
     return "unkown"
 end
 
 function M.resizeWindowAuto(ratio, fill)
-    local direction, exact = M.direction()
-    local target = "left"
-    local directions = { "left", "right", "top", "bottom" }
+    local direction, exact = M.direction(ratio)
+    local target = "right"
+    local directions = { "right", "left", "top", "bottom" }
     for idx, _ in ipairs(directions) do
         if direction == directions[idx] then
             local next_direction = directions[idx % #directions + 1]
@@ -229,11 +247,13 @@ function M.resizeWindowAuto(ratio, fill)
             break
         end
     end
+    -- hs.alert.show("target: " .. target)
     local size = {
         left = hs.geometry.new({ x = 0, y = 0, w = ratio, h = 1 }),
         right = hs.geometry.new({ x = 1 - ratio, y = 0, w = ratio, h = 1 }),
         top = hs.geometry.new({ x = 0, y = 0, w = 1, h = ratio }),
         bottom = hs.geometry.new({ x = 0, y = 1 - ratio, w = 1, h = ratio }),
+        fullscreen = hs.geometry.new({ x = 0, y = 0, w = 1, h = 1 }),
     }
     M.resizeWindow(size[target], fill)  -- Left
 end
@@ -318,15 +338,27 @@ function M.switchApp()
     M.centerCursor()
 end
 
+M.activate = function()
+    if spoon.ModalMgr.active_list[M.name] then
+        M.resizeWindow({ x = 0, y = 0, w = 1, h = 1 })
+        return
+    end
+    spoon.ModalMgr:deactivateAll()
+    -- Show an status indicator so we know we're in some modal environment now
+    spoon.ModalMgr:activate({ M.name }, M.color)
+end
+
 M.modal
     :bind("", "tab", "Send Window to Next Display", function() M.moveToScreen("next") end)
+    :bind("", "=", "Send Window to Next Display", function() M.moveToScreen("next") end)
+    :bind("", "-", "Send Window to Previous Display", function() M.moveToScreen("previous") end)
     :bind("", "'", "Move Window to Next Desktop", function() MoveFocusedWindowToSpace("next", true) end)
     :bind("", ";", "Move Window to Prev Desktop", function() MoveFocusedWindowToSpace("prev", true) end)
 M.modal
     :bind("", "return", "Fullscreen", M.toggleFullScreen)
     :bind("", "space", "Fullscreen (local)", resize({ x = 0, y = 0, w = 1, h = 1 }))
-    :bind("shift", "F", "Fullscreen (local)", resize({ x = 0, y = 0, w = 1, h = 1 }))
-    :bind("", "F", "Center Larger", resize({ x = 0.1, y = 0, w = 0.8, h = 1 }))
+    :bind("", "G", "Center Larger", resize({ x = 0.1, y = 0, w = 0.8, h = 1 }))
+    :bind("", "F", "Fullscreen (local)", resize({ x = 0, y = 0, w = 1, h = 1 }))
 local scale = 1 / 60
 local stepResize = function(u, d, l, r) return function() M.resize(u, d, l, r) end end
 M.modal
@@ -367,23 +399,23 @@ M.modal
     :bind("alt", "S", "cheatsheet_ignore", resize({ x = 0, y = 0.5, w = 1, h = 0.5 }, true))
     :bind("alt", "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.5 }, true))
 M.modal
-    :bind("shift", "A", "2/3 Left", resize({ x = 0, y = 0, w = 0.66, h = 1 }))
-    :bind("shift", "D", "cheatsheet_ignore", resize({ x = 0.34, y = 0, w = 0.66, h = 1 }))
-    :bind("shift", "S", "cheatsheet_ignore", resize({ x = 0, y = 0.34, w = 1, h = 0.66 }))
-    :bind("shift", "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.66 }))
-    :bind({ "shift", "alt" }, "A", "2/3 Left Fill", resize({ x = 0, y = 0, w = 0.66, h = 1 }, true))
-    :bind({ "shift", "alt" }, "D", "cheatsheet_ignore", resize({ x = 0.34, y = 0, w = 0.66, h = 1 }, true))
-    :bind({ "shift", "alt" }, "S", "cheatsheet_ignore", resize({ x = 0, y = 0.34, w = 1, h = 0.66 }, true))
-    :bind({ "shift", "alt" }, "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.66 }, true))
+    :bind("cmd", "A", "2/3 Left", resize({ x = 0, y = 0, w = 0.66, h = 1 }))
+    :bind("cmd", "D", "cheatsheet_ignore", resize({ x = 0.34, y = 0, w = 0.66, h = 1 }))
+    :bind("cmd", "S", "cheatsheet_ignore", resize({ x = 0, y = 0.34, w = 1, h = 0.66 }))
+    :bind("cmd", "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.66 }))
+    :bind({ "cmd", "alt" }, "A", "2/3 Left Fill", resize({ x = 0, y = 0, w = 0.66, h = 1 }, true))
+    :bind({ "cmd", "alt" }, "D", "cheatsheet_ignore", resize({ x = 0.34, y = 0, w = 0.66, h = 1 }, true))
+    :bind({ "cmd", "alt" }, "S", "cheatsheet_ignore", resize({ x = 0, y = 0.34, w = 1, h = 0.66 }, true))
+    :bind({ "cmd", "alt" }, "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.66 }, true))
 M.modal
-    :bind("cmd", "A", "1/3 Left", resize({ x = 0, y = 0, w = 0.34, h = 1 }))
-    :bind("cmd", "D", "cheatsheet_ignore", resize({ x = 0.66, y = 0, w = 0.34, h = 1 }))
-    :bind("cmd", "S", "cheatsheet_ignore", resize({ x = 0, y = 0.66, w = 1, h = 0.34 }))
-    :bind("cmd", "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.34 }))
-    :bind({ "cmd", "alt" }, "A", "1/3 Left Fill", resize({ x = 0, y = 0, w = 0.34, h = 1 }, true))
-    :bind({ "cmd", "alt" }, "D", "cheatsheet_ignore", resize({ x = 0.66, y = 0, w = 0.34, h = 1 }, true))
-    :bind({ "cmd", "alt" }, "S", "cheatsheet_ignore", resize({ x = 0, y = 0.66, w = 1, h = 0.34 }, true))
-    :bind({ "cmd", "alt" }, "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.34 }, true))
+    :bind("shift", "A", "1/3 Left", resize({ x = 0, y = 0, w = 0.34, h = 1 }))
+    :bind("shift", "D", "cheatsheet_ignore", resize({ x = 0.66, y = 0, w = 0.34, h = 1 }))
+    :bind("shift", "S", "cheatsheet_ignore", resize({ x = 0, y = 0.66, w = 1, h = 0.34 }))
+    :bind("shift", "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.34 }))
+    :bind({ "shift", "alt" }, "A", "1/3 Left Fill", resize({ x = 0, y = 0, w = 0.34, h = 1 }, true))
+    :bind({ "shift", "alt" }, "D", "cheatsheet_ignore", resize({ x = 0.66, y = 0, w = 0.34, h = 1 }, true))
+    :bind({ "shift", "alt" }, "S", "cheatsheet_ignore", resize({ x = 0, y = 0.66, w = 1, h = 0.34 }, true))
+    :bind({ "shift", "alt" }, "W", "cheatsheet_ignore", resize({ x = 0, y = 0, w = 1, h = 0.34 }, true))
 
 local appName = {
     ["Code"] = "Visual Studio Code",
