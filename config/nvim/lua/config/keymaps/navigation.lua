@@ -56,17 +56,15 @@ map("n", "<C-w>n", "<CMD>vnew<CR>", "New Window")
 map("n", "<C-w>N", "<CMD>new<CR>", "New Window Vertically")
 -- map("n", "<C-w>w", "<CMD>wincmd p<CR>", "Alternative Window")
 -- map("n", "<C-w><C-w>", "<CMD>wincmd p<CR>", nil, { remap = true })
-map({ "n", "t" }, "<M-tab>", function()
-  local current_win_id = vim.api.nvim_get_current_win()
-  local alternative_win_id = vim.api.nvim_eval('win_getid(winnr("#"))')
-  if current_win_id == alternative_win_id then
-    vim.cmd("wincmd w")
-  else
-    vim.cmd("wincmd p")
-  end
-end, "Alternative Window", { remap = true })
--- map("n", "<C-w>V", "<cmd>vs #<cr>", "Split Alternative Buffer")
--- map("n", "<C-w>S", "<cmd>sp #<cr>", "Split Alternative Buffer (Vertical)")
+-- map({ "n", "t" }, "<M-tab>", function()
+--   local current_win_id = vim.api.nvim_get_current_win()
+--   local alternative_win_id = vim.api.nvim_eval('win_getid(winnr("#"))')
+--   if current_win_id == alternative_win_id then
+--     vim.cmd("wincmd w")
+--   else
+--     vim.cmd("wincmd p")
+--   end
+-- end, "Alternative Window", { remap = true })
 
 -- https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/config/keymaps.lua#L132
 -- del("n", "<leader>qq")
