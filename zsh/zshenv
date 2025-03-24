@@ -27,9 +27,15 @@ export TMUX_CONF=$HOME/.tmux.conf
 export WORKSPACE=$HOME/workspace
 export BLOG_HOME=$WORKSPACE/blog
 
-# https://github.com/ohmyzsh/ohmyzsh/issues/8743
-# export WORDCHARS=$'!"#$%&\'()*+,-.:;<=>?@[\\]^_`{|}~'
-# export WORDCHARS=$'*?[]~&!%^(){}<>[]-_.\\'
+# https://github.com/ohmyzsh/ohmyzsh/issues/8743#issuecomment-704794162
+unix-word-rubout() {
+  # The chars in WORDCHARS are treated as part of a word.
+  local WORDCHARS=$'$#%!,.-_~'
+  zle backward-kill-word
+}
+
+zle -N unix-word-rubout
+bindkey '^W' unix-word-rubout
 
 # editor
 # if [[ -n $(command -v nvim) ]]; then
@@ -112,6 +118,7 @@ _set_path() {
         done
     fi
     PATH="$HOME/.cargo/bin:$PATH"  # bin from third party
+    PATH="$HOME/.console-ninja/.bin:$PATH"
     PATH="$DOTFILES_BIN_HOME:$DOTFILES_BIN_HOME/git:$HOME/.local/bin:$PATH"
     export PATH
 }
