@@ -17,6 +17,7 @@ set ignorecase smartcase " capital insensitive when typing lowercase, but not wh
 " turn off bell
 set belloff=all
 set novisualbell noerrorbells
+set whichwrap=<,>,[,],b,s,h,l
 
 """ key map -------------------------
 nmap q :q<cr>
@@ -24,10 +25,11 @@ nmap q :q<cr>
 " - :actionlist [pattern]
 " Close group
 " nmap <C-q> <Action>(CloseAllEditors)
-nmap <tab> <Action>(GotoFile)
+" nmap <tab> <Action>(GotoFile)
 nmap <leader>u <Action>(Vcs.RollbackChangedLines)
 nmap ) <Action>(VcsShowNextChangeMarker)
 nmap ( <Action>(VcsShowPrevChangeMarker)
+nmap <cr> <Action>(VcsShowCurrentChangeMarker)
 
 " move to wrapped line
 nnoremap j gj
@@ -55,6 +57,7 @@ nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
 
 " windows
+" Note: Mappings to <Action> don't work with noremap
 nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
@@ -63,7 +66,13 @@ nmap <C-S-h> <Action>(StretchSplitToLeft)
 nmap <C-S-j> <Action>(StretchSplitToBotto)
 nmap <C-S-k> <Action>(StretchSplitToTop)
 nmap <C-S-l> <Action>(StretchSplitToRight)
-nmap <C-w>q <Action>(CloseAllUnpinnedEditors)
+nmap <C-w>q <Action>(CloseEditorsGroup)
+nmap <C-w>o <Action>(CloseAllEditorsButActive)
+nmap <C-w>p <Action>(PinActiveEditorTab)
+nmap <C-w>u <Action>(Unsplit)
+nmap <C-w>U <Action>(UnsplitAll)
+nmap <C-w>x <Action>(ChangeSplitOrientation)
+nmap <C-w>z <Action>(MaximizeEditorInSplit)
 nmap K <Action>(ShowHoverInfo)
 
 """ settings in settings
