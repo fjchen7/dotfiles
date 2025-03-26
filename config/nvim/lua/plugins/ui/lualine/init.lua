@@ -242,6 +242,19 @@ M.opts = function()
       -- { LazyVim.lualine.pretty_path() },
     },
     lualine_c = {
+      {
+        "filetype",
+        icon_only = true,
+        separator = "",
+        padding = { left = 1, right = 0 },
+      },
+      {
+        "filename",
+        newfile_status = true,
+        file_status = false,
+        path = 1,
+        padding = { left = 0, right = 1 },
+      },
       -- {
       --   "aerial",
       --   sep_icon = "",
@@ -270,7 +283,7 @@ M.opts = function()
           end
         end,
         separator = "",
-        padding = { left = 1, right = 0 },
+        padding = { left = 0, right = 1 },
       },
       {
         "diagnostics",
@@ -281,7 +294,7 @@ M.opts = function()
           hint = icons.diagnostics.Hint,
         },
         separator = "",
-        padding = { left = 1, right = 0 },
+        padding = { left = 0, right = 1 },
       },
     },
     lualine_x = {

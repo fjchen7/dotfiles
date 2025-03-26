@@ -25,7 +25,8 @@ Snacks.toggle({
   set = function(enabled)
     vim.cmd("Corn toggle")
   end,
-}):map("<leader>uD")
+}):map("<leader>ud")
+Snacks.toggle.diagnostics():map("<leader>uD")
 
 Snacks.toggle({
   name = "Modified",
