@@ -90,7 +90,7 @@
     path = ~/.dotfiles/git/gitconfig.local
     path = ~/.dotfiles/git/delta.gitconfig
 [commit]
-    template = ~/.dotfiles/git/gitmessage
+    # template = ~/.dotfiles/git/gitmessage.example
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#commit-verbose-true
     verbose = true
 [rebase]
