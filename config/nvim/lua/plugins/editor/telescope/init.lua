@@ -2,6 +2,25 @@ local M = {
   "nvim-telescope/telescope.nvim",
 }
 
+local function get_file_root_path()
+  local path = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+  return path:gsub(vim.env.HOME, "~")
+end
+
+local function get_pwd_path()
+  local path = vim.fn.getcwd()
+  return path:gsub(vim.env.HOME, "~")
+end
+
+local function shorten_path(path)
+  path = path:gsub(vim.env.HOME, "~")
+  local start = math.max(1, #path - 19)
+  if start > 1 then
+    path = "..." .. path:sub(start)
+  end
+  return path
+end
+
 M.keys = function()
   -- stylua: ignore
   return {
@@ -15,33 +34,28 @@ M.keys = function()
     --   desc = "Find Files",
     -- },
     { "<Tab>", "<leader>ff", remap = true },
-    { "<leader>ff", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
-    { "<leader>fF", LazyVim.pick("files", { root = false, title = "Files (cwd)" }), desc = "Find Files (cwd)" },
+    { "<leader>ff", function()
+      local path = get_pwd_path()
+      local short_path = shorten_path(path)
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#files
+      LazyVim.pick("files", {
+        cwd = path,
+        title = "Files in " .. short_path,
+      })()
+    end, desc = "Find Files (CWD)" },
+    { "<leader>fF", function()
+      local path = get_file_root_path()
+      local short_path = shorten_path(path)
+      LazyVim.pick("files", {
+        cwd = path,
+        title = "Files in " .. short_path .. " (File Root)"
+      })()
+    end,desc = "Find Files (File Root)" },
     -- { "<leader>fF", LazyVim.pick("files", { root = false, title = "Files (cwd)" }), desc = "Find Files (File Root)" },
     -- { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-    {
-      "<leader>f<C-f>",
-      function()
-        local path = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
-        -- local home = os.getenv("HOME")
-        -- local path = string.gsub(path, "^" .. home, "~")
-        -- local start = math.max(1, #path - 19)
-        -- local trim_path = string.sub(path, start)
-        LazyVim.pick("files", {
-          cwd = path,
-          -- title = "Find Files ( ..." .. trim_path .. "/)",
-          title = "Find Files (File Root)",
-          hidden = true,
-          ignored = false,
-          follow = true,
-        })()
-      end,
-      desc = "Find Files (File Root)",
-    },
     { "<leader>fg", function()
       Snacks.picker.git_files( { untracked = true } )
     end, desc = "Find Files (Git)" },
-
     {
       "<leader>fr",
       function() Snacks.picker.recent({ title = "Recent Files" }) end,
@@ -50,12 +64,43 @@ M.keys = function()
     {
       "<leader>fR",
       function() Snacks.picker.recent({ filter = { cwd = true }, title = "Recent (cwd)" }) end,
-      desc = "Recent Files (cwd)",
+      desc = "Recent Files (CWD)",
     },
     { "<leader>pp", function() Snacks.picker.projects() end, desc = "Projects" },
 
-    { "<C-f>", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-    { "<C-f>", LazyVim.pick("grep_word"), desc = "Grep Selection (Root Dir)", mode = { "x" } },
+    { "<C-f>", function()
+      local path = get_pwd_path()
+      local short_path = shorten_path(path)
+      LazyVim.pick("live_grep", {
+        dirs = { path },
+        title = "Grep in " .. short_path
+      })()
+    end, desc = "Grep (Root)" },
+    { "<C-f>", function()
+      local path = get_pwd_path()
+      local short_path = shorten_path(path)
+      LazyVim.pick("grep_word", {
+        dirs = { path },
+        title = "Grep in " .. short_path
+      })()
+    end, desc = "Grep Selection (Root)", mode = { "x" } },
+    { "<C-M-f>", function()
+      local path = get_file_root_path()
+      local short_path = shorten_path(path)
+      LazyVim.pick("live_grep", {
+        dirs = { path },
+        title = "Grep in " .. short_path .. " (File Root)"
+      })()
+    end, desc = "Grep (File Root)" },
+    { "<C-M-f>", function()
+      local path = get_file_root_path()
+      local short_path = shorten_path(path)
+      LazyVim.pick("grep_word", {
+        dirs = { path },
+        title = "Grep in " .. short_path .. " (File Root)"
+      })()
+    end, desc = "Grep Selection (File Root)", mode = { "x" } },
+
     { "<leader>nZ", function() Snacks.picker.lazy() end, desc = "Search LazyVim Plugin" },
     { "<leader>nC", LazyVim.pick.config_files(), desc = "Find Config File" },
 

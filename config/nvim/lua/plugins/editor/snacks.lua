@@ -15,34 +15,21 @@ local open_config = function()
   vim.cmd("PossessionLoad config")
 end
 
-local find_files = function()
-  -- require("telescope").extensions.smart_open.smart_open({
-  --   prompt_title = "Smart Open",
-  --   cwd_only = true,
-  --   filename_first = true,
-  -- })
-  LazyVim.pick("files")()
-end
-
 M.opts = {
   dashboard = {
     preset = {
       -- stylua: ignore
       keys = {
-        -- { action = "Telescope find_files",      desc = " Find File",       icon = " ", key = "f" },
-        -- { action = frecency,                    desc = " Find File",       icon = " ", key = "f" },
-        -- { action = "Telescope oldfiles",        desc = " Old File",        icon = " ", key = "o" },
-        -- { action = "Telescope live_grep",       desc = " Find text",       icon = " ", key = "g" },
-        -- { icon = " ", desc = "Search Text",  key = "s", action = ":Telescope live_grep_args" },
-        { icon = " ", desc = "Session",      key = "p", action = load_session },
-        { icon = " ", desc = "Find File",    key = "f", action = find_files },
-        { icon = " ", desc = "New File",     key = "n", action = ":ene | startinsert" },
-        { icon = " ", desc = "Search Text",  key = "s", action = LazyVim.pick("live_grep") },
-        { icon = " ", desc = "Recent Files", key = "r", action = function() Snacks.picker.recent({ title = "Recent Files" }) end, },
-        { icon = " ", desc = "Git Project",  key = "g", action = function() Snacks.picker.projects() end },
-        { icon = " ", desc = "Config",       key = "c", action = open_config },
-        { icon = "󰒲 ", desc = "Lazy",         key = "z", action = ":Lazy" },
-        { icon = " ", desc = "Quit",         key = "q", action = ":qa" },
+        { icon = " ", desc = "Session",         key = "p", action = load_session },
+        { icon = " ", desc = "Project",         key = "P", action = function() Snacks.picker.projects() end },
+        { icon = " ", desc = "File",            key = "f", action = "<leader>ff" },
+        { icon = " ", desc = "File (Git)",      key = "g", action = "<leader>fg" },
+        { icon = " ", desc = "Files (Recent)",  key = "r", action = "<leader>fr" },
+        { icon = " ", desc = "Search Text",     key = "s", action = "<Tab>" },
+        { icon = " ", desc = "New File",        key = "n", action = ":ene | startinsert" },
+        { icon = " ", desc = "Config",          key = "c", action = open_config },
+        { icon = "󰒲 ", desc = "Lazy",            key = "z", action = ":Lazy" },
+        { icon = " ", desc = "Quit",            key = "q", action = ":qa" },
       },
     },
   },
