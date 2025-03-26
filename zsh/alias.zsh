@@ -87,11 +87,24 @@ git_current_branch () {
     fi
     echo ${ref#refs/heads/}
 }
+get_file () {
+fd --color=always --hidden --follow --exclude .git --maxdepth=10 . | fzf --preview '([[ -d {} ]] && echo "[DIRECTORY]" && tree -CNFl -L 5 {} | head -200) || (echo "[FILE]" && bat --style=plain --color=always {})' --preview-window right,75%,wrap,hidden | __join_lines
+}
+get_commit () {
+    COMMAND='git log --color --pretty=format:"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"'
+    # -p: generat path (changed content)
+    PREVIEW_DEFAULT='git show --stat --color {1}'
+    PREVIEW_FULL="$PREVIEW_DEFAULT -p | $GIT_WIDGET_PAGER"
+    eval $COMMAND |
+    fzf --no-cycle --preview "$PREVIEW_FULL" \
+        --height=80% --preview-window down,65%,wrap | awk '{print $1}'
+}
+alias g='git'
 alias gs='git status'
 alias gss='git status -sb'
 alias gsh='git stash'
-alias gshp='git stash push -m'
-alias gshP='git stash pop'
+alias gshp='git stash pop'
+alias gshm='git stash push -m'
 alias ga='git add'
 alias gaa='git add -A'
 alias gab="git absorb"
@@ -100,23 +113,24 @@ alias gabr="git absorb --and-rebase"
 # alias gabr='_f(){ git add $@ && git absorb --and-rebase }; _f'
 alias gc='git commit'
 alias gcm='git commit -m'
-alias gcf='git commit --fixup'
+alias gcf='print -z "git commit --fixup $(get_commit)"'  # fixup a commit
 alias gc!='git commit --amend -v'
 alias gc!!='git commit --amend -v -C HEAD'
-alias 'gc-'='git commit -t <(sed "1 i\### Last commit\n$(git log --format=%B -n 1 HEAD)\n" ~/.dotfiles/git/gitmessage) -v'
-alias gC='git clone'
+# alias 'gc-'='git commit -t <(sed "1 i\### Last commit\n$(git log --format=%B -n 1 HEAD)\n" ~/.dotfiles/git/gitmessage) -v'
+alias gn='git clone'
 alias gk='git checkout'
 alias gk-='git checkout -'
 # checkout branch
 alias gkb='git checkout $(git branch --sort=-committerdate --color=always -a | fzf --query "!remote " --preview "git lg {-1} -20" --height=70% --preview-window down,70%,wrap,border --header="^d delete branch" --bind "ctrl-d:execute(git branch -d {-1} > /dev/null)+reload(git branch --sort=-committerdate --color=always -a)" | awk "{print $NF}" |  sed -e "s/remotes\///" -e "s/*//")'
+alias goo='git open'
 alias gp='git push'
 # push and create PR
 alias gpr='git push && gh pr create --title "<pr_title>" --web'
 alias gpo='git push && git open'
 alias gp!='git push -f'
 alias gpo!='git push -f && git open'
-alias gpb='git push --set-upstream origin $(git_current_branch)'
-alias gP='git pull'
+# alias gpb='git push --set-upstream origin $(git_current_branch)'
+alias gpl='git pull'
 alias gb='git branch'
 alias gbv='git branch -v'
 alias gbd='git branch -d'
@@ -127,8 +141,9 @@ alias glg='git lg'
 alias glgs='git lg --stat'  # show changed files
 alias glgv='git lgv'
 alias glgvv='git lgvv'
-alias go='git restore'
-alias gos='git restore --staged'
+alias gro='git restore'
+alias gros='git restore --staged'
+alias gt='git reset'
 alias ge='git remote'
 alias gev='git remote -v'
 alias gr='git rebase'
@@ -136,9 +151,9 @@ alias gri='git rebase -i --autosquash --autostash'
 alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias gac='_f(){ [[ "$#" == 0 ]] && echo "Error: nothing to add and commit" && return 1; git add $@ && git commit -t <(sed "1 i\### Last commit\n$(git log --format=%B -n 1 HEAD)\n" ~/.dotfiles/git/gitmessage) }; _f'
-alias gac.='gac .'
+alias gac.='gac .'  # add and commit all
 alias gac!='_f(){ [[ "$#" == 0 ]] && echo "Error: nothing to add and commit" && return 1; git add $@ && gc! }; _f'
-alias g='git'
+
 # cargo
 alias c='cargo'
 alias cb='cargo build'
@@ -147,12 +162,12 @@ alias cre='cargo run --example'
 alias cc='cargo clean'
 alias ck='cargo check'
 alias cu='cargo update'
-alias cug='cargo upgrade'
+alias cupg='cargo upgrade'
 # alias ct='cargo nextest'
-alias ctl='cargo nextest list'
 alias ct='cargo nextest run'
 alias ctn='cargo nextest run --no-capture'
 alias cta='cargo nextest run --run-ignored all'
+alias ctl='cargo nextest list'
 
 # show information
 alias @shell-pid='echo $$'
@@ -176,8 +191,8 @@ alias rr='func() { if [ $# -eq 0 ]; then open -na "RustRover.app" --args .; else
 alias o="open"
 alias cls='clear'
 alias h="fc -l"
-alias q="exit"
-alias n='nnn -T d -io -P v'
+alias e="exit"
+# alias n='nnn -T d -io -P v'
 alias du='_f(){ du -sh $@ | sort -h }; _f'
 alias 'du.'='_f(){ du -sh * | sort -h }; _f'
 alias trn='tr -d "\n"'
