@@ -45,9 +45,6 @@ M.opts = {
         },
       },
       handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-          border = "single",
-        }),
         -- Call vim.lsp.definition under `local foo = function() end` shows
         -- two results in the same line. Seems like a lua_ls bug. Fix it.
         -- https://www.reddit.com/r/neovim/comments/19cvgtp/comment/kj1yevl

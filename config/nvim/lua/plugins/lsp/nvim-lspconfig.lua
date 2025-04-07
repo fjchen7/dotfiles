@@ -162,7 +162,12 @@ M.init = function()
             vim.keymap.set("n", k, "<CR>" .. k, { noremap = false, buffer = buf })
           end
         else
-          vim.lsp.buf.hover()
+          vim.lsp.buf.hover({
+            -- :h api-win_config*
+            border = "rounded",
+            width = 80,
+            title = "Hover",
+          })
         end
       end,
       desc = "Hover / Peek Fold",
@@ -219,15 +224,5 @@ M.opts = {
     enabled = false,
   },
 }
-
-LazyVim.lsp.on_attach(function(client, buffer)
-  if client.supports_method("textDocument/hover") then
-    client.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = "single",
-      width = 80,
-      title = "Hover",
-    })
-  end
-end)
 
 return M
