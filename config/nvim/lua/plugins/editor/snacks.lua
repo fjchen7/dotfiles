@@ -22,8 +22,8 @@ M.opts = {
       keys = {
         { icon = " ", desc = "Session",         key = "p", action = load_session },
         { icon = " ", desc = "Project",         key = "P", action = function() Snacks.picker.projects() end },
-        { icon = " ", desc = "File",            key = "f", action = "<leader>ff" },
-        { icon = " ", desc = "File (Git)",      key = "g", action = "<leader>fg" },
+        { icon = " ", desc = "Files",           key = "f", action = "<leader>ff" },
+        { icon = " ", desc = "Files (Git)",     key = "g", action = "<leader>fg" },
         { icon = " ", desc = "Files (Recent)",  key = "r", action = "<leader>fr" },
         { icon = " ", desc = "Search Text",     key = "s", action = "<Tab>" },
         { icon = " ", desc = "New File",        key = "n", action = ":ene | startinsert" },
@@ -50,6 +50,8 @@ M.opts = {
         },
       },
     },
+    -- https://www.reddit.com/r/neovim/comments/1jv5m7n/comment/mm9rlu6
+    exclude = { "node_modules", "/dist", "target" },
   },
   zen = {
     enabled = true,
