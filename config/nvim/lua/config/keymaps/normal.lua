@@ -29,16 +29,7 @@ del("n", "<leader>qq")
 -- map("n", "<C-q>", "<CMD>silent! bufdo up<CR><CMD>qa<cr>")
 map("n", "<C-q>", "<CMD>qa<cr>")
 map("n", "U", "<C-r>", "Redo")
-
-map("i", "<C-s>", "<cmd>w<cr>", "Save File")
-
--- Scroll
--- map("n", "<Up>", "<C-y>")
--- map("n", "<Down>", "<C-e>")
--- map("n", "<C-d>", "<C-d>zz")
--- map("n", "<C-u>", "<C-u>zz")
--- map("n", "}", "}zz")
--- map("n", "{", "{zz")
+map("n", "Z", "zz")
 
 -- https://www.reddit.com/r/neovim/comments/1abd2cq/comment/kjn1kww
 map("x", ".", ":norm .<CR>", "Repeat in Selection")
@@ -53,28 +44,28 @@ map("n", "<C-[>", [[<cmd>silent! exec "normal! \<C-t>"<cr>]], "Jump Back")
 
 -- map("n", "<C-LeftMouse>", "<LeftMouse><C-]>", "Jump to Definition", { remap = true })
 -- map("n", "<C-RightMouse>", [[<cmd>silent! exec "normal! \<C-t>"<cr>]], "Jump Back")
-local definition_or_tag = function()
-  local can_jump_definition = false
-  local bufnr = vim.api.nvim_get_current_buf()
-  local attached_clients = vim.lsp.get_clients({ bufnr = bufnr })
-  for _, client in ipairs(attached_clients) do
-    if client.name ~= "copilot" then
-      if client.capabilities.textDocument.definition then
-        -- vim.notify(client.name, vim.log.levels.INFO, { title = "Notification" })
-        can_jump_definition = true
-        break
-      end
-    end
-  end
-
-  if can_jump_definition then
-    return "<LeftMouse>:lua vim.lsp.buf.definition()<CR>"
-  else
-    return "<LeftMouse><C-]>"
-  end
-end
-map("n", "<C-LeftMouse>", definition_or_tag, "Jump to Definition", { remap = true, expr = true })
-map("n", "<C-RightMouse>", "<C-o>", "Older History")
+-- local definition_or_tag = function()
+--   local can_jump_definition = false
+--   local bufnr = vim.api.nvim_get_current_buf()
+--   local attached_clients = vim.lsp.get_clients({ bufnr = bufnr })
+--   for _, client in ipairs(attached_clients) do
+--     if client.name ~= "copilot" then
+--       if client.capabilities.textDocument.definition then
+--         -- vim.notify(client.name, vim.log.levels.INFO, { title = "Notification" })
+--         can_jump_definition = true
+--         break
+--       end
+--     end
+--   end
+--
+--   if can_jump_definition then
+--     return "<LeftMouse>:lua vim.lsp.buf.definition()<CR>"
+--   else
+--     return "<LeftMouse><C-]>"
+--   end
+-- end
+-- map("n", "<C-LeftMouse>", definition_or_tag, "Jump to Definition", { remap = true, expr = true })
+-- map("n", "<C-RightMouse>", "<C-o>", "Older History")
 
 -- map("n", "<C-ScrollWheelDown>", "<C-o>", "Older History")
 -- map("n", "<C-ScrollWheelUp>", "<C-i>", "Newer History")
