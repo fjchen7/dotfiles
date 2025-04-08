@@ -11,6 +11,14 @@ M.init = function()
       require("goto-preview")[method](opts)
     end
   end
+
+  -- Remove lsp keymaps introduced by neovim 0.11.0
+  -- https://gpanders.com/blog/whats-new-in-neovim-0-11/#defaults
+  for _, key in pairs({ "grn", "grr", "gri" }) do
+    vim.keymap.del("n", key)
+  end
+  vim.keymap.del({ "x", "n" }, "gra")
+
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   -- stylua: ignore
   local keymaps = {
@@ -163,7 +171,7 @@ M.init = function()
           end
         else
           vim.lsp.buf.hover({
-            -- :h api-win_config*
+            -- :h winborder
             border = "rounded",
             width = 80,
             title = "Hover",

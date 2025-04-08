@@ -48,24 +48,25 @@ M.keys = function()
       local short_path = shorten_path(path)
       LazyVim.pick("files", {
         cwd = path,
-        title = "Files in " .. short_path .. " (File Root)"
+        title = "Files in " .. short_path .. " (File Root)",
       })()
     end,desc = "Find Files (File Root)" },
+    { "<leader>f<c-f>", function()
+      local path = get_pwd_path()
+      local short_path = shorten_path(path)
+      LazyVim.pick("files", {
+        cwd = path,
+        title = "Files (include ignored/hidden) in " .. short_path,
+        ignored = true,
+        hidden = true,
+        exclude = {}
+      })()
+    end, desc = "Find Files (CWD) with ignored/hidden ..  " },
     -- { "<leader>fF", LazyVim.pick("files", { root = false, title = "Files (cwd)" }), desc = "Find Files (File Root)" },
     -- { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-    { "<leader>fg", function()
-      Snacks.picker.git_files( { untracked = true } )
-    end, desc = "Find Files (Git)" },
-    {
-      "<leader>fr",
-      function() Snacks.picker.recent({ title = "Recent Files" }) end,
-      desc = "Recent Files",
-    },
-    {
-      "<leader>fR",
-      function() Snacks.picker.recent({ filter = { cwd = true }, title = "Recent (cwd)" }) end,
-      desc = "Recent Files (CWD)",
-    },
+    { "<leader>fg", function() Snacks.picker.git_files( { untracked = true } ) end, desc = "Find Files (Git)" },
+    { "<leader>fr", function() Snacks.picker.recent({ title = "Recent Files" }) end, desc = "Recent Files", },
+    { "<leader>fR", function() Snacks.picker.recent({ filter = { cwd = true }, title = "Recent (cwd)" }) end, desc = "Recent Files (CWD)", },
     { "<leader>pp", function() Snacks.picker.projects() end, desc = "Projects" },
 
     { "<C-f>", function()

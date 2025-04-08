@@ -26,6 +26,10 @@ opt.backup = false -- Don't backup file while overwriting file
 opt.conceallevel = 3
 opt.incsearch = true
 
+-- default border for floating windows
+-- :h winborder
+opt.winborder = "rounded"
+
 -- stack:  -- Make jumplist behave like web browser back / forward
 -- https://www.reddit.com/r/neovim/comments/11dmaed/keep_buffer_view_when_you_return_to_file/
 -- https://www.reddit.com/r/neovim/comments/16nead7/comment/k1e1nj5/

@@ -73,6 +73,8 @@ local M = {
 
       default_settings = {
         -- https://github.com/rust-lang/rust-analyzer/blob/master/crates/rust-analyzer/src/config.rs#L886
+        -- Check if settings work:
+        -- :lua = vim.lsp.get_clients({ name = "rust-analyzer" })[1].config.settings["rust-analyzer"].procMacro
         ["rust-analyzer"] = {
           -- NOTE: experimental options: buildScripts.overrideCommand, check.allTargets, check.invocationStrategy
           cargo = {
