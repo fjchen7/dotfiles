@@ -66,10 +66,10 @@ source $DOTFILES_ZSH_HOME/complete.fzf.zsh
 # autoload loads script as function by searching $fpath.
 # ref: https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
 # initialize autocomplete
-# autoload -U compinit
+autoload -U compinit
 # -u avoid security check
 # -d <dumpfile> specify dump file location
-# compinit -u
+compinit -u
 # _gnu_generic can create completions for gnu commands that list option help (when --help is used) in a standardized way.
 # compdef _gnu_generic fzf curl
 source $ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.zsh
