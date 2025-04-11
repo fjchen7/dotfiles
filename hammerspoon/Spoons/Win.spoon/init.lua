@@ -261,7 +261,11 @@ end
 function M.resizeWindow(size1, fill)
     M.deactivate()
     local w1 = hs.window.focusedWindow()
-    w1:setFullScreen(false)
+    -- w1:setFullScreen(false)
+    if w1:isFullScreen() then
+        hs.alert.show("Current window is full screen")
+        return
+    end
     if not w1 then
         hs.alert.show("No focused window found!")
         return
