@@ -4,19 +4,19 @@ return {
   enabled = true,
   keys = {
     {
-      "<C-r>y",
+      "<C-r>r",
       function()
         require("yazi").toggle()
       end,
-      desc = "Open Yazi",
+      desc = "Yazi Open",
     },
     {
       -- Open in the current working directory
-      "<C-r>Y",
+      "<C-r>f",
       function()
         require("yazi").yazi()
       end,
-      desc = "Open Yazi and Locate",
+      desc = "Yazi Open and Locate",
     },
   },
   ---@type YaziConfig

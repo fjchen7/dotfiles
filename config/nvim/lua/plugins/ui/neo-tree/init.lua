@@ -51,7 +51,7 @@ Util.is_neo_tree_shown = is_neo_tree_shown
 M.keys = function()
   return {
     {
-      "<C-r>r",
+      "<C-r>n",
       function()
         -- if is_neo_tree_shown() then
         if vim.bo.ft == "neo-tree" then
@@ -64,9 +64,9 @@ M.keys = function()
         --   -- require("neo-tree.command").execute({ toggle = true, action = "show", dir = vim.loop.cwd() })
         -- end
       end,
-      desc = "Open NeoTree or Focus",
+      desc = "NeoTree Open or Focus",
     },
-    { "<C-r>q", "<cmd>Neotree close<cr>", desc = "Close NeoTree" },
+    { "<C-r>q", "<cmd>Neotree close<cr>", desc = "NeoTree Close" },
     -- {
     --   "<leader>fE",
     --   function()
@@ -97,15 +97,15 @@ M.keys = function()
     {
       "<C-r>g",
       "<cmd>Neotree position=bottom git_status<cr>",
-      desc = "Git NeoTree",
+      desc = "NeoTree Git",
     },
     {
       "<C-r>b",
       "<cmd>Neotree position=right buffers<cr>",
-      desc = "Buffer NeoTree",
+      desc = "NeoTree Buffer",
     },
     {
-      "<C-r>f",
+      "<C-r>m",
       function()
         if is_neo_tree_shown() then
           if vim.bo.ft == "neo-tree" then
@@ -119,7 +119,7 @@ M.keys = function()
           -- vim.cmd("Neotree reveal action=show")
         end
       end,
-      desc = "Reveal File in NeoTree",
+      desc = "Neotree Reveal File",
     },
   }
 end
