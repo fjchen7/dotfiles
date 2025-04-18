@@ -26,6 +26,8 @@ config/raycast
 config/lazygit/state.yml
 config/jgit
 config/yazi/plugins
+config/shell_gpt
+config/rest-client
 
 config/nvim/.luarc.json
 config/nvim/lazy-lock.json

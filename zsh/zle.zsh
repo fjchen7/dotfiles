@@ -296,7 +296,7 @@ bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
 bindkey "^[h" backward-delete-char
-bindkey -s "^[l" "ls -al^J"  # Alt+l: list all files
+# bindkey -s "^[l" "ls -al^J"  # Alt+l: list all files
 bindkey -s "^[p" "cd .. && pwd^J"  # Alt+p: cd parent directory
 
 _j() {
@@ -307,10 +307,27 @@ _j() {
 zle -N _j
 bindkey '^[j' _j # Alt+j: jump to directory
 
-_exit() {
-    LBUFFER="exit"
-    zle accept-line
+# _exit() {
+#     LBUFFER="exit"
+#     zle accept-line
+# }
+# zle -N _exit
+# bindkey "^[q" _exit  # Alt+q: exit shell
+
+# https://github.com/TheR1D/shell_gpt#shell-integration
+# Shell-GPT integration ZSH v0.2
+_sgpt_zsh() {
+if [[ -n "$BUFFER" ]]; then
+    _sgpt_prev_cmd=$BUFFER
+    BUFFER+="⌛"
+    zle -I && zle redisplay
+    BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd" --no-interaction)
+    zle end-of-line
+fi
 }
-zle -N _exit
-bindkey "^[q" _exit  # Alt+q: exit shell
+zle -N _sgpt_zsh
+bindkey "^[l" _sgpt_zsh
+# Shell-GPT integration ZSH v0.2
+alias sgpt="all_proxy= sgpt"
+
 

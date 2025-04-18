@@ -99,6 +99,7 @@ get_commit () {
     fzf --no-cycle --preview "$PREVIEW_FULL" \
         --height=80% --preview-window down,65%,wrap | awk '{print $1}'
 }
+
 alias g='git'
 alias gs='git status'
 alias gss='git status -sb'
