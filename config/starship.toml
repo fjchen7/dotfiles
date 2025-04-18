@@ -1,7 +1,19 @@
 # https://starship.rs/config
-add_newline = false
+add_newline = true
+continuation_prompt = "[➜](bold green) "
+
 # continuation_prompt = "[▶▶ ](bold green)"
-# format = '$time$all$character'
+# 👤⭐️🌟⚡️
+format = """
+⭐️ $all\
+$fill \
+$jobs\
+$cmd_duration\
+$time\
+$memory_usage\
+$line_break\
+$character
+"""
 
 [character]
 success_symbol = "[➜](bold green)"
@@ -9,14 +21,25 @@ success_symbol = "[➜](bold green)"
 error_symbol = "[✘](bold red)"
 
 [time]
-disabled = true
-format = '[$time]($style) '
+disabled = false
+time_format = "%R"
+format = '🕒[$time]($style) '
+
+[cmd_duration]
+min_time = 1000
+format = '[⌛️$duration](green) '
+
+[fill]
+# symbol = '─'
+symbol = ' '
+style = 'fg:#dce0e8'
 
 [directory]
 truncation_length = 4
+truncate_to_repo = true
+truncation_symbol = '…/'
 
 [git_branch]
-always_show_remote = true
 format = "on [$branch]($style) "
 
 # https://starship.rs/config/#git-status
@@ -31,13 +54,23 @@ staged = "[+${count}](bold fg:#9ADCFF)"
 stashed = "[•${count}](bold fg:#A2DBFA)"
 renamed = "[»${count}](bold fg:#FFF89A)"
 deleted = "[✘${count}](bold fg:#FFF89A)"
-format = '($stashed$untracked$conflicted$deleted$renamed$modified$staged )([\[$ahead_behind\]]($style) )'
+# format = '($stashed$untracked$conflicted$deleted$renamed$modified$staged )([\[$ahead_behind\]]($style) )'
+format = '(($modified$staged )[\[$ahead_behind\]]($style)) '
 style = "bold #bababa"
 
 [git_metrics]
 format = '([+$added]($added_style)/[-$deleted]($deleted_style) )'
+disabled = true
+
+[git_commit]
 disabled = false
 
-[cmd_duration]
-show_notifications = true
-min_time_to_notify = 120_000
+[package]
+disabled = true
+
+[memory_usage]
+threshold = 0
+format = "[\\[${ram}\\]]($style)"
+disabled = false
+# [os]
+# disabled = false
