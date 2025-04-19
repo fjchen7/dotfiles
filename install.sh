@@ -106,7 +106,7 @@ setup_tools() {
     # install formulas
     brew update
     # basic
-    brew install zsh starship autojump bash less ripgrep eza fd fzf navi bat jq httpie procs gh git-extras git-delta koekeishiya/formulae/yabai yqrashawn/goku/goku
+    brew install zsh starship autojump bash less ripgrep eza fd fzf navi bat jq httpie procs gh git-extras git-delta yqrashawn/goku/goku
     # good tools
     brew install tree thefuck beeftornado/rmtree/brew-rmtree pstree dust duf dog atuin starship
     # dev tools
