@@ -1,4 +1,3 @@
-hs.ipc.cliInstall("/opt/homebrew")
 -- Configuration resources
 -- https://github.com/ashfinal/awesome-hammerspoon
 -- https://github.com/Hammerspoon/Spoons/
@@ -151,5 +150,14 @@ function RightClickFocusedWindow()
   end
 end
 
-hs.alert.show("Hammerspoon Config Reloaded")
 spoon.ModalMgr.supervisor:enter()
+
+-- NOTE: If you meet wired behavior in windows moving, try:
+-- * Exit Input Pro and restart (https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1880579175)
+-- * Uninstall yabi
+
+hs.ipc.cliUninstall("/opt/homebrew")
+hs.ipc.cliInstall("/opt/homebrew")
+
+hs.alert.show("Hammerspoon Config Reloaded")
+
