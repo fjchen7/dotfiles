@@ -1,9 +1,9 @@
 require("git"):setup()
 
--- Hide preview
--- https://github.com/yazi-rs/plugins/tree/main/hide-preview.yazi#advanced
+-- Hide preview in neovim
+-- https://github.com/yazi-rs/plugins/tree/main/toggle-pane.yazi#advanced
 if os.getenv("NVIM") then
-	require("hide-preview"):entry()
+	require("toggle-pane"):entry("min-preview")
 end
 
 require("mactag"):setup({

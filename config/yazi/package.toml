@@ -1,9 +1,27 @@
-[plugin]
-deps = [
-  { use = "yazi-rs/plugins:hide-preview", rev = "71c4fc2" },
-  { use = "yazi-rs/plugins:smart-enter", rev = "71c4fc2" },
-  { use = "yazi-rs/plugins:git", rev = "71c4fc2" }, { use = "yazi-rs/plugins:max-preview", rev = "71c4fc2" }, { use = "yazi-rs/plugins:smart-filter", rev = "71c4fc2" }, { use = "yazi-rs/plugins:mactag", rev = "71c4fc2" },
-]
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "b12a9ab"
+hash = "7918aab6a71caf31b58411f789195677"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "b12a9ab"
+hash = "5c9dda1a587b8f5b6f63e3d5375bda88"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "b12a9ab"
+hash = "e0ada736ea676c2bbb3ec705a49526ef"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-filter"
+rev = "b12a9ab"
+hash = "f0c4b41b5d19a3144958383333eff6e7"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mactag"
+rev = "b12a9ab"
+hash = "f4ee8d1a119fc869ffcd7e8a71b1469e"
 
 [flavor]
 deps = []

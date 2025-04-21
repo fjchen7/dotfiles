@@ -4,19 +4,19 @@ run = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
 
 [[manager.prepend_keymap]]
-on = "T"
-run = "plugin hide-preview"
-desc = "Hide or show preview"
-
-[[manager.prepend_keymap]]
-on = "F"
-run = "plugin smart-filter"
-desc = "Smart filter"
+on = "<A-p>"
+run = "plugin toggle-pane min-preview"
+desc = "Show or hide preview"
 
 [[manager.prepend_keymap]]
 on = "M"
-run = "plugin max-preview"
-desc = "Maximize or restore preview"
+run = "plugin toggle-pane max-preview"
+desc = "Maximize preview"
+
+[[manager.pnd_keymap]]
+on = "F"
+run = "plugin smart-filter"
+desc = "Smart filter"
 
 [[manager.prepend_keymap]]
 on = ["b", "a"]
