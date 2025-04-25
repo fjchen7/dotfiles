@@ -107,16 +107,17 @@ export LESSOPEN='|$DOTFILES_HOME/bin/_lessfilter %s'
 
 # path
 _set_path() {
-    PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+    # local BREW_PREFIX=$(brew --prefix)  # /opt/homebrew/
+    local BREW_PREFIX="/opt/homebrew"
+    PATH="$BREW_PREFIX/bin:/usr/local/bin:/usr/local/sbin:$PATH"
     # use homebew gnu command line tools instead of built-in those
     if [[ $OSTYPE == 'darwin'* ]]; then
-        # local BREW_PREFIX=$(brew --prefix)
-        local BREW_PREFIX="/opt/homebrew"
         local packages=(gnu-tar gnu-which grep gawk gnu-sed findutils coreutils)
         for i in "${packages[@]}"; do
             PATH="$BREW_PREFIX/opt/$i/libexec/gnubin:$PATH"
         done
     fi
+    PATH="$BREW_PREFIX/opt/uutils-coreutils/libexec/uubin:$PATH"  # Use Rust coreutils
     PATH="$HOME/.cargo/bin:$PATH"  # bin from third party
     PATH="$HOME/.console-ninja/.bin:$PATH"
     PATH="$DOTFILES_BIN_HOME:$DOTFILES_BIN_HOME/git:$HOME/.local/bin:$PATH"
@@ -130,7 +131,7 @@ unset NO_COLOR
 
 # development environment variables
 export RUST_BACKTRACE=full
-export RUST_LOG=debug
+# export RUST_LOG=debug
 export PYTHONIOENCODING='UTF-8'
 export NAVI_CONFIG_YAML="$(cat $XDG_CONFIG_HOME/navi/config.yaml)"
 

@@ -5,12 +5,11 @@ continuation_prompt = "[➜](bold green) "
 # continuation_prompt = "[▶▶ ](bold green)"
 # 👤⭐️🌟⚡️
 format = """
-⭐️ $all\
+$time\
+$all\
 $fill \
 $jobs\
 $cmd_duration\
-$time\
-$memory_usage\
 $line_break\
 $character
 """
@@ -23,7 +22,8 @@ error_symbol = "[✘](bold red)"
 [time]
 disabled = false
 time_format = "%R"
-format = '🕒[$time]($style) '
+# format = '🕒[$time]($style) '
+format = '[$time]($style) '
 
 [cmd_duration]
 min_time = 1000
@@ -35,12 +35,12 @@ symbol = ' '
 style = 'fg:#dce0e8'
 
 [directory]
-truncation_length = 4
+truncation_length = 3
 truncate_to_repo = true
-truncation_symbol = '…/'
+# truncation_symbol = '…/'
 
 [git_branch]
-format = "on [$branch]($style) "
+format = "\\([$branch]($style)\\) "
 
 # https://starship.rs/config/#git-status
 [git_status]
@@ -71,6 +71,6 @@ disabled = true
 [memory_usage]
 threshold = 0
 format = "[\\[${ram}\\]]($style)"
-disabled = false
+disabled = true
 # [os]
 # disabled = false

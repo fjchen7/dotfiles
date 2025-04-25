@@ -249,6 +249,8 @@
         [:1 [:openObsidian "Coding"]]
         [:2 [:openObsidian "Rust"]]
         [:3 [:openObsidian "Web3"]]
+        [:grave_accent_and_tilde [:openApp "Obsidian"]]
+        [:c [:openApp "Google Chrome"]]
 
         [:v :!OSCf6]  ; show clipboard (supported by Raycast)
         [:q :!CTOf7] ;; Previous Space

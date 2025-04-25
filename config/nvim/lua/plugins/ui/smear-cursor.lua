@@ -2,6 +2,9 @@ return {
   "sphamba/smear-cursor.nvim",
   opts = {
     cursor_color = "#d3cdc3",
-    filetypes_disabled = { "yazi" },
+    filetypes_disabled = {
+      "yazi",
+      "snacks_picker_input",
+    },
   },
 }

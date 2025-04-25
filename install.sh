@@ -112,7 +112,7 @@ setup_tools() {
     # dev tools
     brew install python shellcheck yarn node openssl neovim vim
     # gnu replacement
-    brew install coreutils findutils gnutls gnu-sed gnu-which gawk grep gnu-tar gzip watch
+    brew install coreutils uutils-coreutils findutils gnutls gnu-sed gnu-which gawk grep gnu-tar gzip watch
     # macos utility
     # brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency qlvideo
 
