@@ -20,7 +20,7 @@ return {
         local set = function(mode, lhs, rhs)
           vim.keymap.set(mode, lhs, rhs, { buffer = _opts.bufnr })
         end
-        set("n", "q", "<cmd>q<CR>")
+        set("n", "q", "<Plug>(KsbQuitAll)")
         set("n", "<CR>", "<Plug>(KsbPasteCmd)")
         return true
       end,
