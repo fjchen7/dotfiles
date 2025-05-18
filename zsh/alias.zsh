@@ -303,7 +303,7 @@ function _wtf() {
         # grep text like "alias $'ls?=" or "alias 'wtf="
         PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias \$\?'$1="
     else
-        which "$@"
+        \which "$@"
     fi
 }
 
