@@ -18,12 +18,13 @@ map("n", "<leader>uIn", function()
 end, "Inspect Treesitter Ndoe under Cursor")
 
 Snacks.toggle({
-  name = "Diagnostics (Inline)",
+  name = "Inline Diagnostics",
   get = function()
     return vim.diagnostic.config().virtual_text ~= false
   end,
   set = function(enabled)
-    vim.cmd("Corn toggle")
+    vim.diagnostic.config({ virtual_text = enabled })
+    -- vim.cmd("Corn toggle")
   end,
 }):map("<leader>ud")
 Snacks.toggle.diagnostics():map("<leader>uD")

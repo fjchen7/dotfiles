@@ -2,7 +2,7 @@ local M = {
   -- Show Diagnostic in right hand side
   "RaafatTurki/corn.nvim",
   event = "BufReadPost",
-  enabled = true,
+  enabled = false,
 }
 
 local enabled_diagnostics_opts = {
@@ -31,6 +31,7 @@ M.dependencies = {
 }
 
 M.opts = {
+  auto_cmds = false,
   on_toggle = function(is_hidden)
     -- Turn on builtin inline diagnostics when corn is hidden, and vice versa
     local opts = is_hidden and disabled_diagnostics_opts or enabled_diagnostics_opts

@@ -158,27 +158,7 @@ M.init = function()
 
     {
       -- Mapping K in visual mode to avoid annoying v_K
-      mode = { "n", "x" },
-      "K",
-      function()
-        local winid = require("ufo").peekFoldedLinesUnderCursor()
-        -- :h ufo.txt
-        if winid then
-          local buf = vim.api.nvim_win_get_buf(winid)
-          local ufo_keys = { "a", "i", "o", "A", "I", "O", "gd", "gr" }
-          for _, k in ipairs(ufo_keys) do
-            vim.keymap.set("n", k, "<CR>" .. k, { noremap = false, buffer = buf })
-          end
-        else
-          vim.lsp.buf.hover({
-            -- :h winborder
-            border = "rounded",
-            width = 80,
-            title = "Hover",
-          })
-        end
-      end,
-      desc = "Hover / Peek Fold",
+      mode = { "n", "x" }, "K", function() _G.show_docs() end, desc = "Hover",
     },
 
     -- { "<M-s>", vim.lsp.buf.signature_help, mode = { "i", "n" }, desc = "Signature Help", has = "signatureHelp" },
@@ -224,6 +204,8 @@ M.opts = {
       focusable = true,
       -- focus = true,
     },
+    underline = true,
+    virtual_text = false,
   },
   inlay_hints = {
     enabled = true,
