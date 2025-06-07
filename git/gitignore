@@ -1,4 +1,8 @@
-
+.cursor/
+.cursorignore
+.claude/
+CLAUDE.md
+.github/*.md
 
 # https://github.com/github/gitignore
 
