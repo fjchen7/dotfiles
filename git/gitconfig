@@ -1,4 +1,7 @@
 # This is Git's per-user configuration file.
+# Reference:
+# - https://jvns.ca/blog/2024/02/16/popular-git-config-options/
+# - https://blog.gitbutler.com/how-git-core-devs-configure-git/
 [core]
     ignorecase = false
     # pager = diff-so-fancy --colors | less --tab=4 -RF
@@ -26,8 +29,8 @@
     algorithm = histogram
     # uses different colours to highlight lines in diffs that have been “moved”
     colorMoved = default
-    # include more context in diffs
-    context = 10
+    # context in diffs
+    context = 3
     # detect if a file has been renamed
     renames = true
 [push]
@@ -93,6 +96,7 @@
     # template = ~/.dotfiles/git/gitmessage.example
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#commit-verbose-true
     verbose = true
+    # gpgSign = true
 [rebase]
     # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#rebase-autosquash-true
     autoSquash = true
@@ -124,9 +128,10 @@
     # Enable rerere, which records the before and after states of rebase conflicts
     enabled = true
     autoupdate = true
-[url "git@github.com:"]
-    # https://jvns.ca/blog/2024/02/16/popular-git-config-options
-    insteadOf = "https://github.com/"
+[status]
+    branch = false
+    showStash = true
+    showUntrackedFiles = all
 [branch]
     # makes git branch sort by most recently used branches instead of alphabetical
     sort = -committerdate
@@ -140,3 +145,12 @@
 [help]
     # guess and correct the wrong git command that is executed
     autocorrect = prompt
+[interactive]
+    # one key to select an option (e.g. in `git add --patch`)
+    singleKey = true
+[url "git@github.com:"]
+    # https://jvns.ca/blog/2024/02/16/popular-git-config-options
+    insteadOf = "https://github.com/"
+    pushInsteadOf = "https://github.com/"
+    insteadOf = "gh:"
+    pushInsteadOf = "gh:"
