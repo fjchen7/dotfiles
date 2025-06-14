@@ -41,7 +41,6 @@ plugins=(
     # timer
     # fancy-ctrl-Z
     # colored-man-pages
-    alias-tips
     extract
     rust
     zsh-completions
@@ -65,11 +64,14 @@ source $DOTFILES_ZSH_HOME/complete.fzf.zsh
 
 # autoload loads script as function by searching $fpath.
 # ref: https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
-# initialize autocomplete
+# initialize autocomplete with cache optimization
 autoload -U compinit
-# -u avoid security check
-# -d <dumpfile> specify dump file location
-compinit -u
+# Check if completion cache needs update (once per day)
+if [[ -n ${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump(#qN.mh+24) ]]; then
+    compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump"
+else
+    compinit -C -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump"
+fi
 # _gnu_generic can create completions for gnu commands that list option help (when --help is used) in a standardized way.
 # compdef _gnu_generic fzf curl
 source $ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.zsh
