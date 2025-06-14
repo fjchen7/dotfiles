@@ -1,0 +1,38 @@
+# Use degit instead of git submodules for faster cloning
+zstyle ':zim:zmodule' use 'degit'
+zstyle ':zim:completion' dumpfile "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump"
+
+### Behavior
+# Sets sane Zsh built-in environment options.
+zmodule environment
+# Applies correct bindkeys for input events.
+zmodule input
+# Enter directory when pressing enter
+# zmodule magic-enter
+
+### Completion
+# Additional completion definitions for Zsh.
+zmodule zsh-users/zsh-completions --fpath src
+# Enables and configures smart and extensive tab completion.
+# completion must be sourced after all modules that add completion definitions.
+zmodule completion
+
+### Third Modules
+# Fish-like fast/unobtrusive autosuggestions for Zsh.
+zmodule zsh-users/zsh-autosuggestions
+# Fish-like syntax highlighting for Zsh.
+# Must be sourced after completion initialization.
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule pabloariasal/zfm
+
+zmodule Aloxaf/fzf-tab
+# zmodule marlonrichert/zsh-autocomplete --no-submodules
+
+zmodule zsh-users/zsh-history-substring-search
+
+zmodule romkatv/powerlevel10k
+zmodule djui/alias-tips
+zmodule ohmyzsh/ohmyzsh --root plugins/autojump
+zmodule ohmyzsh/ohmyzsh --root plugins/extract
+zmodule ohmyzsh/ohmyzsh --root plugins/macos
+zmodule ohmyzsh/ohmyzsh --root plugins/fancy-ctrl-Z

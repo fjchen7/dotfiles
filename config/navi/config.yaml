@@ -4,12 +4,10 @@
 style:
   tag:
     color: red # text color. possible values: https://bit.ly/3gloNNI
-    width_percentage: 17 # column width relative to the terminal window
-    min_width: 20 # minimum column width as number of characters
+    width_percentage: 10 # column width relative to the terminal window
   comment:
     color: blue
     width_percentage: 50
-    min_width: 70
   snippet:
     color: white
 

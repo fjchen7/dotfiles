@@ -10,22 +10,18 @@ function y() {
 
 alias pc='tee >(pbcopy)' # copy + stdout
 alias pp=pbpaste
-alias proxy_clash="export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897"
+alias proxy="export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897"
 alias unproxy="unset http_proxy https_proxy all_proxy"
-alias proxy_proxyman="export https_proxy=http://172.20.10.2:9090 http_proxy=http://172.20.10.2:9090 all_proxy=socks5://172.20.10.2:9090"
 alias 'proxy?'="_is_proxy"
 _is_proxy() {
-    r=$(curl -sL -vv https://www.google.com --max-time 3 2>/dev/null)
-    if [[ -z "$r" ]]; then
-        echo "❗️ $(tput setaf 1)"No Proxy!"$(tput sgr0)"
-    else
-        echo "✅ $(tput setaf 2)"In Proxy!"$(tput sgr0)"
-    fi
+  r=$(curl -sL -vv https://www.google.com --max-time 3 2>/dev/null)
+  if [[ -z "$r" ]]; then
+    echo "❗️ $(tput setaf 1)"No Proxy!"$(tput sgr0)"
+  else
+    echo "✅ $(tput setaf 2)"In Proxy!"$(tput sgr0)"
+  fi
 }
 
-export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="l gti g"
-
-# ls
 # alias exa='exa -Fh --git --time-style=long-iso --sort=name'
 alias eza='eza --sort=name --time-style=long-iso'
 alias gls='gls --color=tty -F'
@@ -44,7 +40,7 @@ alias ll.='_f(){ (cd ${@:-.}; eza -algd .*)}; _f'
 alias lls='_f(){ (cd ${@:-.}; _fs=( $(find . -maxdepth 1 -type l | xargs -I _ basename _) ); [ -n "$_fs" ] && eza -algd $_fs) }; _f'
 
 # cd
-alias cdl='_f(){ cd $@; ls }; _f'  # cd and list
+alias cdl='_f(){ cd $@; ls }; _f' # cd and list
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
@@ -72,32 +68,31 @@ alias 'path?'='_quick_grep "_list_path" $@'
 alias 'bin?'='_quick_grep "_list_my_bin" $@'
 alias 'bindkey?'='_quick_grep "bindkey" $@'
 alias 'key?'='_quick_grep "bindkey" $@'
-alias 'brew?'='_quick_grep "_brew_list" $@'
+alias 'brew?'='_quick_grep "brew_list" $@'
 alias 'zstyle?'='_quick_grep "zstyle -L" $@'
 
 # git
-git_current_branch () {
-    local ref
-    ref=$(command git symbolic-ref --quiet HEAD 2> /dev/null)
-    local ret=$?
-    if [[ $ret != 0 ]]
-    then
-        [[ $ret == 128 ]] && return
-        ref=$(command git rev-parse --short HEAD 2> /dev/null)  || return
-    fi
-    echo ${ref#refs/heads/}
+git_current_branch() {
+  local ref
+  ref=$(command git symbolic-ref --quiet HEAD 2>/dev/null)
+  local ret=$?
+  if [[ $ret != 0 ]]; then
+    [[ $ret == 128 ]] && return
+    ref=$(command git rev-parse --short HEAD 2>/dev/null) || return
+  fi
+  echo ${ref#refs/heads/}
 }
-get_file () {
-fd --color=always --hidden --follow --exclude .git --maxdepth=10 . | fzf --preview '([[ -d {} ]] && echo "[DIRECTORY]" && tree -CNFl -L 5 {} | head -200) || (echo "[FILE]" && bat --style=plain --color=always {})' --preview-window right,75%,wrap,hidden | __join_lines
+get_file() {
+  fd --color=always --hidden --follow --exclude .git --maxdepth=10 . | fzf --preview '([[ -d {} ]] && echo "[DIRECTORY]" && tree -CNFl -L 5 {} | head -200) || (echo "[FILE]" && bat --style=plain --color=always {})' --preview-window right,75%,wrap,hidden | __join_lines
 }
-get_commit () {
-    COMMAND='git log --color --pretty=format:"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"'
-    # -p: generat path (changed content)
-    PREVIEW_DEFAULT='git show --stat --color {1}'
-    PREVIEW_FULL="$PREVIEW_DEFAULT -p | $GIT_WIDGET_PAGER"
-    eval $COMMAND |
+get_commit() {
+  COMMAND='git log --color --pretty=format:"%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"'
+  # -p: generat path (changed content)
+  PREVIEW_DEFAULT='git show --stat --color {1}'
+  PREVIEW_FULL="$PREVIEW_DEFAULT -p | $GIT_WIDGET_PAGER"
+  eval $COMMAND |
     fzf --no-cycle --preview "$PREVIEW_FULL" \
-        --height=80% --preview-window down,65%,wrap | awk '{print $1}'
+      --height=80% --preview-window down,65%,wrap | awk '{print $1}'
 }
 
 alias g='git'
@@ -114,7 +109,7 @@ alias gabr="git absorb --and-rebase"
 # alias gabr='_f(){ git add $@ && git absorb --and-rebase }; _f'
 alias gc='git commit'
 alias gcm='git commit -m'
-alias gcf='print -z "git commit --fixup $(get_commit)"'  # fixup a commit
+alias gcf='print -z "git commit --fixup $(get_commit)"' # fixup a commit
 alias gc!='git commit --amend -v'
 alias gc!!='git commit --amend -v -C HEAD'
 # alias 'gc-'='git commit -t <(sed "1 i\### Last commit\n$(git log --format=%B -n 1 HEAD)\n" ~/.dotfiles/git/gitmessage) -v'
@@ -137,9 +132,11 @@ alias gbv='git branch -v'
 alias gbd='git branch -d'
 alias gd='git diff'
 alias gf='git fetch'
-alias gfp='git fetch --prune'  # prune branch that is deleted on remote
+alias gfs='git fetch && git status'
+alias gfb='git fetch && git rebase'
+alias gfp='git fetch --prune' # prune branch that is deleted on remote
 alias glg='git lg'
-alias glgs='git lg --stat'  # show changed files
+alias glgs='git lg --stat' # show changed files
 alias glgv='git lgv'
 alias glgvv='git lgvv'
 alias gro='git restore'
@@ -152,7 +149,7 @@ alias gri='git rebase -i --autosquash --autostash'
 alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias gac='_f(){ [[ "$#" == 0 ]] && echo "Error: nothing to add and commit" && return 1; git add $@ && git commit -t <(sed "1 i\### Last commit\n$(git log --format=%B -n 1 HEAD)\n" ~/.dotfiles/git/gitmessage) }; _f'
-alias gac.='gac .'  # add and commit all
+alias gac.='gac .' # add and commit all
 alias gac!='_f(){ [[ "$#" == 0 ]] && echo "Error: nothing to add and commit" && return 1; git add $@ && gc! }; _f'
 
 # cargo
@@ -197,11 +194,34 @@ alias q="exit"
 alias du='_f(){ du -sh $@ | sort -h }; _f'
 alias 'du.'='_f(){ du -sh * | sort -h }; _f'
 alias trn='tr -d "\n"'
-# Fix neovim highlight in tmux: https://gist.github.com/gutoyr/4192af1aced7a1b555df06bd3781a722
-alias tmux='env TERM=xterm-256color tmux'
-alias tn='tmux new -A -s main'
+# Tmux
+alias t='tmux -u'
 alias ta='tmux attach'
-alias tl='tmux list-session'
+alias tsl="echo '[TMUX Sessions]'; tmux list-session"
+alias tsk="tmux list-session | awk -F':' '{print \$1}' | xargs -I {} sh -c 'tmux kill-session -t {}' && echo 'All tmux sessions killed'"
+alias tnr='pkill tmux; tmux new-session -s main'
+# tmux session manager: tn [session_name] - select/create session with fzf or direct name
+alias tn='_f(){
+    if [[ $# -eq 1 ]]; then
+        tmux new-session -A -s "$1"
+    else
+        local session=$(_tmux_select_session)
+        [[ -n "$session" ]] && tmux new-session -A -s "$session"
+    fi
+}; _f'
+function _tmux_select_session() {
+  local sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | grep -v "^main$" || echo "")
+  local all_sessions="main"
+  [[ -n "$sessions" ]] && all_sessions="main\n$sessions"
+
+  local count=$(echo -e "$all_sessions" | wc -l | tr -d " ")
+
+  if [[ $count -eq 1 ]]; then
+    echo "main"
+  else
+    echo -e "$all_sessions" | fzf --height=40% --reverse --prompt="tmux session: " --header="Press Ctrl-D to delete session" --bind "ctrl-d:execute(tmux kill-session -t {} 2>/dev/null || true)+reload(sessions=\$(tmux list-sessions -F \"#{session_name}\" 2>/dev/null | grep -v \"^main\$\" || echo \"\"); all_sessions=\"main\"; [[ -n \"\$sessions\" ]] && all_sessions=\"main\\n\$sessions\"; echo -e \"\$all_sessions\")"
+  fi
+}
 # Copilot CLI
 # https://docs.github.com/en/copilot/github-copilot-in-the-cli/using-github-copilot-in-the-cli#setting-up-aliases-for-copilot-in-the-cli
 # eval "$(gh copilot alias -- zsh)"
@@ -216,8 +236,8 @@ alias rg='rg -L'
 alias tree1='tree -L 1'
 alias tree2='tree -L 2'
 alias tree3='tree -L 3'
-alias diff='colordiff'  # diff with color
-alias ping='ping -c 5'  # Stop after sending count ECHO_REQUEST packets #
+alias diff='colordiff' # diff with color
+alias ping='ping -c 5' # Stop after sending count ECHO_REQUEST packets #
 alias curl='curl -SL'  # Show error && redirect
 # https://twitter.com/carsonyangk8s/status/1498254329429762054
 alias ping='_f(){ping -c5 $@ | nali}; _f' # -c5 Stop after sending count ECHO_REQUEST packets #
@@ -242,7 +262,7 @@ alias chgrp='chgrp --preserve-root'
 
 # Others
 alias cleanup='brew cleanup && pip cache purge'
-alias -s md='open -a Typora'    # open *.md with Typora by default
+alias -s md='open -a Typora' # open *.md with Typora by default
 # Blog
 alias blog-deploy='hugo server --source $BLOG_HOME -e production --disableFastRender -F'
 alias blog-new='_f() { hugo new -s $BLOG_HOME posts/$1.md; open $BLOG_HOME/content/posts/$1.md; }; _f'
@@ -259,55 +279,55 @@ alias "]blog"='code $BLOG_HOME'
 
 # helper functions
 function _quick_grep {
-    [[ "$#" == 0 ]] && exit 1
-    local cmd="$1"
-    shift 1
+  [[ "$#" == 0 ]] && exit 1
+  local cmd="$1"
+  shift 1
 
-    local _delimiter=" "
-    for ((i=1; i<=$#; i++)); do
-        case "$@[$i]" in
-            "-o" | "--or" )
-                _delimiter="|"
-                set -- "${@:1:$((i-1))}" "${@:$((i+1))}"  # remove -o from $@
-                break
-                ;;
-            * )
-                ;;
-        esac
-    done
-    if [[ "$#" == 0 ]]; then
-        eval "$cmd"
-    else
-        # join parameters with delimiter
-        local _p=$(_join_by "${_delimiter}" ${@:1})
-        eval "$cmd" | grep -i -E "${_p}"  # operation OR
-    fi
+  local _delimiter=" "
+  for ((i = 1; i <= $#; i++)); do
+    case "$@[$i]" in
+    "-o" | "--or")
+      _delimiter="|"
+      set -- "${@:1:$((i - 1))}" "${@:$((i + 1))}" # remove -o from $@
+      break
+      ;;
+    *) ;;
+    esac
+  done
+  if [[ "$#" == 0 ]]; then
+    eval "$cmd"
+  else
+    # join parameters with delimiter
+    local _p=$(_join_by "${_delimiter}" ${@:1})
+    eval "$cmd" | grep -i -E "${_p}" # operation OR
+  fi
 }
 
 function _join_by {
-    # https://stackoverflow.com/a/17841619
-    local d=${1-} f=${2-}; if shift 2; then printf %s "$f" "${@/#/$d}"; fi;
+  # https://stackoverflow.com/a/17841619
+  local d=${1-} f=${2-}
+  if shift 2; then printf %s "$f" "${@/#/$d}"; fi
 }
 
 function _list_my_bin() {
-    fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_HOME}" --exec basename {} \; | sort -n
+  fd --type executable --max-depth 1 --exclude '_*' . "${DOTFILES_BIN_HOME}" --exec basename {} \; | sort -n
 }
 
 function _list_path() {
-    echo $PATH | tr ":" "\n"
+  echo $PATH | tr ":" "\n"
 }
 
 function _wtf() {
-    command -V "$@"
-    if [[ -n $(alias $@) ]]; then
-        # grep text like "alias $'ls?=" or "alias 'wtf="
-        PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias \$\?'$1="
-    else
-        \which "$@"
-    fi
+  command -V "$@"
+  if [[ -n $(alias $@) ]]; then
+    # grep text like "alias $'ls?=" or "alias 'wtf="
+    PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias \$\?'$1="
+  else
+    \which "$@"
+  fi
 }
 
-function _brew_list() {
-    # ref: https://stackoverflow.com/a/55445034
-    brew leaves | xargs brew deps --installed --for-each | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/"
+function brew_list() {
+  # ref: https://stackoverflow.com/a/55445034
+  brew leaves | xargs brew deps --installed --for-each | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/"
 }

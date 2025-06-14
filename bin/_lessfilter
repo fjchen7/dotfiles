@@ -6,12 +6,12 @@ category=${mime%%/*}
 kind=${mime##*/}
 echo $"[$(du -sh $1 | xargs | cut -d" " -f1)]"
 if [ -d "$1" ]; then
-	exa --git -hl --color=always --icons "$1"
+	eza --git -hl --color=always --icons "$1"
 elif [ "$category" = image ]; then
 	# todo: fix picture preview
 	chafa "$1"
 	exiftool "$1"
-elif [ "$kind" = vnd.openxmlformats-officedocument.spreadsheetml.sheet ] || \
+elif [ "$kind" = vnd.openxmlformats-officedocument.spreadsheetml.sheet ] ||
 	[ "$kind" = vnd.ms-excel ]; then
 	in2csv "$1" | xsv table | bat --style=plain -ltsv --color=always
 elif [ "$category" = text ]; then
@@ -19,4 +19,4 @@ elif [ "$category" = text ]; then
 else
 	lesspipe.sh "$1" | bat --style=plain --color=always
 fi
-# lesspipe.sh don't use exa, bat and chafa, it use ls and exiftool. so we create a lessfilter.
+# lesspipe.sh don't use eza, bat and chafa, it use ls and exiftool. so we create a lessfilter.

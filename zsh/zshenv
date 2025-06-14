@@ -1,8 +1,6 @@
-# ~/.zshenv is loaded before ~/.zshrc
-# and script only loads ~/.zshenv but not ~/.zshrc
+# ~/.zshenv will be loaded before ~/.zshrc
 #
-# zsh configuration loading order
-#   https://scriptingosx.com/2019/06/moving-to-zsh-part-2-configuration-files/
+# zsh configuration loading order: https://scriptingosx.com/2019/06/moving-to-zsh-part-2-configuration-files/
 
 # XDG Base Directory
 # https://wiki.archlinux.org/title/XDG_Base_Directory
@@ -10,10 +8,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
-
-# zsh
-export ZSH=$XDG_CONFIG_HOME/oh-my-zsh
-export ZSH_CUSTOM=$ZSH/custom
 
 # dotfiles
 export DOTFILES_HOME=$HOME/.dotfiles
@@ -23,46 +17,22 @@ export DOTFILES_ZSH_HOME=$DOTFILES_HOME/zsh
 export CHEATSHEETS_HOME=$DOTFILES_HOME/cheatsheets
 export TMUX_CONF=$HOME/.tmux.conf
 
-# my workspace
-export WORKSPACE=$HOME/workspace
-export BLOG_HOME=$WORKSPACE/blog
-
 # https://github.com/ohmyzsh/ohmyzsh/issues/8743#issuecomment-704794162
-unix-word-rubout() {
-  # The chars in WORDCHARS are treated as part of a word.
-  local WORDCHARS=$'$#%!,.-_~'
-  zle backward-kill-word
-}
+# unix-word-rubout() {
+#   # The chars in WORDCHARS are treated as part of a word.
+#   local WORDCHARS=$'$#%!,.-_~'
+#   zle backward-kill-word
+# }
 
-zle -N unix-word-rubout
-bindkey '^W' unix-word-rubout
+# zle -N unix-word-rubout
+# bindkey '^W' unix-word-rubout
 
-# editor
-# if [[ -n $(command -v nvim) ]]; then
-#     EDITOR='nvim'
-# else
-#     EDITOR='vim'
-# fi
-# export EDITOR
-
-# https://github.com/kdheepak/lazygit.nvim#usage
-
-# NVIM_LISTEN_ADDRESS is deprecated. Use NVIM instead.
-# https://neovim.io/doc/user/deprecated.html#_environment-variables
-# if [ -n "$NVIM" ]; then
-#     alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe --servername $NVIM'
-#     export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe' --servername $NVIM"
-#     export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe' --servername $NVIM"
-# else
-#     export VISUAL="nvim"
-#     export EDITOR="nvim"
-# fi
 export VISUAL="nvim"
 export EDITOR="nvim"
 alias vim=nvim
 
 # fzf
-FZF_BASE_OPTS="--no-sort --extended --multi --color=16,hl:green,header:bold --ansi --tabstop=4 --info=inline --layout=reverse --cycle \
+FZF_BASE_OPTS="--no-sort --extended --multi --color=16,hl:green,hl+:regular,fg+:regular,gutter:-1 --scrollbar=┃ --ansi --tabstop=4 --info=inline --layout=reverse --cycle \
 --bind='ctrl-n:down' \
 --bind='ctrl-p:up' \
 --bind='ctrl-alt-n:page-down' \
@@ -105,35 +75,11 @@ export LESS='--tabs 4 -j2 -iMsFR'
 # `less <file>` shows information according to file type
 export LESSOPEN='|$DOTFILES_HOME/bin/_lessfilter %s'
 
-# path
-_set_path() {
-    # local BREW_PREFIX=$(brew --prefix)  # /opt/homebrew/
-    local BREW_PREFIX="/opt/homebrew"
-    PATH="$BREW_PREFIX/bin:/usr/local/bin:/usr/local/sbin:$PATH"
-    # use homebew gnu command line tools instead of built-in those
-    if [[ $OSTYPE == 'darwin'* ]]; then
-        local packages=(gnu-tar gnu-which grep gawk gnu-sed findutils coreutils)
-        for i in "${packages[@]}"; do
-            PATH="$BREW_PREFIX/opt/$i/libexec/gnubin:$PATH"
-        done
-    fi
-    PATH="$BREW_PREFIX/opt/uutils-coreutils/libexec/uubin:$PATH"  # Use Rust coreutils
-    PATH="$HOME/.cargo/bin:$PATH"  # bin from third party
-    PATH="$HOME/.console-ninja/.bin:$PATH"
-    PATH="$DOTFILES_BIN_HOME:$DOTFILES_BIN_HOME/git:$HOME/.local/bin:$PATH"
-    export PATH
-}
-_set_path
-CDPATH=.:$HOME  # by default CDPATH=.
-
 # https://news.ycombinator.com/item?id=30483417
 unset NO_COLOR
 
 # development environment variables
 export RUST_BACKTRACE=full
-# export RUST_LOG=debug
-export PYTHONIOENCODING='UTF-8'
-export NAVI_CONFIG_YAML="$(cat $XDG_CONFIG_HOME/navi/config.yaml)"
 
 [[ -e $DOTFILES_ZSH_HOME/zshenv.local ]] && source $DOTFILES_ZSH_HOME/zshenv.local
 [[ -n $KITTY_PID ]] && [[ -e $XDG_CONFIG_HOME/kitty/kitty.zsh ]] && source $XDG_CONFIG_HOME/kitty/kitty.zsh

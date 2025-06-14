@@ -1,19 +1,40 @@
-# prevent > from overwriting existent file
-# using >| to write forcedly
-set -o noclobber
-unsetopt BEEP             # turn off bell/beep
-typeset -U PATH           # prevent duplicate path
-setopt EXTENDED_GLOB      # extended globbing
-DISABLE_AUTO_UPDATE="true" # disable zsh auto update
-# skip the verification of insecure directories
-# if it doesn't work, try compaudit | xargs chmod g-w,o-w
-ZSH_DISABLE_COMPFIX="true"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# history
+# -----------
+#  Zim setup
+# -----------
+# Set directory where Zim will be installed
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+ZIM_CONFIG_FILE=${DOTFILES_ZSH_HOME}/zimrc
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init
+fi
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
+
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
+bindkey -e
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+
+# -----------
+#  history
+# -----------
 setopt SHARE_HISTORY        # adds history incrementally and share it across sessions
 setopt EXTENDED_HISTORY     # add timestamps to history
 setopt HIST_IGNORE_ALL_DUPS # don't record duplicated commands in history
-setopt HIST_SAVE_NO_DUPS    # don't save duplicates
+setopt HIST_SAVE_NO_DUPS    # don't duplicates history
 setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks from each command line being added to the history list.
 setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
@@ -22,82 +43,67 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTCONTROL='ignoreboth' # don't show duplicates and commands that begin with a space in history.
 
-# directory stack
+# -----------
+#  Behavior
+# -----------
+# prevent > from overwriting existent file
+# using >| to write forcedly
+set -o noclobber
+unsetopt BEEP             # turn off bell/beep
+typeset -U PATH           # prevent duplicate path
+setopt EXTENDED_GLOB      # extended globbing
+
+# -----------
+#  directory
+# -----------
 # ref: https://zsh.sourceforge.io/Intro/intro_6.html
 setopt AUTO_CD              # simply type dir name to cd
 setopt AUTO_PUSHD           # push the current directory visited on the stack.
 setopt PUSHD_IGNORE_DUPS    # do not store duplicates in the stack.
 setopt PUSHD_SILENT         # do not print the directory stack after pushd or popd.
 
-# +-----------+
-# | plugins   |
-# +-----------+
-# tmux https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/tmux
-source $DOTFILES_ZSH_HOME/appearance.zsh
-plugins=(
-    # autoupdate  # https://github.com/TamCore/autoupdate-oh-my-zsh-plugins
-    macos # https://github.com/zshzoo/macos
-    autojump
-    # timer
-    # fancy-ctrl-Z
-    # colored-man-pages
-    alias-tips
-    extract
-    rust
-    zsh-completions
-)
-# plugins+=(globalias)
-# GLOBALIAS_FILTER_VALUES=(grep vim rm \\rm du
-#     l ls ll la lla ls\? ll\?
-#     brew\?
-#     rg ping mv cp
-# )
-source $ZSH/oh-my-zsh.sh
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# +------------+
-# | completion |
-# +------------+
-fpath+=(
-    $DOTFILES_ZSH_HOME/completions  # customized zsh completions
-)
-source $DOTFILES_ZSH_HOME/complete.fzf.zsh
-
-# autoload loads script as function by searching $fpath.
-# ref: https://coderwall.com/p/ktv3hq/zsh-autoloading-functions-i
-# initialize autocomplete
-autoload -U compinit
-# -u avoid security check
-# -d <dumpfile> specify dump file location
-compinit -u
-# _gnu_generic can create completions for gnu commands that list option help (when --help is used) in a standardized way.
-# compdef _gnu_generic fzf curl
-source $ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.zsh
-source $DOTFILES_ZSH_HOME/complete.zsh
-# load plugins by manual
-source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-
-# +----------------+
-# |  key bindings  |
-# +----------------+
+# ----------------
+#  key bindings
+# ----------------
 # https://blog.quarticcat.com/zh/posts/how-do-i-make-my-zsh-smooth-as-fuck/#key-bindingszsh
-bindkey -r '^['  # [Esc] (Default: vi-cmd-mode)
-bindkey '^Z' undo         # [Ctrl-Z]
-bindkey '^Y' redo         # [Ctrl-Y]
+# bindkey -r '^['  # [Esc] (Default: vi-cmd-mode)
+# bindkey '^Z' undo         # [Ctrl-Z]
+# bindkey '^Y' redo         # [Ctrl-Y]
 bindkey '^Q' push-line    # [Ctrl-Q]
 # [Space] Do history expansion. !! will print command at first but not execute directly
 # Conflict with globalias
 # bindkey ' '  magic-space
 
-# +----------------+
-# | other settings |
-# +----------------+
+# zsh-history-substring-search
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+# zsh-autosuggestion
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8a8a8a,underline"
+bindkey '^o' autosuggest-execute
+# zsh-alias-tips
+export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="l g"
+# zfm
+alias je='_f(){ cursor $(zfm query $@) }; _f'
+alias jj='_f(){ cd $(zfm query $@) }; _f'
+alias ja='zfm add .'
+
+# -----------
+#  Style
+# -----------
+# Fzf style
+source $DOTFILES_ZSH_HOME/complete.zsh
+# Completion and fzf-tab style
+source $DOTFILES_ZSH_HOME/complete.fzf.zsh
+# avoid line end with % when using `printf`
+# https://unix.stackexchange.com/a/167600
+export PROMPT_EOL_MARK=''
+
+# ----------------
+#  other settings
+# ----------------
 # brew install without updating (https://github.com/Homebrew/brew/issues/1670)
 export HOMEBREW_NO_AUTO_UPDATE=1
-
-# Load zshenv again to reoder PATH order messed by /etc/zprofile
-source $DOTFILES_ZSH_HOME/zshenv
+# Load custom zshrc
 source $DOTFILES_ZSH_HOME/zle.zsh
 source $DOTFILES_ZSH_HOME/alias.zsh
 source $DOTFILES_ZSH_HOME/lazy_load.zsh
@@ -105,3 +111,33 @@ source $DOTFILES_ZSH_HOME/lazy_load.zsh
 
 # eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(atuin init zsh)"
+eval "$(thefuck --alias)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+source $DOTFILES_ZSH_HOME/p10k.zsh
+
+# Set PATH
+typeset -U path
+typeset -U my_path
+my_path=(
+  "$DOTFILES_BIN_HOME"
+  "$DOTFILES_BIN_HOME/git"
+  "$HOME/.local/bin"
+  "$HOME/.cargo/bin"
+)
+# use gnu command line tools instead of built-in ones
+if [[ $OSTYPE == 'darwin'* ]]; then
+  local packages=(gnu-tar gnu-which grep gawk gnu-sed findutils coreutils)
+  for i in "${packages[@]}"; do
+    my_path=($my_path "$HOMEBREW_PREFIX/opt/$i/libexec/gnubin")
+  done
+fi
+path=(
+  $my_path
+  "$HOMEBREW_PREFIX/bin"
+  "$HOMEBREW_PREFIX/sbin"
+  "/usr/local/bin"
+  "/usr/local/sbin"
+  $path
+)
+export PATH

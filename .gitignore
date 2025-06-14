@@ -21,7 +21,6 @@ config/iterm2
 config/nnn
 config/clash
 config/dlv
-config/oh-my-zsh
 config/raycast
 config/lazygit/state.yml
 config/jgit

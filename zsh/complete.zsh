@@ -15,7 +15,7 @@ setopt LIST_PACKED          # completion menu takes less spaces
 #     https://github.com/Phantas0s/.dotfiles/blob/master/zsh/completion.zsh
 # Set applied completers and the applied order
 zstyle ':completion:*' completer _extensions _complete _approximate
-# Enbale menu
+# Enable menu
 zstyle ':completion:*' menu select
 # Use cache for completion
 zstyle ':completion:*' use-cache on
@@ -64,37 +64,50 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 # +---------+
 # | fzf-tab |
 # +---------+
-zstyle ':fzf-tab:complete:*' fzf-flags --tac --no-sort --color=16,hl:green,header:bold --height=30% --preview-window right,75%,wrap,hidden
+# Behavior
+zstyle ':fzf-tab:*' query-string prefix input first
+zstyle ':fzf-tab:*' switch-group 'F1' 'F2'
+zstyle ':fzf-tab:*' show-group quiet
+zstyle ':fzf-tab:*' prefix ''
+zstyle ':fzf-tab:*' continuous-trigger '\'
+
+# FZF configuration and key bindings
+FZF_BASE_OPTS=(
+    --exact
+    --extended
+    --no-hscroll
+    --ansi
+    --tac
+    --no-sort
+    --color=16,hl:green,hl+:regular,fg+:regular,gutter:-1
+)
+zstyle ':fzf-tab:complete:*' fzf-flags $FZF_BASE_OPTS --preview-window right,75%,wrap,hidden
+zstyle ':fzf-tab:complete:*' fzf-bindings \
+    'ctrl-e:execute-silent({_FTB_INIT_}code "$realpath")+abort' \
+    'ctrl-o:execute-silent({_FTB_INIT_}open "$realpath")+abort' \
+    'alt-n:preview-half-page-down' \
+    'alt-p:preview-half-page-up' \
+    'ctrl-\:toggle-preview'
 # https://github.com/Aloxaf/fzf-tab/wiki/Preview#show-file-contents
 zstyle ':fzf-tab:complete:*' fzf-preview 'less ${(Q)realpath}'
-zstyle ':fzf-tab:complete:*' query-string ''  # empty query string
-zstyle ':fzf-tab:*' switch-group 'F1' 'F2'
-# ref: https://github.com/Aloxaf/fzf-tab/wiki/Configuration#group-colors
-FZF_TAB_GROUP_COLORS=(
-    $'\033[94m' $'\033[38;5;75m' $'\033[33m' $'\033[35m' $'\033[31m' $'\033[38;5;27m' $'\033[36m' \
-    $'\033[38;5;100m' $'\033[38;5;98m' $'\033[91m' $'\033[38;5;80m' $'\033[92m' \
-    $'\033[38;5;214m' $'\033[38;5;165m' $'\033[38;5;124m' $'\033[38;5;120m'
-)
-zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
-zstyle ':fzf-tab:*' single-group color
-zstyle ':fzf-tab:*' show-group full
-zstyle ':fzf-tab:*' prefix ''
-zstyle ':fzf-tab:*' continuous-trigger '/'
 
 # environment variables
 # https://github.com/Aloxaf/fzf-tab/wiki/Preview#environment-variable
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview 'echo ${(P)word}'
-zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-flags --tac --no-sort --color=16,hl:green --height=30% --preview-window down,30%,wrap
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-flags $FZF_BASE_OPTS --height=40% --preview-window down,30%,wrap,hidden
 
-# preview for cd/ls/vim/code
-zstyle ':fzf-tab:complete:(cd|ls|vim|code):*' fzf-flags --tac --no-sort --color=16,hl:green,header:bold --height=35% --preview-window right,75%,wrap --header='^E Edit, ^O Open, ^G Continuous'
-zstyle ':fzf-tab:complete:(cd|ls|vim|code):*' fzf-bindings \
-    'ctrl-e:execute-silent({_FTB_INIT_}code "$realpath")+abort' \
-    'ctrl-o:execute-silent({_FTB_INIT_}open "$realpath")+abort'
+# # preview for cd/ls/vim/code
+zstyle ':fzf-tab:complete:(cd|ls|eza|vim|nvim|code):*' fzf-flags $FZF_BASE_OPTS --height=45% --preview-window right,75%,wrap,hidden --header='^E Edit, ^O Open'
+# zstyle ':fzf-tab:complete:(cd|ls|eza|vim|nvim|code):*' fzf-bindings \
+#     'ctrl-e:execute-silent({_FTB_INIT_}code "$realpath")+abort' \
+#     'ctrl-o:execute-silent({_FTB_INIT_}open "$realpath")+abort' \
+#     'alt-n:preview-half-page-down' \
+#     'alt-p:preview-half-page-up' \
+#     'ctrl-\:toggle-preview'
 
 # preview for kill/ps
 # https://github.com/Aloxaf/fzf-tab/wiki/Preview#killps-preview-of-full-commandline-arguments
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 # zstyle ':completion:*:*:(kill|ps):*' complete-options false
 zstyle ':fzf-tab:complete:(kill|ps):*' fzf-preview $'[[ $group == "[process ID]" ]] && ps -f -p $word'  # only show items in group 'process ID'
-zstyle ':fzf-tab:complete:(kill|ps):*' fzf-flags --no-sort --height=60% --color=16,hl:green --preview-window=down:18%:wrap
+zstyle ':fzf-tab:complete:(kill|ps):*' fzf-flags $FZF_BASE_OPTS --height=60% --preview-window=down:18%:wrap

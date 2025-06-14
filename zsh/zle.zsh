@@ -17,15 +17,12 @@
 #     - `bindkey '\eb'`: see <alt-b> maps to which zle widget.
 #     - `zle -la`: list all available zle widges.
 
-# use `emacs' keymap
-bindkey -e
-# zsh-autosuggestion
-bindkey '^o' autosuggest-execute
+FZF_TMUX_POPUP_CMD=(fzf-tmux -p "100%,80%" --border=none --no-hscroll)
 
 # zsh navi widget, tweaked from `navi widget zsh`.
 # ^o opens cheatsheet
 _navi_call() {
-    local result="$(navi --fzf-overrides '--tiebreak=begin,length' --print "$@" </dev/tty)"
+    local result="$(navi --fzf-overrides '--tiebreak=begin,length --tmux=100%,80% --no-hscroll' --print "$@" </dev/tty)"
     [[ -n "$result" ]] && printf "%s" "$result"
 }
 _fzf_navi_widget() {
@@ -112,11 +109,11 @@ _fzf_git_file_widget() {
         echo $files |
         fzf --nth 2.. --preview "$PREVIEW_DIFF" \
             --height=90% --preview-window down,84%,wrap \
-            --header='^a add | ^l unstaged changes (default) | ^s staged changes | ^h changes vs. HEAD' \
+            --header='^a add | ⌥l unstaged changes (default) | ⌥s staged changes | ⌥h changes vs. HEAD' \
             --bind "ctrl-a:execute(git add {-1} > /dev/null)+reload(eval $COMMAND)" \
-            --bind "ctrl-l:preview($PREVIEW_DIFF)" \
-            --bind "ctrl-h:preview($PREVIEW_DIFF_HEAD)" \
-            --bind "ctrl-s:preview($PREVIEW_DIFF_CACHED)" |
+            --bind "alt-l:preview($PREVIEW_DIFF)" \
+            --bind "alt-h:preview($PREVIEW_DIFF_HEAD)" \
+            --bind "alt-s:preview($PREVIEW_DIFF_CACHED)" |
         awk '{print $NF}' | # get last column
         __join_lines)
     __redraw $files
@@ -201,8 +198,8 @@ _fzf_git_stash_widget() {
 _fzf_env_widget() {
     local envs=$(
         env | grep '=' | sed -e 's/=.*//' |
-        fzf --preview "eval echo '\${}'" \
-            --preview-window down,40%,wrap |
+        ${FZF_TMUX_POPUP_CMD[@]} --preview "eval echo '\${}'" \
+            --preview-window up,15%,wrap |
         awk '{print "$"$1}' |
         __join_lines)
     __redraw $envs
@@ -212,8 +209,8 @@ _fzf_alias_widget() {
     all_aliases=$(alias | sed "s/^'//" | sed "s/'=/=/" | sort)
     local alias=$(
         echo -E $all_aliases |
-        fzf --no-multi --preview "echo {}" \
-            --height=45% --preview-window down,35%,wrap \
+        ${FZF_TMUX_POPUP_CMD[@]} --no-multi --preview "echo {}" \
+            --height=80% --preview-window up,15%,wrap \
             --header='^g git alias' \
             --bind="ctrl-g:reload(git alias)" |
         sed -e 's/\=.*//')
@@ -329,5 +326,3 @@ zle -N _sgpt_zsh
 bindkey "^[l" _sgpt_zsh
 # Shell-GPT integration ZSH v0.2
 alias sgpt="all_proxy= sgpt"
-
-

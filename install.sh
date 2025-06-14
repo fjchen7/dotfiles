@@ -39,16 +39,6 @@ prepare() {
     [[ ! -e $DOTFILES_HOME ]] && git clone https://github.com/fjchen7/dotfiles "$DOTFILES_HOME"
     export XDG_CONFIG_HOME=$HOME/.config
     [[ ! -d $XDG_CONFIG_HOME ]] && mkdir -p "$XDG_CONFIG_HOME"
-    # soft link oh-my-zsh custom configuration
-    git clone https://github.com/ohmyzsh/ohmyzsh "$DOTFILES_HOME/config/oh-my-zsh" --depth 1
-    local zsh_custom_plugins="$DOTFILES_HOME/config/oh-my-zsh/custom/plugins"
-    mkdir -p "$zsh_custom_plugins"
-    git clone https://github.com/Aloxaf/fzf-tab "$zsh_custom_plugins/fzf-tab" --depth 1
-    git clone https://github.com/djui/alias-tips "$zsh_custom_plugins/alias-tips" --depth 1
-    git clone https://github.com/zsh-users/zsh-autosuggestions "$zsh_custom_plugins/zsh-autosuggestions" --depth 1
-    git clone https://github.com/zsh-users/zsh-completions "$zsh_custom_plugins/zsh-completions" --depth 1
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting "$zsh_custom_plugins/zsh-syntax-highlighting" --depth 1
-    git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins "$zsh_custom_plugins/autoupdate" --depth 1
 }
 
 setup_zsh() {
@@ -106,13 +96,13 @@ setup_tools() {
     # install formulas
     brew update
     # basic
-    brew install zsh starship autojump bash less ripgrep eza fd fzf navi bat jq httpie procs gh git-extras git-delta yqrashawn/goku/goku
+    brew install zsh autojump bash less ripgrep eza fd fzf navi bat jq httpie procs gh git-extras git-delta yqrashawn/goku/goku
     # good tools
-    brew install tree thefuck beeftornado/rmtree/brew-rmtree pstree dust duf dog atuin starship
+    brew install tree thefuck beeftornado/rmtree/brew-rmtree pstree dust duf dog atuin
     # dev tools
     brew install python shellcheck yarn node openssl neovim vim
     # gnu replacement
-    brew install coreutils uutils-coreutils findutils gnutls gnu-sed gnu-which gawk grep gnu-tar gzip watch
+    brew install coreutils findutils gnutls gnu-sed gnu-which gawk grep gnu-tar gzip watch
     # macos utility
     # brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency qlvideo
 
