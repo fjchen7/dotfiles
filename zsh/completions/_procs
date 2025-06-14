@@ -1,2 +1,0 @@
-#compdef procs
-command -v procs > dev/null && source <(procs --completion-out zsh)

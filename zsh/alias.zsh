@@ -72,7 +72,7 @@ alias 'path?'='_quick_grep "_list_path" $@'
 alias 'bin?'='_quick_grep "_list_my_bin" $@'
 alias 'bindkey?'='_quick_grep "bindkey" $@'
 alias 'key?'='_quick_grep "bindkey" $@'
-alias 'brew?'='_quick_grep "_brew_list" $@'
+alias 'brew?'='_quick_grep "brew_list" $@'
 alias 'zstyle?'='_quick_grep "zstyle -L" $@'
 
 # git
@@ -307,7 +307,7 @@ function _wtf() {
     fi
 }
 
-function _brew_list() {
+function brew_list() {
     # ref: https://stackoverflow.com/a/55445034
     brew leaves | xargs brew deps --installed --for-each | sed "s/^.*:/$(tput setaf 4)&$(tput sgr0)/"
 }

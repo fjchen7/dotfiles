@@ -24,7 +24,7 @@ update_brew() {
 }
 update_pip() {
     info_begin "PYTHON3" "packages"
-    pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U
+    pip3 freeze --local | grep -v '^-e' | grep -v 'wheel' | cut -d = -f 1  | xargs pip3 install -U
     info_end "PYTHON3" "packages"
 }
 update_apt() {
@@ -38,20 +38,9 @@ update_apt() {
 }
 update_zsh() {
     info_begin "zsh"
-
-    # printf "⚙️  updating zsh theme <powerlevel10k>...\n"
-    # git -C $ZSH_CUSTOM/themes/powerlevel10k pull
-
-    while read -r plugin_root; do
-        printf "⚙️  updating zsh plugin <${plugin_root##*/}>...\n"
-        git -C $plugin_root pull
-    done < <(
-        fd . ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins --type=d --max-depth=1
-    )
-
-    printf '⚙️  updating zsh by "omz update".\n'
-    (source $ZSH/lib/cli.zsh && omz update)
-
+    printf '⚙️  updating zsh by "zimfw update".\n'
+    zimfw upgrade
+    zimfw update
     info_end "zsh"
 }
 

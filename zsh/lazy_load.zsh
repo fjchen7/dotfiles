@@ -1,13 +1,4 @@
 # thefuck
-load-fuck() {
-    eval $(thefuck --alias)
-}
-
-fuck() {
-    unset -f fuck
-    load-fuck
-    fuck "$@"
-}
 
 # https://github.com/undg/zsh-nvm-lazy-load/blob/master/zsh-nvm-lazy-load.plugin.zsh
 load-nvm() {
@@ -21,4 +12,3 @@ nvm() {
   load-nvm
   nvm "$@"
 }
-
