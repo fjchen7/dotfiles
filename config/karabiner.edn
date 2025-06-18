@@ -136,8 +136,8 @@
         [:!Tv [:openApp "Visual Studio Code"]]
         [:!Tr [:openApp "RustRover"]]
         [:!Te [:openApp "Finder"]]
-        [:!Tk :!Ch :Kitty]
-        [:!Tk [:openApp "Kitty"]]
+        [:!Tk :!Ch :Alacritty]
+        [:!Tk [:openApp "Alacritty"]]
         [:!Tbackslash [:openApp "Bitwarden"]]
         [:!Tn [:openApp "Notes"]]
         ; [:!Tr :!CTS4]  ;; Look word up in Eudic dictionary
