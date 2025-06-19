@@ -1,6 +1,7 @@
 return {
   "L3MON4D3/LuaSnip",
-  event = "InsertEnter",
+  -- event = "InsertEnter",
+  event = "BufRead",
   dependencies = {
     {
       "garymjr/nvim-snippets",

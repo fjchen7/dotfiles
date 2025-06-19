@@ -3,7 +3,7 @@ local M = {
   "mrjones2014/smart-splits.nvim",
   event = "VeryLazy",
   build = "./kitty/install-kittens.bash",
-  enabled = vim.fn.getenv("ZELLIJ") == vim.NIL,
+  enabled = vim.fn.getenv("TMUX_PANE") ~= vim.NIL,
 }
 
 local fn = function(method)

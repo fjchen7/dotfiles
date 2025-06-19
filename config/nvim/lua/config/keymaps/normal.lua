@@ -18,8 +18,9 @@ map("n", "q", function()
       has_others_listed = true
     end
   end
-  if has_others_listed then
-    vim.cmd("close")
+  local is_in_tmux_popup = vim.fn.getenv("TMUX") ~= vim.NIL and vim.fn.getenv("TMUX_PANE") == vim.NIL
+  if has_others_listed or is_in_tmux_popup then
+    vim.cmd("q")
   else
     require("notify")("Cannot close last window", vim.log.levels.WARN, { title = "Close" })
   end
