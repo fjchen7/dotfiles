@@ -28,6 +28,7 @@ config/jgit
 config/yazi/plugins
 config/shell_gpt
 config/rest-client
+config/claude
 
 config/nvim/.luarc.json
 config/nvim/lazy-lock.json
