@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 show_hidden = false
 show_symlink = true
 sort_dir_first = true
