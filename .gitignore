@@ -6,6 +6,7 @@ zsh/zshrc.local
 zsh/zshenv.local
 
 hammerspoon/Spoons/EmmyLua.spoon/annotations
+config/tmux/plugins
 config/github-copilot
 config/githubnext__github-copilot-cli.json
 config/gh-dash
